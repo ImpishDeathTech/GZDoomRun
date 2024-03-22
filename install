@@ -8,6 +8,7 @@ GZDOOMR_CUSTOM="${GZDOOMR_CUSTOM_DIR}.py"
 GZDOOMR_DESKTOP=/usr/share/applications/gzdoom-run.desktop
 GZDOOMR_STEAM_BANNER="${GZDOOMR_CONFIG}/banner.jpg"
 GZDOOMR_STEAM_LOGO="${GZDOOMR_CONFIG}/logo.png"
+GZDOOMR_STEAM_ARTWORK="${GZDOOMR_CONFIG}/artwork.png"
 
 function install-gzdoom () {
     printf "Installing GZDoom Run ... \n\n"
@@ -15,6 +16,7 @@ function install-gzdoom () {
     raco pkg install gui-easy
     sudo cp ./gzdoom-run.py $GZDOOMR_BIN
     sudo cp ./gzdoom-run-gui.rkt $GZDOOMR_GUI_BIN
+    cp ./artwork.png $GZDOOMR_STEAM_ARTWORK
     cp ./logo.png $GZDOOMR_STEAM_LOGO
     cp ./banner.jpg $GZDOOMR_STEAM_BANNER
     cp ./custom.py $GZDOOMR_CUSTOM
