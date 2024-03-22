@@ -30,6 +30,7 @@ cd GZDoomRun
 ### Running
 > Now, we'll test it by extracting the provided tarball and installing Brutal Doom! this will only be available if you download one of the GZDoomRun_vX.X.X_BRUTAL builds
 > This will also create a desktop shortcut for loading Brutal Doom
+```sh
 ./install brutal
 gzdoom-run brutalv21
 ```
