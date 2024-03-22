@@ -1,0 +1,13 @@
+#! /usr/bin/bash
+
+GZDOOMR_CONFIG="${HOME}/.config/gzdoom"
+SIGIL_CONFIG="${GZDOOMR_CONFIG}/SIGIL_v1_21"
+SIGIL_ICON=/usr/share/icons/romero-sigil.png
+SIGIL_DESKTOP=/usr/share/applications/romero-sigil.desktop
+
+printf "\nInstalling John Romero's SIGIL\n\n"
+
+gzdoom-run remove SIGIL_v1_21.wad SIGIL_COMPAT_v1_21.wad
+rm -r $SIGIL_CONFIG 
+sudo rm $SIGIL_ICON
+sudo rm $SIGIL_DESKTOP 

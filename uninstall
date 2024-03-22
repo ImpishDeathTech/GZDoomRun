@@ -23,7 +23,7 @@ function uninstall-brutal-doom () {
     printf "Installing Brutal Doom ... \n\n"
 
     cd brutal
-    ./remove
+    ./uninstall
         
     RET=$?
 
@@ -40,6 +40,27 @@ function uninstall-brutal-doom () {
     return $RET
 }
 
+function uninstall-brutal-doom () {
+    printf "Installing SIGIL ... \n\n"
+
+    cd sigil
+    ./uninstall
+        
+    RET=$?
+
+    cd ..
+
+    if [ $RET -eq 0 ]
+    then
+        printf "\nDone.\n"
+    else
+        printf "\nCould not remove SIGIL!\n"
+        return $RET
+    fi
+
+    return $RET
+}
+
 
 if [ $# -eq 2 ]
 then
@@ -50,6 +71,9 @@ then
     elif [ $ARG = gzdoom ]
     then
         uninstall-gzdoom
+    elif [ $ARG = sigil ]
+    then 
+        uninstall-sigil
     else
         printf "Invalid argument '%s'\n" $ARG 
         exit 1

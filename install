@@ -37,7 +37,26 @@ function install-brutal-doom () {
     then
         printf "\nDone.\n"
     else
-        printf "\nCould not install!\n"
+        printf "\nCould not install Brutal Doom!\n"
+        return $RET
+    fi
+
+    return $RET
+}
+
+function install-sigil () {
+    cd sigil
+    ./install
+
+    RET=$?
+
+    cd .. 
+
+    if [ $RET -eq 0 ]
+    then
+        printf "\nDone.\n"
+    else
+        printf "\nCould not install SIGIL!\n"
         return $RET
     fi
 
@@ -55,6 +74,9 @@ then
     elif [ $ARG = gzdoom ]
     then
         install-gzdoom
+    elif [ $ARG = sigil ]
+    then 
+        install-sigil
     else
         printf "\nInvalid argument '%s'\n" $ARG 
         exit 1

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=gzdoom-run SIGIL_v1_21
+Icon=romero-sigil
+Name=SIGIL
+Categories=Game;ActionGame;
+Comment=The Unofficial 5th episode of DOOM by Romero Games. 
