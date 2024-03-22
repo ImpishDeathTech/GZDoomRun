@@ -1,0 +1,16 @@
+#! /usr/bin/bash
+
+GZDOOMR_CONFIG="${HOME}/.config/gzdoom"
+BRUTAL_DOOM_CONFIG="${GZDOOMR_CONFIG}/brutalv21"
+BRUTAL_DOOM_ICON=/usr/share/icons/brutal-doom.png
+BRUTAL_DOOM_DESKTOP=/usr/share/applications/brutal-doom.desktop
+
+echo Uninstalling Brutal Doom ...
+echo 
+
+gzdoom-run remove brutalv21
+sudo rm $BRUTAL_DOOM_ICON
+sudo rm $BRUTAL_DOOM_DESKTOP
+rm -r $BRUTAL_DOOM_CONFIG
+
+echo

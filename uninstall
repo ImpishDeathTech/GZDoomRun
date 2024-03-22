@@ -1,0 +1,62 @@
+#! /usr/bin/bash
+
+GZDOOMR_BIN=/usr/bin/gzdoom-run
+GZDOOMR_GUI_BIN=/usr/bin/gzdoom-run-gui
+GZDOOMR_CUSTOM=$HOME/.config/gzdoom/custom.py
+GZDOOMR_CUSTOM_DIR=$HOME/.config/gzdoom/custom
+GZDOOMR_DESKTOP=/usr/share/applications/gzdoom-run.desktop
+
+function uninstall-gzdoom () {
+    printf "Unistalling GZDoom Run ... \n\n"
+    
+    sudo rm $GZDOOMR_BIN
+    sudo rm $GZDOOMR_GUI_BIN
+    rm $GZDOOMR_CUSTOM
+    sudo rm -r $GZDOOMR_CUSTOM_DIR
+    sudo rm $GZDOOMR_DESKTOP
+    RET=$?
+    printf "\nDone."
+    return $?
+}
+
+function uninstall-brutal-doom () {
+    printf "Installing Brutal Doom ... \n\n"
+
+    cd brutal
+    ./remove
+        
+    RET=$?
+
+    cd ..
+
+    if [ $RET -eq 0 ]
+    then
+        printf "\nDone.\n"
+    else
+        printf "\nCould not remove!\n"
+        return $RET
+    fi
+
+    return $RET
+}
+
+
+if [ $# -eq 2 ]
+then
+    ARG=${@[1]}
+    if [ $ARG = brutal ]
+    then
+        uninstall-brutal-doom 
+    elif [ $ARG = gzdoom ]
+    then
+        uninstall-gzdoom
+    else
+        printf "Invalid argument '%s'\n" $ARG 
+        exit 1
+    fi
+else 
+    uninstall-gzdoom 
+fi
+
+exit $?
+

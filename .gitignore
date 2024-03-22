@@ -1,0 +1,17 @@
+.vscode
+brutal/bd21-changelog.txt
+brutal/BRUTAL DOOM MANUAL.rtf
+brutal/icon.png
+brutal/brutalv21.pk3
+brutal/banner.jpg 
+brutal/logo.png
+banner.jpg 
+logo.png
+load-repo
+update-repo
+make-package
+commit
+commit-all
+add-file
+print-version
+gzdoom-run-gui.rkt~

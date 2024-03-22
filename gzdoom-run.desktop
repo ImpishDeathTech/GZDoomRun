@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=gzdoom-run-gui
+Icon=gzdoom
+Name=GZDoom Run
+Categories=Game;ActionGame;
+Comment=A utility for loading mods to GZDoom more dynamically

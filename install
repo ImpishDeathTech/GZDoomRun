@@ -1,0 +1,67 @@
+#! /usr/bin/bash
+
+GZDOOMR_CONFIG="${HOME}/.config/gzdoom"
+GZDOOMR_BIN=/usr/bin/gzdoom-run
+GZDOOMR_GUI_BIN=/usr/bin/gzdoom-run-gui
+GZDOOMR_CUSTOM_DIR="${GZDOOMR_CONFIG}/custom"
+GZDOOMR_CUSTOM="${GZDOOMR_CUSTOM_DIR}.py"
+GZDOOMR_DESKTOP=/usr/share/applications/gzdoom-run.desktop
+GZDOOMR_STEAM_BANNER="${GZDOOMR_CONFIG}/banner.jpg"
+GZDOOMR_STEAM_LOGO="${GZDOOMR_CONFIG}/logo.png"
+
+function install-gzdoom () {
+    printf "Installing GZDoom Run ... \n\n"
+
+    raco pkg install gui-easy
+    sudo cp ./gzdoom-run.py $GZDOOMR_BIN
+    sudo cp ./gzdoom-run-gui.rkt $GZDOOMR_GUI_BIN
+    cp ./logo.png $GZDOOMR_STEAM_LOGO
+    cp ./banner.jpg $GZDOOMR_STEAM_BANNER
+    cp ./custom.py $GZDOOMR_CUSTOM
+    cp -r ./custom $GZDOOMR_CUSTOM_DIR
+    sudo cp ./gzdoom-run.desktop $GZDOOMR_DESKTOP
+    RET=$?
+    printf "\nDone.\n"
+    return $RET
+}
+
+function install-brutal-doom () {
+    cd brutal
+    ./install
+        
+    RET=$?
+
+    cd ..
+
+    if [ $RET -eq 0 ]
+    then
+        printf "\nDone.\n"
+    else
+        printf "\nCould not install!\n"
+        return $RET
+    fi
+
+    return $RET
+}
+
+
+if [ $# -eq 1 ]
+then
+    ARG=$1
+    
+    if [ $ARG = brutal ]
+    then
+        install-brutal-doom
+    elif [ $ARG = gzdoom ]
+    then
+        install-gzdoom
+    else
+        printf "\nInvalid argument '%s'\n" $ARG 
+        exit 1
+    fi
+else 
+    install-gzdoom
+fi
+
+exit $?
+
