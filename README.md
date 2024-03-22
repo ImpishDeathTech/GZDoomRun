@@ -15,11 +15,11 @@
 ```sh
 git clone https://github.com/ImpishDeathTech/GZDoomRun.git
 ```
- > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-run-v1-3-1/GZDoomRun_v1.3.1_BRUTAL.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-run-v1-3-1/GZDoomRun_v1.3.1_BRUTAL.tar.gz) version and unload it:
+ > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-run-v1-3-1/GZDoomRun_BRUTAL_v1.3.1.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-run-v1-3-1/GZDoomRun_BRUTAL_v1.3.1.tar.gz) version and unload it:
 ```sh
-unzip GZDoomRun_vX.X.X_BRUTAL.zip
+unzip GZDoomRun_BRUTAL_vX.X.X.zip
 # or
-tar -xvf GZDoomRun_vX.X.X_BRUTAL.tar.gz
+tar -xvf GZDoomRun_BRUTAL_vX.X.X.tar.gz
 ```
 > Next, cd into the project directory and execute the install.sh script.
 ```sh
