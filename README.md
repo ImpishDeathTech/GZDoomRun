@@ -15,11 +15,11 @@
 ```sh
 git clone https://github.com/ImpishDeathTech/GZDoomRun.git
 ```
- > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1/GZDoomRun_BRUTAL_v1.3.1.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1/GZDoomRun_BRUTAL_v1.3.1.tar.gz) version and unload it:
+ > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1/GZDoomRun_SIGIL_v1.3.1-1.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1/GZDoomRun_SIGIL_v1.3.1-1.tar.gz) version and unload it:
 ```sh
-unzip GZDoomRun_BRUTAL_vX.X.X.zip
+unzip GZDoomRun_SIGIL_vX.X.X-X.zip
 # or
-tar -xvf GZDoomRun_BRUTAL_vX.X.X.tar.gz
+tar -xvf GZDoomRun_SIGIL_vX.X.X-X.tar.gz
 ```
 > Next, cd into the project directory and execute the install.sh script.
 ```sh
@@ -28,11 +28,13 @@ cd GZDoomRun
 ```
 
 ### Running
-> Now, we'll test it by extracting the provided tarball and installing Brutal Doom! this will only be available if you download one of the GZDoomRun_vX.X.X_BRUTAL builds
-> This will also create a desktop shortcut for loading Brutal Doom
+> Now, we'll test it by extracting the provided tarball and installing Brutal Doom! this will only be available if you download one of the GZDoomRun_vX.X.X-X_BRUTAL or GZDoomRun_vX.X.X-X_SIGIL builds
+> This will also create a desktop shortcut for loading Brutal Doom and SIGIL
 ```sh
 ./install brutal
+./install sigil
 gzdoom-run brutalv21
+gzdoom-run SIGIL_v1_21
 ```
 gzdoom-run will launch gzdoom on it's own if no arguments are provided
 
