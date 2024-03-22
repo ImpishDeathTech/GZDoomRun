@@ -79,6 +79,11 @@ then
     elif [ $ARG = sigil ]
     then 
         install-sigil
+    elif [ $ARG = all ]
+    then 
+        install-gzdoom
+        install-brutal-doom 
+        install-sigil
     else
         printf "\nInvalid argument '%s'\n" $ARG 
         exit 1

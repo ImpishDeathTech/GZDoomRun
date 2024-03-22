@@ -52,7 +52,7 @@
                    version-major 
                    version-minor
                    version-patch)
-   #:size '(300 500)
+   #:size '(400 500)
    (image gzdoom-icon)
    (vpanel
     #:style '(border)
