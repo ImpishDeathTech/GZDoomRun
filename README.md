@@ -4,6 +4,7 @@
 > This program was originally meant to used with Steam to help me load doom mods easier, 
 > but has a few command line options that make it a fine standalone program.
 > Type `gzdoom-run help` once installed to see these options.
+> Requires racket and python3 to be installed on your system
 
 ## GZDoom Run GUI
 > The gui is currently written in racket, may be rewritten in C with SDL2, C++ with SFML, more likely the latter 
