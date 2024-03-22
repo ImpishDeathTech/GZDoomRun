@@ -96,7 +96,7 @@ def suffixes() -> tuple:
     return WAD_SUFFIXES
 
 def load_directory() -> dict:
-    for file_name in os.listdir(custom.CUSTOM_DIR):
+    for file_name in os.listdir(CUSTOM_DIR):
         if file_name.endswith(".py"):
             modname : str        = file_name[:-3]
             modpath : str        = CUSTOM_DIR + file_name

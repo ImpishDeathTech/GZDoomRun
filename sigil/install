@@ -5,7 +5,7 @@ SIGIL_CONFIG="${GZDOOMR_CONFIG}/SIGIL_v1_21"
 SIGIL_ICON=/usr/share/icons/romero-sigil.png
 SIGIL_STEAM_LOGO="${SIGIL_CONFIG}/logo.png"
 SIGIL_STEAM_BANNER="${SIGIL_CONFIG}/banner.jpg"
-SIGIL_STEAM_ARTWORK="${SIGIL_CONFIG}/artwork.jpg"<
+SIGIL_STEAM_ARTWORK="${SIGIL_CONFIG}/artwork.jpg"
 SIGIL_DESKTOP=/usr/share/applications/romero-sigil.desktop
 
 printf "\nInstalling John Romero's SIGIL\n\n"
@@ -14,6 +14,6 @@ gzdoom-run install SIGIL_v1_21.wad SIGIL_COMPAT_v1_21.wad
 mkdir $SIGIL_CONFIG 
 sudo cp ./icon.png $SIGIL_ICON
 sudo cp ./romero-sigil.desktop $SIGIL_DESKTOP
-cp ./artwork.jpg $SIGIL_ARTWORK_JPG
+cp ./artwork.jpg $SIGIL_STEAM_ARTWORK
 cp ./logo.png $SIGIL_STEAM_LOGO
 cp ./banner.jpg $SIGIL_STEAM_BANNER 
