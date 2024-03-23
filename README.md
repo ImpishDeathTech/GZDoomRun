@@ -4,6 +4,7 @@
 > This program was originally meant to used with Steam to help me load doom mods easier, 
 > but has a few command line options that make it a fine standalone program.
 > Type `gzdoom-run help` once installed to see these options.
+> Requires racket and python3 to be installed on your system
 
 ## GZDoom Run GUI
 > The gui is currently written in racket, may be rewritten in C with SDL2, C++ with SFML, more likely the latter 
@@ -15,7 +16,7 @@
 ```sh
 git clone https://github.com/ImpishDeathTech/GZDoomRun.git
 ```
- > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1/GZDoomRun_SIGIL_v1.3.1-1.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1/GZDoomRun_SIGIL_v1.3.1-1.tar.gz) version and unload it:
+ > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-2/GZDoomRun_SIGIL_v1.3.1-2.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-2/GZDoomRun_SIGIL_v1.3.1-2.tar.gz) version and unload it:
 ```sh
 unzip GZDoomRun_SIGIL_vX.X.X-X.zip
 # or
