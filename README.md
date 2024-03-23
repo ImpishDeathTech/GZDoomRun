@@ -16,7 +16,7 @@
 ```sh
 git clone https://github.com/ImpishDeathTech/GZDoomRun.git
 ```
- > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1/GZDoomRun_SIGIL_v1.3.1-1.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1/GZDoomRun_SIGIL_v1.3.1-1.tar.gz) version and unload it:
+ > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-2/GZDoomRun_SIGIL_v1.3.1-2.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-2/GZDoomRun_SIGIL_v1.3.1-2.tar.gz) version and unload it:
 ```sh
 unzip GZDoomRun_SIGIL_vX.X.X-X.zip
 # or
