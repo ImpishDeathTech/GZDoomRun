@@ -64,7 +64,8 @@ function uninstall-brutal-doom () {
 
 if [ $# -eq 2 ]
 then
-    ARG=${@[1]}
+    ARG=$1
+
     if [ $ARG = brutal ]
     then
         uninstall-brutal-doom 
@@ -73,6 +74,11 @@ then
         uninstall-gzdoom
     elif [ $ARG = sigil ]
     then 
+        uninstall-sigil
+    elif [ $ARG = all ]
+    then
+        uninstall-gzdoom
+        uninstall-brutal-doom
         uninstall-sigil
     else
         printf "Invalid argument '%s'\n" $ARG 
