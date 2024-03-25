@@ -45,7 +45,7 @@
 
 
 (define (launch-gzdoom) 
-  (let-values ([(proc out in err) (subprocess #f #f #f gzdoom-run (string-replace/modulo (obs-peek @run-args)))])
+  (let-values ([(proc out in err) (subprocess #f #f #f gzdoom-run "with" (string-replace (obs-peek @run-args) " " "%"))])
     (let loop ()
       (when (eq? (subprocess-status proc) 'running)
         (loop)))
@@ -62,7 +62,7 @@
                    version-major 
                    version-minor
                    version-patch)
-   #:size '(400 500)
+   #:size '(500 500)
    (image gzdoom-icon)
    (vpanel
     #:style '(border)
