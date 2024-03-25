@@ -3,4 +3,4 @@
 - Reimplement gzdoom-run.py in racket or gzdoom-run-gui.rkt in python
 
 ## To Do List for v1.4.0
-- Reimplement everithing in C or C++
+- Reimplement everything in C or C++
