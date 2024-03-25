@@ -78,7 +78,8 @@ def find_wad(wad_name: str) -> str:
 
 
 def launch_gzdoom_with(wad_list: list):
-    result : CompletedProcess = subprocess.run(["gzdoom", " ".join(wad_list)])
+    wad_list.insert(0, "gzdoom")
+    result : CompletedProcess = subprocess.run(wad_list)
     
     if result.returncode == 0:
         print(result.stdout)
@@ -124,24 +125,28 @@ class CommandOptions:
 
     def process_arguments(self, argc: int, argv: list):
         if argc > 0:
-            for option in self.command_options.keys():
-                if argv[0] == option:
-                    key : str = argv[0]
-                    argv.pop(0)
-                    self.command_options[key](argc - 1, argv)
+            if argc == 1:
+                print(argv[0])
+                file_names : list = argv[0].split("%")
+                file_paths : list = []
 
-            file_paths : list = []
-    
-            for i in range(argc):
-                file_path : str = find_wad(argv[i])
+                for file_name in file_names:
+                    file_path : str = find_wad(file_name)
 
-                if file_path != "nil":
-                    file_paths.append(file_path)
+                    if file_path != "nil":
+                        file_paths.append(file_path)
 
-                else:
-                    raise GZDoomRunError(2, f"No '{file_path}' .WAD or .PK3 found in {WAD_DIRECTORY}")
-        
-            launch_gzdoom_with(file_paths)
+                    else:
+                        raise GZDoomRunError(2, f"No '{file_path}' .WAD or .PK3 found in {WAD_DIRECTORY}")
+                    
+                launch_gzdoom_with(file_paths)
+
+            else:
+                for option in self.command_options.keys():
+                    if argv[0] == option:
+                        key : str = argv[0]
+                        argv.pop(0)
+                        self.command_options[key](argc - 1, argv)
 
         else:
             launch_gzdoom()
