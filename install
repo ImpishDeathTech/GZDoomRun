@@ -14,14 +14,16 @@ function install-gzdoom () {
     printf "Installing GZDoom Run ... \n\n"
 
     raco pkg install gui-easy
+    raco exe ./gzdoom-run-gui.rkt
     sudo cp ./gzdoom-run.py $GZDOOMR_BIN
-    sudo cp ./gzdoom-run-gui.rkt $GZDOOMR_GUI_BIN
+    sudo cp ./gzdoom-run-gui $GZDOOMR_GUI_BIN
     cp ./artwork.png $GZDOOMR_STEAM_ARTWORK
     cp ./logo.png $GZDOOMR_STEAM_LOGO
     cp ./banner.jpg $GZDOOMR_STEAM_BANNER
     cp ./custom.py $GZDOOMR_CUSTOM
     cp -r ./custom $GZDOOMR_CUSTOM_DIR
     sudo cp ./gzdoom-run.desktop $GZDOOMR_DESKTOP
+    rm ./gzdoom-run-gui
     RET=$?
     printf "\nDone.\n"
     return $RET
