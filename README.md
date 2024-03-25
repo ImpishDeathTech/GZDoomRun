@@ -16,7 +16,7 @@
 ```sh
 git clone https://github.com/ImpishDeathTech/GZDoomRun.git
 ```
- > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-2/GZDoomRun_SIGIL_v1.3.1-2.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-2/GZDoomRun_SIGIL_v1.3.1-2.tar.gz) version and unload it:
+ > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-3/GZDoomRun_SIGIL_v1.3.1-3.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-3/GZDoomRun_SIGIL_v1.3.1-3.tar.gz) version and unload it:
 ```sh
 unzip GZDoomRun_SIGIL_vX.X.X-X.zip
 # or
@@ -34,8 +34,10 @@ cd GZDoomRun
 ```sh
 ./install brutal
 ./install sigil
-gzdoom-run brutalv21
-gzdoom-run SIGIL_v1_21
+gzdoom-run with brutalv21
+
+# Loading multiple wads is done by seperating each wad name by a '%'
+gzdoom-run with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
 ```
 gzdoom-run will launch gzdoom on it's own if no arguments are provided
 
