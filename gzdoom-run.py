@@ -125,7 +125,13 @@ class CommandOptions:
 
     def process_arguments(self, argc: int, argv: list):
         if argc > 0:
-            if argc == 1:
+            if argc <= 1:
+                for option in self.command_options.keys():
+                    if argv[0] == option:
+                        key : str = argv[0]
+                        argv.pop(0)
+                        self.command_options[key](argc - 1, argv)
+            elif argc == 1:
                 print(argv[0])
                 file_names : list = argv[0].split("%")
                 file_paths : list = []
@@ -141,12 +147,7 @@ class CommandOptions:
                     
                 launch_gzdoom_with(file_paths)
 
-            else:
-                for option in self.command_options.keys():
-                    if argv[0] == option:
-                        key : str = argv[0]
-                        argv.pop(0)
-                        self.command_options[key](argc - 1, argv)
+            
 
         else:
             launch_gzdoom()
