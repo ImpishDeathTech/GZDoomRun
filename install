@@ -30,54 +30,40 @@ function install-gzdoom () {
     cp ./custom.py $GZDOOMR_CUSTOM
     cp -r ./custom $GZDOOMR_CUSTOM_DIR
     
-    sudo cp ./gzdoom-run.desktop $GZDOOMR_DESKTOP
+    sudo cp ./gzdoomrun.desktop $GZDOOMR_DESKTOP
 
     RET=$?
     printf "\nDone.\n"
     return $RET
 }
 
+function check-done () {
+    if [ $1 -eq 0 ]
+    then
+        printf "\nDone.\n"
+    else
+        printf "\nCould not install %s!\n" $PKG_NAME
+        exit 1
+    fi
+}
+
 function install-module () {
     PKG_NAME=$1
-    unzip "./${PKG_NAME}.pkz"
+    cd $PKG_NAME
     
-    if [ $? -eq 0 ]
+    if [ $? -eq 1 ]
     then 
+        unzip "./${PKG_NAME}.pkz"
+        check-done $? $PKG_NAME
         cd $PKG_NAME
-        ./install
-
-        if [ $? -eq 0 ]
-        then
-            printf "\nDone.\n"
-        else
-            printf "\nCould not install %s!\n" $PKG_NAME
-            return 1
-        fi
-
-        cd ..
-    else
-        cd $PKG_NAME
-
-        if [ $? -eq 1 ]
-        then
-            printf "\nCould not install %s!\n" $PKG_NAME
-            return 1
-        else
-            ./install
-
-            if [ $? -eq 0 ]
-            then 
-                printf "\nDone.\n"
-            else
-                printf "\nCould not install %s!\n" $PKG_NAME
-                return 1
-            fi
-
-            cd ..
-        fi
+        check-done $? $PKG_NAME
     fi
     
-    return 0
+    ./install
+    RET=$?
+    cd ..
+
+    return $RET
 }
 
 alias install-brutal="install-module brutal"
@@ -85,25 +71,25 @@ alias install-sigil="install-module sigil"
 
 if [ $# -eq 1 ]
 then
-    ARG=$1
-    
-    if [ $ARG = gzdoom ]
+    if [ $1 = gzdoom ]
     then
         install-gzdoom
-    elif [ $ARG = brutal ]
+    elif [ $1 = brutal ]
     then
-        install-brutal-doom
-    elif [ $ARG = sigil ]
+        install-brutal
+    elif [ $1 = sigil ]
     then 
         install-sigil
-    elif [ $ARG = all ]
+    elif [ $1 = all ]
     then 
         install-gzdoom
-        install-brutal-doom 
+        install-brutal
         install-sigil
     else
-        install-module $ARG
+        install-module $1
+        
         if [ $? -eq 1 ]
+        then
             printf "\nInvalid argument '%s'\n" $ARG 
             exit 1
         fi

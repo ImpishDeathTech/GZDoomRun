@@ -6,15 +6,17 @@ import gzdoomrun as gzdr
 
 from types import ModuleType
 from importlib.machinery import ModuleSpec
+from pathlib import Path
 
 
-DIRECTORY  : str = "@directory_path"
-FILES      : str = "@file_list"
-RUN_ARGS   : str = "@run_arguments"
-ARTWORK    : str = "@game_artwork"
-EXECUTE    : str = "$run_gzdoom"
-CLEAR_ARGS : str = "$clear_arguments"
-EXIT_APP   : str = "$exit_application"
+DIRECTORY   : str = "@directory_path"
+FILES       : str = "@file_list"
+RUN_ARGS    : str = "@run_arguments"
+ARTWORK     : str = "@game_artwork"
+EXECUTE     : str = "$run_gzdoom"
+CLEAR_ARGS  : str = "$clear_arguments"
+EXIT_APP    : str = "$exit_application"
+DEFAULT_PATH: str = os.path.join(Path.home(), ".config", "gzdoom") 
 
 class Application:
 
@@ -38,7 +40,8 @@ class Application:
             [gui.Column(argument_input)]
         ]
 
-        self.window : gui.Window = gui.Window(title=self.title, layout=self.layout)
+        self.window       : gui.Window = gui.Window(title=self.title, layout=self.layout)
+        self.is_first_run : bool       = True
     
     def find(self, event: any):
         for key in self.events.keys():
@@ -54,18 +57,15 @@ class Application:
 
     def list_directory(self, event: any, values: any):
         folder = values[DIRECTORY]
+        file_names: list = []
         try:
             file_list = os.listdir(folder)
         except:
             file_list = []
         finally:
-            file_names = []
-
             for file_name in file_list:
                 if os.path.isfile(os.path.join(folder, file_name)) and file_name.lower().endswith(gzdr.custom.WAD_SUFFIXES):
                     file_names.append(file_name[:-4])
-
-            self.window[FILES].update(file_names)
 
 
     def update_image_and_args(self, event: any, values: any):
@@ -107,14 +107,26 @@ class Application:
 
 
 if __name__ == "__main__":
+    file_names : list = []
+
+    try:
+        file_list = os.listdir(DEFAULT_PATH)
+    except:
+        file_list = []
+    finally:
+        for file_name in file_list:
+            if os.path.isfile(os.path.join(DEFAULT_PATH, file_name)) and file_name.lower().endswith(gzdr.custom.WAD_SUFFIXES):
+                file_names.sort(key=str.lower)
+                file_names.append(file_name[:-4])
+
     app : Application = Application(f"GZDoom Run v{gzdr.VERSION_MAJOR}.{gzdr.VERSION_MINOR}.{gzdr.VERSION_PATCH}",
     [
         [
             gui.Text("Mod Folder"),
-            gui.In(size=(25, 1), enable_events=True, key=DIRECTORY),
+            gui.In(DEFAULT_PATH, size=(25, 1), enable_events=True, key=DIRECTORY),
             gui.FolderBrowse()
         ],
-        [gui.Listbox(values=[], enable_events=True, size=(49, 20), key=FILES)]
+        [gui.Listbox(file_names, enable_events=True, size=(49, 20), key=FILES)]
     ],
     [
         [

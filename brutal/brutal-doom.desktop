@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=gzdoom-run brutalv21
+Exec=gzdoomrun brutalv21
 Icon=brutal-doom
 Name=Brütal Doom
 Categories=Game;ActionGame;
