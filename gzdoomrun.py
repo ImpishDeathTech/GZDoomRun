@@ -162,6 +162,7 @@ def run_cli(argc: int, argv: list):
     try:
             sys.argv.pop(0)
             options.process_arguments(argc - 1, sys.argv)
+            sys.exit(0)
     
     except gzdr.GZDoomRunError as e:
         e.what()
