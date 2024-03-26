@@ -8,7 +8,7 @@ BRUTAL_DOOM_DESKTOP=/usr/share/applications/brutal-doom.desktop
 echo Uninstalling Brutal Doom ...
 echo 
 
-gzdoom-run remove brutalv21
+gzdoomrun remove brutalv21
 sudo rm $BRUTAL_DOOM_ICON
 sudo rm $BRUTAL_DOOM_DESKTOP
 rm -r $BRUTAL_DOOM_CONFIG

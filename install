@@ -13,8 +13,7 @@ GZDOOMR_STEAM_ARTWORK="${GZDOOMR_CONFIG}/artwork.png"
 
 function install-gzdoom () {
     printf "Installing GZDoom Run ... \n\n"
-
-    sudo touch $GZDOOMR_BIN
+    
     sudo cp ./gzdoomrun-main.py $GZDOOMR_BIN
     sudo cp ./gzdoomrun.py $GZDOOMR_BIN.py
     
@@ -42,7 +41,7 @@ function check-done () {
     then
         printf "\nDone.\n"
     else
-        printf "\nCould not install %s!\n" $PKG_NAME
+        printf "\nCould not install %s!\n" $2
         exit 1
     fi
 }
@@ -66,8 +65,15 @@ function install-module () {
     return $RET
 }
 
-alias install-brutal="install-module brutal"
-alias install-sigil="install-module sigil"
+function install-brutal () { 
+    install-module brutal
+    return $?
+}
+
+function install-sigil () {  
+    install-module sigil 
+    return $?
+}
 
 if [ $# -eq 1 ]
 then
@@ -87,7 +93,7 @@ then
         install-sigil
     else
         install-module $1
-        
+
         if [ $? -eq 1 ]
         then
             printf "\nInvalid argument '%s'\n" $ARG 

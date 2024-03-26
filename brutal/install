@@ -10,7 +10,7 @@ BRUTAL_DOOM_DESKTOP=/usr/share/applications/brutal-doom.desktop
 
 printf "Installing Brutal Doom ... \n\n"
 
-gzdoom-run install brutalv21.pk3
+gzdoomrun install brutalv21.pk3
 sudo cp ./icon.png $BRUTAL_DOOM_ICON
 sudo cp ./brutal-doom.desktop $BRUTAL_DOOM_DESKTOP
 

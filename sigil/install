@@ -10,7 +10,7 @@ SIGIL_DESKTOP=/usr/share/applications/romero-sigil.desktop
 
 printf "\nInstalling John Romero's SIGIL\n\n"
 
-gzdoom-run install SIGIL_v1_21.wad SIGIL_COMPAT_v1_21.wad
+gzdoomrun install SIGIL_v1_21.wad SIGIL_COMPAT_v1_21.wad
 mkdir $SIGIL_CONFIG 
 sudo cp ./icon.png $SIGIL_ICON
 sudo cp ./romero-sigil.desktop $SIGIL_DESKTOP
