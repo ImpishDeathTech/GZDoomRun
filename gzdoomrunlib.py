@@ -1,5 +1,3 @@
-#! /usr/bin/python3
-
 import os, sys, subprocess, importlib.util
 
 from types import ModuleType
