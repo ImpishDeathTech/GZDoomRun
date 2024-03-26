@@ -2,8 +2,9 @@
 
 GZDOOMR_CONFIG="${HOME}/.config/gzdoom"
 GZDOOMR_BIN=/usr/bin/gzdoomrun
-GZDOOMR_GUI_1312_BIN=/usr/bin/gzdoomrungui-1-3-12
-GZDOOMR_GUI_BIN=/usr/bin/gzdoomrungui
+GZDOOMR_GUI_1312_BIN=/usr/bin/gzdoomrun-1-3-12
+GZDOOMR_BIN=/usr/bin/gzdoomrun
+GZDOOMR_LIB=/usr/bin/gzdoomrunlib.py
 GZDOOMR_CUSTOM_DIR="${GZDOOMR_CONFIG}/custom"
 GZDOOMR_CUSTOM="${GZDOOMR_CUSTOM_DIR}.py"
 GZDOOMR_DESKTOP=/usr/share/applications/gzdoomrun.desktop
@@ -14,14 +15,9 @@ GZDOOMR_STEAM_ARTWORK="${GZDOOMR_CONFIG}/artwork.png"
 function install-gzdoom () {
     printf "Installing GZDoom Run ... \n\n"
     
-    sudo cp ./gzdoomrun-main.py $GZDOOMR_BIN
-    sudo cp ./gzdoomrun.py $GZDOOMR_BIN.py
-    
-    raco pkg install gui-easy
-    raco exe ./gzdoomrungui.rkt
-    sudo cp ./gzdoomrungui $GZDOOMR_GUI_1312_BIN
-    rm ./gzdoomrungui
-    sudo cp ./gzdoomrungui.py $GZDOOMR_GUI_BIN
+    sudo cp ./gzdoomrunlib.py $GZDOOMR_LIB
+    sudo cp ./gzdoomrun.py $GZDOOMR_BIN
+    sudo chmod +x $GZDOOMR_BIN
     
     cp ./artwork.png $GZDOOMR_STEAM_ARTWORK
     cp ./logo.png $GZDOOMR_STEAM_LOGO
