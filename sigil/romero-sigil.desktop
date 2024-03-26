@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=gzdoomrun SIGIL_v1_21
+Exec=gzdoomrun with SIGIL_v1_21
 Icon=romero-sigil
 Name=SIGIL
 Categories=Game;ActionGame;
