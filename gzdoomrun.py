@@ -9,7 +9,7 @@ from pathlib import Path
 WAD_DIRECTORY     : str  = f"{Path.home()}/.config/gzdoom/"
 VERSION_MAJOR     : int  = 1
 VERSION_MINOR     : int  = 3
-VERSION_PATCH     : int  = 1
+VERSION_PATCH     : int  = 2
 
 CUSTOM_FILE       : dict = {
     "name": "custom",
@@ -62,9 +62,11 @@ class GZDoomRunError(Exception):
         self.__what__ : str = f"[GZDoom Run Error] ({code}): {reason}"
         self.__code__ : int = code
     
-    def what(self):
+    def what(self, exit_app: bool=True):
         print(self.__what__)
-        sys.exit(self.__code__)
+        
+        if exit_app:
+            sys.exit(self.__code__)
 
 
 
@@ -114,9 +116,11 @@ class CommandOptions:
             "with"   : self.process_arguments
         }
 
-        for key in custom_options.keys():
-            self.command_options[key] = custom_options[key]
-
+        try:
+            for key in custom_options.keys():
+                self.command_options[key] = custom_options[key]
+        except:
+            return
 
     def print_help(self, argc: int, argv: list):
         print(HELP_STRING)
@@ -154,26 +158,4 @@ class CommandOptions:
 
 
 
-#######################################
-#  MM    MM    AAA    IIIIII NN   NN  # 
-#  MMM  MMM   AAAAA     II   NNNN NN  #
-#  MMMMMMMM  AAA AAA    II   NN NNNN  #   
-#  MM MM MM AAA   AAA IIIIII NN  NNN  #
-#######################################
-# Processes the arguments (if any),   #
-# and either preforms the specified   #
-# operation, runs a specified         #
-# WAD/PK3 by filname (no suffix), or  #
-# runs gzdoom as is with whatever     #
-# IWADs are available.                #
-#######################################
 
-if __name__ == "__main__":
-    options : CommandOptions = CommandOptions(custom.load_directory())
-
-    try:
-        sys.argv.pop(0)
-        options.process_arguments(len(sys.argv), sys.argv)
-    
-    except GZDoomRunError as e:
-        e.what()

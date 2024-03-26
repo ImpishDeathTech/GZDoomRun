@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=gzdoom-run-gui
+Exec=gzdoomrungui
 Icon=gzdoom
 Name=GZDoom Run
 Categories=Game;ActionGame;

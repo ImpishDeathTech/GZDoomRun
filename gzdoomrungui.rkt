@@ -3,7 +3,7 @@
          racket/gui/easy
          racket/gui/easy/operator)
 
-(define gzdoom-run "/usr/bin/gzdoom-run")
+(define gzdoom-run "/usr/bin/gzdoomrun")
 (define gzdoom-icon "/usr/share/icons/gzdoom.png")
 (define version-major 1)
 (define version-minor 3)
@@ -63,6 +63,7 @@
                    version-minor
                    version-patch)
    #:size '(500 500)
+   #:
    (image gzdoom-icon)
    (vpanel
     #:style '(border)

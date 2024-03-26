@@ -24,4 +24,5 @@ commit
 commit-all
 add-file
 print-version
+makepkz
 gzdoom-run-gui.rkt~

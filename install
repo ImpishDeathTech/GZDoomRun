@@ -1,11 +1,12 @@
 #! /usr/bin/bash
 
 GZDOOMR_CONFIG="${HOME}/.config/gzdoom"
-GZDOOMR_BIN=/usr/bin/gzdoom-run
-GZDOOMR_GUI_BIN=/usr/bin/gzdoom-run-gui
+GZDOOMR_BIN=/usr/bin/gzdoomrun
+GZDOOMR_GUI_1312_BIN=/usr/bin/gzdoomrungui-1-3-12
+GZDOOMR_GUI_BIN=/usr/bin/gzdoomrungui
 GZDOOMR_CUSTOM_DIR="${GZDOOMR_CONFIG}/custom"
 GZDOOMR_CUSTOM="${GZDOOMR_CUSTOM_DIR}.py"
-GZDOOMR_DESKTOP=/usr/share/applications/gzdoom-run.desktop
+GZDOOMR_DESKTOP=/usr/share/applications/gzdoomrun.desktop
 GZDOOMR_STEAM_BANNER="${GZDOOMR_CONFIG}/banner.jpg"
 GZDOOMR_STEAM_LOGO="${GZDOOMR_CONFIG}/logo.png"
 GZDOOMR_STEAM_ARTWORK="${GZDOOMR_CONFIG}/artwork.png"
@@ -13,71 +14,85 @@ GZDOOMR_STEAM_ARTWORK="${GZDOOMR_CONFIG}/artwork.png"
 function install-gzdoom () {
     printf "Installing GZDoom Run ... \n\n"
 
+    sudo touch $GZDOOMR_BIN
+    sudo cp ./gzdoomrun-main.py $GZDOOMR_BIN
+    sudo cp ./gzdoomrun.py $GZDOOMR_BIN.py
+    
     raco pkg install gui-easy
-    raco exe ./gzdoom-run-gui.rkt
-    sudo cp ./gzdoom-run.py $GZDOOMR_BIN
-    sudo cp ./gzdoom-run-gui $GZDOOMR_GUI_BIN
+    raco exe ./gzdoomrungui.rkt
+    sudo cp ./gzdoomrungui $GZDOOMR_GUI_1312_BIN
+    rm ./gzdoomrungui
+    sudo cp ./gzdoomrungui.py $GZDOOMR_GUI_BIN
+    
     cp ./artwork.png $GZDOOMR_STEAM_ARTWORK
     cp ./logo.png $GZDOOMR_STEAM_LOGO
     cp ./banner.jpg $GZDOOMR_STEAM_BANNER
     cp ./custom.py $GZDOOMR_CUSTOM
     cp -r ./custom $GZDOOMR_CUSTOM_DIR
+    
     sudo cp ./gzdoom-run.desktop $GZDOOMR_DESKTOP
-    rm ./gzdoom-run-gui
+
     RET=$?
     printf "\nDone.\n"
     return $RET
 }
 
-function install-brutal-doom () {
-    cd brutal
-    ./install
-        
-    RET=$?
+function install-module () {
+    PKG_NAME=$1
+    unzip "./${PKG_NAME}.pkz"
+    
+    if [ $? -eq 0 ]
+    then 
+        cd $PKG_NAME
+        ./install
 
-    cd ..
+        if [ $? -eq 0 ]
+        then
+            printf "\nDone.\n"
+        else
+            printf "\nCould not install %s!\n" $PKG_NAME
+            return 1
+        fi
 
-    if [ $RET -eq 0 ]
-    then
-        printf "\nDone.\n"
+        cd ..
     else
-        printf "\nCould not install Brutal Doom!\n"
-        return $RET
-    fi
+        cd $PKG_NAME
 
-    return $RET
+        if [ $? -eq 1 ]
+        then
+            printf "\nCould not install %s!\n" $PKG_NAME
+            return 1
+        else
+            ./install
+
+            if [ $? -eq 0 ]
+            then 
+                printf "\nDone.\n"
+            else
+                printf "\nCould not install %s!\n" $PKG_NAME
+                return 1
+            fi
+
+            cd ..
+        fi
+    fi
+    
+    return 0
 }
 
-function install-sigil () {
-    cd sigil
-    ./install
-
-    RET=$?
-
-    cd .. 
-
-    if [ $RET -eq 0 ]
-    then
-        printf "\nDone.\n"
-    else
-        printf "\nCould not install SIGIL!\n"
-        return $RET
-    fi
-
-    return $RET
-}
-
+alias install-brutal="install-module brutal"
+alias install-sigil="install-module sigil"
 
 if [ $# -eq 1 ]
 then
     ARG=$1
     
-    if [ $ARG = brutal ]
-    then
-        install-brutal-doom
-    elif [ $ARG = gzdoom ]
+    if [ $ARG = gzdoom ]
     then
         install-gzdoom
+    elif [ $ARG = brutal ]
+    then
+        install-brutal-doom
     elif [ $ARG = sigil ]
     then 
         install-sigil
@@ -87,8 +102,11 @@ then
         install-brutal-doom 
         install-sigil
     else
-        printf "\nInvalid argument '%s'\n" $ARG 
-        exit 1
+        install-module $ARG
+        if [ $? -eq 1 ]
+            printf "\nInvalid argument '%s'\n" $ARG 
+            exit 1
+        fi
     fi
 else 
     install-gzdoom
