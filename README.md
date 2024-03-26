@@ -12,11 +12,8 @@
 ## Tutorial
 
 ### Installation 
-> First, make sure you have GZDoom installed natively, no snap or flatpak crap. Then, download the git repo:
-```sh
-git clone https://github.com/ImpishDeathTech/GZDoomRun.git
-```
- > or download the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-3/GZDoomRun_SIGIL_v1.3.1-3.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-3/GZDoomRun_SIGIL_v1.3.1-3.tar.gz) version and unload it:
+> First, make sure you have GZDoom installed natively, no snap or flatpak crap.
+ > Then, download most recent the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-3/GZDoomRun_SIGIL_v1.3.1-3.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-1-3/GZDoomRun_SIGIL_v1.3.1-3.tar.gz) version and unload it:
 ```sh
 unzip GZDoomRun_SIGIL_vX.X.X-X.zip
 # or
