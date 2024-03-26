@@ -1,5 +1,3 @@
-#! /usr/bin/python3
-
 import os, sys, subprocess, importlib.util
 
 from types import ModuleType
@@ -79,7 +77,7 @@ def find_wad(wad_name: str) -> str:
     return "nil"
 
 
-def launch_gzdoom_with(wad_list: list):
+def launch_gzdoom_with(wad_list: list) -> int:
     wad_list.insert(0, "gzdoom")
     result : CompletedProcess = subprocess.run(wad_list)
     
@@ -93,8 +91,8 @@ def launch_gzdoom_with(wad_list: list):
     return result.returncode
 
 
-def launch_gzdoom():
-    launch_gzdoom_with([])
+def launch_gzdoom() -> int:
+    return launch_gzdoom_with([])
 
 
 #########################################
