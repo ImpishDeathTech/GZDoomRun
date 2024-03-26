@@ -43,7 +43,7 @@ class Application:
         self.window       : gui.Window = gui.Window(title=self.title, layout=self.layout)
         self.is_first_run : bool       = True
     
-    def find(self, event: any):
+    def find(self, event: any) -> bool:
         for key in self.events.keys():
             if key == str(event):
                 return True
