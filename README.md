@@ -3,7 +3,7 @@
 
 > This program was originally meant to used with Steam to help me load doom mods easier, 
 > but has a few command line options that make it a fine standalone program.
-> Type `gzdoom-run help` once installed to see these options.
+> Type `gzdoomrun help` once installed to see these options.
 > Requires python3 and PySimpleGUI to be installed on your sistem, racket for v1.3.1
 
 ## GZDoom Run GUI
@@ -31,12 +31,12 @@ cd GZDoomRun
 ```sh
 ./install brutal
 ./install sigil
-gzdoom-run with brutalv21
+gzdoomrun with brutalv21
 
 # Loading multiple wads is done by seperating each wad name by a '%'
-gzdoom-run with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
+gzdoomrun with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
 ```
-gzdoom-run will launch gzdoom on it's own if no arguments are provided
+gzdoomrun will launch gzdoom on it's own if no arguments are provided
 
 And that's it! Now, Setting it up with steam is pretty easy.
 Go to your Library, and click Add Game at the bottom. A list of your applications should pop up and we can add GZDoom from there.
