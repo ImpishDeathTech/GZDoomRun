@@ -160,9 +160,9 @@ def run_cli(argc: int, argv: list):
     options : gzdr.CommandOptions = gzdr.CommandOptions(gzdr.custom.load_directory())
     
     try:
-            sys.argv.pop(0)
-            options.process_arguments(argc - 1, sys.argv)
-            sys.exit(0)
+        sys.argv.pop(0)
+        options.process_arguments(argc - 1, sys.argv)
+        sys.exit(0)
     
     except gzdr.GZDoomRunError as e:
         e.what()
