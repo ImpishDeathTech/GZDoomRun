@@ -1,92 +1,84 @@
 #! /usr/bin/bash
 
-GZDOOMR_BIN=/usr/bin/gzdoom-run
-GZDOOMR_GUI_BIN=/usr/bin/gzdoom-run-gui
-GZDOOMR_CUSTOM=$HOME/.config/gzdoom/custom.py
-GZDOOMR_CUSTOM_DIR=$HOME/.config/gzdoom/custom
-GZDOOMR_DESKTOP=/usr/share/applications/gzdoom-run.desktop
+GZDOOMR_CONFIG="${HOME}/.config/gzdoom"
+GZDOOMR_BIN=/usr/bin/gzdoomrun
+GZDOOMR_GUI_1312_BIN=/usr/bin/gzdoomrun-1-3-12
+GZDOOMR_BIN=/usr/bin/gzdoomrun
+GZDOOMR_LIB=/usr/bin/gzdoomrunlib.py
+GZDOOMR_CUSTOM_DIR="${GZDOOMR_CONFIG}/custom"
+GZDOOMR_CUSTOM="${GZDOOMR_CUSTOM_DIR}.py"
+GZDOOMR_DESKTOP=/usr/share/applications/gzdoomrun.desktop
+GZDOOMR_STEAM_BANNER="${GZDOOMR_CONFIG}/banner.jpg"
+GZDOOMR_STEAM_LOGO="${GZDOOMR_CONFIG}/logo.png"
+GZDOOMR_STEAM_ARTWORK="${GZDOOMR_CONFIG}/artwork.png"
 
 function uninstall-gzdoom () {
-    printf "Unistalling GZDoom Run ... \n\n"
+    printf "uninstalling GZDoom Run ... \n\n"
     
+    sudo rm $GZDOOMR_LIB
     sudo rm $GZDOOMR_BIN
-    sudo rm $GZDOOMR_GUI_BIN
+    
+    rm $GZDOOMR_STEAM_ARTWORK
+    rm $GZDOOMR_STEAM_LOGO
+    rm $GZDOOMR_STEAM_BANNER
     rm $GZDOOMR_CUSTOM
-    sudo rm -r $GZDOOMR_CUSTOM_DIR
+    rm -r $GZDOOMR_CUSTOM_DIR
+    
     sudo rm $GZDOOMR_DESKTOP
+
     RET=$?
-    printf "\nDone."
-    return $?
-}
-
-function uninstall-brutal-doom () {
-    printf "Installing Brutal Doom ... \n\n"
-
-    cd brutal
-    ./uninstall
-        
-    RET=$?
-
-    cd ..
-
-    if [ $RET -eq 0 ]
-    then
-        printf "\nDone.\n"
-    else
-        printf "\nCould not remove!\n"
-        return $RET
-    fi
-
+    printf "\nDone.\n"
     return $RET
 }
 
-function uninstall-brutal-doom () {
-    printf "Installing SIGIL ... \n\n"
-
-    cd sigil
-    ./uninstall
-        
-    RET=$?
-
-    cd ..
-
-    if [ $RET -eq 0 ]
+function check-done () {
+    if [ $1 -eq 0 ]
     then
         printf "\nDone.\n"
     else
-        printf "\nCould not remove SIGIL!\n"
-        return $RET
-    fi
-
-    return $RET
-}
-
-
-if [ $# -eq 2 ]
-then
-    ARG=$1
-
-    if [ $ARG = brutal ]
-    then
-        uninstall-brutal-doom 
-    elif [ $ARG = gzdoom ]
-    then
-        uninstall-gzdoom
-    elif [ $ARG = sigil ]
-    then 
-        uninstall-sigil
-    elif [ $ARG = all ]
-    then
-        uninstall-gzdoom
-        uninstall-brutal-doom
-        uninstall-sigil
-    else
-        printf "Invalid argument '%s'\n" $ARG 
+        printf "\nCould not uninstall %s!\n" $2
         exit 1
     fi
+}
+
+function uninstall-module () {
+    PKG_NAME=$1
+    cd $PKG_NAME
+    check-done $? $PKG_NAME
+    ./uninstall
+    RET=$?
+    cd ..
+
+    return $RET
+}
+
+if [ $# -eq 1 ]
+then
+    if [ $1 = gzdoom ]
+    then
+        uninstall-gzdoom
+    elif [ $1 = brutal ]
+    then
+        uninstall-module brutal
+    elif [ $1 = sigil ]
+    then 
+        uninstall-module sigil
+    elif [ $1 = all ]
+    then 
+        uninstall-gzdoom
+        uninstall-module brutal
+        uninstall-module sigil
+    else
+        uninstall-module $1
+
+        if [ $? -eq 1 ]
+        then
+            printf "\nInvalid argument '%s'\n" $ARG 
+            exit 1
+        fi
+    fi
 else 
-    uninstall-gzdoom 
+    uninstall-gzdoom
 fi
 
 exit $?
-
