@@ -1,6 +1,5 @@
 ## To Do List for v1.3.2:
 - Update filepaths correctly
-- Make Package Uninstallable
 - Change Color Scheme
 - Replace window Icon
 
