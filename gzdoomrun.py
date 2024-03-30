@@ -114,12 +114,12 @@ def make_application(file_names: list) -> Application:
             gui.In(DEFAULT_PATH, size=(25, 1), enable_events=True, key=DIRECTORY),
             gui.FolderBrowse()
         ],
-        [gui.Listbox(file_names, enable_events=True, size=(49, 20), key=FILES)]
+        [gui.Listbox(file_names, enable_events=True, size=(45, 20), key=FILES)]
     ],
     [
         [
             gui.Text("Launch With"),
-            gui.In(size=(25, 1), enable_events=True, key=RUN_ARGS)
+            gui.In(size=(34, 1), enable_events=True, key=RUN_ARGS)
         ],
         [
             gui.Button("Run", enable_events=True, key=EXECUTE),
