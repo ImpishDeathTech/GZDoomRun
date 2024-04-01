@@ -28,6 +28,7 @@ ARTWORK     : str = "@ game artwork"
 EXECUTE     : str = "@ run gzdoom"
 CLEAR_ARGS  : str = "@ clear arguments"
 EXIT_APP    : str = "@ exit application"
+WARP_MAP    : str = "@ warp to map"
 
 
 # Paths
@@ -55,6 +56,7 @@ class Application:
         self.options    : gzdr.CommandOptions = gzdr.CommandOptions([])
         self.run_args   : str                 = ""
         self.iwad       : str                 = ""
+        self.warp_map   : str                 = ""
 
         self.events : dict = {
             DIRECTORY : self.list_directory,
@@ -63,8 +65,10 @@ class Application:
             IWAD_NAME : self.set_iwad,
             RUN_ARGS  : self.update_arglist,
             EXECUTE   : self.run_gzdoom,
+            WARP_MAP  : self.set_warp_map,
             CLEAR_ARGS: self.clear_arguments,
             EXIT_APP  : self.exit_application
+           
         }
 
         self.layout : list = [
@@ -132,10 +136,18 @@ class Application:
                     self.options.process_arguments(2, ["with", self.run_args])
             
             elif (self.iwad != "doom1") and self.run_args:
-                self.options.process_arguments(4, ["iwad", self.iwad, "with", self.run_args])
+                if self.warp_map:
+                    self.options.process_arguments(6, ["iwad", self.iwad, "warp", self.warp_map, "with", self.run_args])
+                
+                else:
+                    self.options.process_arguments(4, ["iwad", self.iwad, "with", self.run_args])
                 
             else:
-                self.options.process_arguments(2, ["iwad", self.iwad])
+                if self.warp_map:
+                    self.options.rocess_arguments(4, ["iwad", self.iwad, "warp", self.warp_map])
+                
+                else:
+                    self.options.process_arguments(2, ["iwad", self.iwad])
                 
         
         except gzdr.GZDoomRunError as e:
@@ -144,6 +156,7 @@ class Application:
 
     def clear_arguments(self, event: any, values: any):
         self.window[RUN_ARGS].update("")
+        self.window[WARP_MAP].update("")
         self.run_args = ""
 
 
@@ -177,6 +190,10 @@ class Application:
         
         else:
             self.window[IWAD_NAME].update(self.iwad)
+    
+    def set_warp_map(self, event: any, values: any):
+        self.warp_map = values[WARP_MAP].upper()
+        self.window[WARP_MAP].update(self.warp_map)
     
 
     def run(self):
@@ -217,7 +234,11 @@ def make_application(mod_list: list, iwad_list: list) -> Application:
     launch_pad : list = [
         [
             gui.Text("Launch With"),
-            gui.In(size=(34, 1), enable_events=True, key=RUN_ARGS)
+            gui.In(size=(25, 1), enable_events=True, key=RUN_ARGS)
+        ],
+        [
+            gui.Text("Warp Map   "),
+            gui.In(size=(25, 1), enable_events=True, key=WARP_MAP),
         ],
         [
             gui.Button("Run", enable_events=True, key=EXECUTE),
