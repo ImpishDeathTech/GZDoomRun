@@ -1,6 +1,5 @@
-import os, sys, subprocess, importlib.util
+import os, sys, subprocess, importlib.util, json
 
-import gzdoomrunlib.custom as custom
 from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path 
@@ -8,13 +7,7 @@ from pathlib import Path
 WAD_DIRECTORY     : str  = f"{Path.home()}/.config/gzdoom/"
 VERSION_MAJOR     : int  = 1
 VERSION_MINOR     : int  = 3
-VERSION_PATCH     : int  = 2
-
-CUSTOM_FILE       : dict = {
-    "name": "custom",
-    "path": f"{WAD_DIRECTORY}/custom.py"
-}
-
+VERSION_PATCH     : int  = 3
 HELP_STRING       : str = F"""
     GZDoom Run v{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH} Help
         
@@ -39,6 +32,17 @@ HELP_STRING       : str = F"""
         remove [keywords]
             if they exist, uninstalls the related WAD and PK3 files
 """
+
+def load_custom() -> ModuleType:
+    spec   : ModuleSpec = importlib.util.spec_from_file_location("custom", os.path.join(WAD_DIRECTORY, "gzdoomrunlib", "custom.py"))
+    custom : ModuleType = importlib.util.module_from_spec(spec)
+
+    sys.modules["custom"] = custom
+    spec.loader.exec_module(custom)
+
+    return custom
+
+custom : ModuleType = load_custom()
 
 
 class GZDoomRunError(Exception):

@@ -2,12 +2,21 @@
 
 import importlib.util, sys, os
 import PySimpleGUI as gui 
-import gzdoomrunlib.utils as gzdr
 
 from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path
 
+def load_gzdr() -> ModuleType:
+    spec : ModuleSpec = importlib.util.spec_from_file_location("utils", os.path.join(Path.home(), ".config", "gzdoom", "gzdoomrunlib", "utils.py"))
+    gzdr : ModuleType = importlib.util.module_from_spec(spec)
+
+    sys.modules["utils"] = gzdr
+    spec.loader.exec_module(gzdr)
+
+    return gzdr
+
+gzdr : ModuleType = load_gzdr()
 
 
 DIRECTORY   : str = "@ directory path"
@@ -185,7 +194,8 @@ class Application:
 
 def make_application(mod_list: list, iwad_list: list) -> Application:
     title      : str  = f"GZDoom Run v{gzdr.VERSION_MAJOR}.{gzdr.VERSION_MINOR}.{gzdr.VERSION_PATCH}"
-    
+    iwad_listln: int  = len(iwad_list)
+
     iwad_block : list = [
         [
             gui.Text("Run IWAD"),
@@ -215,9 +225,12 @@ def make_application(mod_list: list, iwad_list: list) -> Application:
         ]
     ]
 
-    if len(iwad_list) > 0:
-        iwad_block.append([gui.Listbox(iwad_list, enable_events=True, size=(45, len(iwad_list)), key=IWAD_LIST)])
+    if iwad_listln > 0:
+        if iwad_listln <= 8:
+            iwad_block.append([gui.Listbox(iwad_list, enable_events=True, size=(45, iwad_listln), key=IWAD_LIST)])
 
+        else:
+            iwad_block.append([gui.Listbox(iwad_list, enable_events=True, size=(45, 8), key=IWAD_LIST)])
     
     return Application(title, iwad_block, pwad_block, launch_pad)
 

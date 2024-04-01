@@ -28,15 +28,37 @@ def save_manifest(name: str, manifest: list):
 
 def install_packet_archive(file_name: str):
     manifest : list = []
-    outpath  : str  = os.path.join(WAD_DIRECTORY, file_name)
+    outpath  : str  = os.path.join(WAD_DIRECTORY, file_name[:-4])
 
     print(GZDOOM_INSTALL + f" {file_name} to {outpath} ...")
+
+    if not os.path.isdir(outpath[:-4]):
+        manifest.append(outpath[:-4])
+        os.mkdirs(outpath[:-4])
     
     with ZipFile(file_name, mode='r', allowZip64=True) as zip_file:
+        steam_pic_filenames : list = [
+            "artwork.png",
+            "artwork.jpg",
+            "banner.png",
+            "banner.jpg",
+            "logo.png",
+            "icon.png"
+        ]
         for name in zip_file.namelist():
             if name.endswith(WAD_SUFFIXES):
                 manifest.append(name)
-                zip_file.extract(name, path=outpath)
+                zip_file.extract(name, path=WAD_DIRECTORY)
+            
+            elif name.endswith(".desktop"):
+                install_desktop_file(zip_file, name)
+            
+            elif name.endswith(".txt") or name.endswith(".otf") or name.endswith(".rtf"):
+                zip_file.extract(name, path=outpath[:-4]) 
+            
+            elif name.endswith(".png") or name.endswith(".jpg"):
+                if name in steam_pic_filenames:
+                    zip_file.extract(name, path=outpath[:-4])
     
     save_manifest(file_name[:-4], manifest)
 

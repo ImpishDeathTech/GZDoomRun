@@ -4,7 +4,7 @@ from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path 
 
-WAD_DIRECTORY  : str   = os.path.join(Path.home, ".config", "gzdoom")
+WAD_DIRECTORY  : str   = os.path.join(Path.home(), ".config", "gzdoom")
 CUSTOM_DIR     : str   = os.path.join(WAD_DIRECTORY, "custom")
 MODCACHE       : str   = os.path.join(WAD_DIRECTORY, "modcache.json")
 WAD_SUFFIXES   : tuple = (".wad", ".pk3")
@@ -33,7 +33,7 @@ def load_module(modname: str, modpath: str):
 # dictionary at the bottom of the file            #
 # Alternatively, you can define it in their own   #
 # file in the CUSTOM_DIR if you need more room    #
-# to breathe.                                     #
+# to breathe. Only define small commands here.    #
 ###################################################
 
 def list_wads(argc: int, argv: list):
@@ -45,9 +45,6 @@ def list_wads(argc: int, argv: list):
             print(file_name[:-4])
     
     sys.exit(0)
-
-
-
 
 # gzdoom-run remove [keywords]
 def remove_wads(argc: int, argv: list):
@@ -72,8 +69,8 @@ def remove_wads(argc: int, argv: list):
 ####################################################################
 
 OPTIONS : dict = {
-    "list"   : list_wads,
-    "remove" : remove_wads,
+    "list"      : list_wads,
+    "uninstall" : remove_wads,
 }
 
 ####################################################################
