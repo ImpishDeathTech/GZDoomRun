@@ -82,7 +82,7 @@ def load_directory() -> dict:
     for file_name in os.listdir(CUSTOM_DIR):
         if file_name.endswith(".py"):
             modname : str        = file_name[:-3]
-            modpath : str        = CUSTOM_DIR + file_name
+            modpath : str        = os.path.join(CUSTOM_DIR, file_name)
             module  : ModuleType = load_module(modname, modpath)
 
         OPTIONS[modname] : callable = module.main

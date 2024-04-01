@@ -58,7 +58,7 @@ class Application:
 
         self.events : dict = {
             DIRECTORY : self.list_directory,
-            MOD_LIST  : self.update_image_and_args,
+            MOD_LIST  : self.update_run_args,
             IWAD_LIST : self.update_iwad,
             IWAD_NAME : self.set_iwad,
             RUN_ARGS  : self.update_arglist,
@@ -101,12 +101,13 @@ class Application:
                     file_names.append(file_name[:-4])
 
 
-    def update_image_and_args(self, event: any, values: any):
+    def update_run_args(self, event: any, values: any):
         try:
             file_name = os.path.join(values[DIRECTORY], values[MOD_LIST][0])
             run_args = values[RUN_ARGS].split(" ")
             run_args.append(values[MOD_LIST][0])
             self.run_args = "%".join(run_args)
+            print(self.run_args)
             self.window[RUN_ARGS].update(" ".join(run_args))
 
         except:
@@ -114,7 +115,7 @@ class Application:
 
     
     def update_arglist(self, event: any, values: any):
-        if self.run_args != "":
+        if self.run_args:
             self.run_args += "%"
             self.run_args += "%".join(values[RUN_ARGS].split(" "))
         
@@ -280,8 +281,8 @@ def run_from_cli(argc: int, argv: list) -> int:
     options : gzdr.CommandOptions = gzdr.CommandOptions(gzdr.custom.load_directory())
     
     try:
-        sys.argv.pop(0)
-        options.process_arguments(argc - 1, sys.argv)
+        argv.pop(0)
+        options.process_arguments(argc - 1, argv)
     
     except gzdr.GZDoomRunError as e:
         e.what()

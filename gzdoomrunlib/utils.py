@@ -69,6 +69,7 @@ def find_file(mod_name: str) -> str:
 
 def launch_gzdoom_with(wad_list: list) -> int:
     wad_list.insert(0, "gzdoom")
+    print(wad_list)
     result : CompletedProcess = subprocess.run(wad_list)
     
     if result.returncode == 0:
@@ -83,6 +84,26 @@ def launch_gzdoom_with(wad_list: list) -> int:
 
 def launch_gzdoom() -> int:
     return launch_gzdoom_with([])
+
+
+def load_filepaths(iwad_path: list, file_names: list) -> list:
+    file_names = file_names
+    file_paths : list = ["-file"]
+
+    print(file_names)
+
+    for file_name in file_names:
+        file_path : str = find_file(file_name)
+
+        if file_path != "nil":
+            file_paths.append(file_path)
+
+        else:
+            raise GZDoomRunError(2, f"No '{file_path}.wad' or '{file_path}.pk3' found in {WAD_DIRECTORY}")
+    
+    print(iwad_path + file_paths)
+    return iwad_path + file_paths              
+                
 
 
 #########################################
@@ -116,34 +137,31 @@ class CommandOptions:
 
     def process_arguments(self, argc: int, argv: list):
         if argc > 0:
-            if argc <= 2:
-                file_paths : list = []
+            if argc > 1:
+                iwad_path  : list = []
+                pos        : int  = 0
                 
                 if argv[0] == "iwad":
-                    file_paths.append("-iwad")
-                    file_paths.append(argv[1])
-                    argv.pop(0)
-                    argv.pop(0)
+                    iwad_path += ["-iwad", argv[1]]
+                    print(iwad_path)
+                    pos += 2
                     
-                    if len(argv) == 0:
-                        return launch_gzdoom_with(file_paths)
-
-
-                if argv[0] == "with":
-                    file_paths.append("-file")
-                    file_names : list = argv[1].split("%")
-
-                    for file_name in file_names:
-                        file_path : str = find_file(file_name)
-
-                        if file_path != "nil":
-                            file_paths.append(file_path)
-
-                        else:
-                            raise GZDoomRunError(2, f"No '{file_path}.wad' or '{file_path}.pk3' found in {WAD_DIRECTORY}")
-                    
-                    return launch_gzdoom_with(file_paths)
+                    if argc == 2:
+                        return launch_gzdoom_with(iwad_path)
                 
+                if argv[pos] == "warp":
+                    iwad_path += ["-warp", argv[pos + 1]]
+                    print(iwad_path)
+                    pos += 2
+
+                if argv[pos] == "with":
+                    args = argv[pos + 1].split("%")
+                    print(args)
+                    args = load_filepaths(iwad_path, args)
+                    print(args)
+                    return launch_gzdoom_with(args)
+
+                    
                 else:
                     for option in self.command_options.keys():
                         if argv[0] == option:
@@ -152,7 +170,7 @@ class CommandOptions:
                             self.command_options[key](argc - 1, argv)
 
         else:
-            return launch_gzdoom()
+            return launch_gzdoom_with(["-iwad", argv[0]])
 
 
 
