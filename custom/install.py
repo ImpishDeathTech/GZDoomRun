@@ -86,7 +86,7 @@ def install_packet_file(file_name: str):
 # gzdoom-run install [file names]
 def main(argc: int, argv: list):
     for file_name in argv:
-        if file_name.endswith(".pkz"):
+        if file_name.endswith(".pkz") or file_name.endswith(".zip"):
             install_packet_archive(file_name)
 
         elif file_name.endswith(WAD_SUFFIXES):
