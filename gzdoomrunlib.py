@@ -68,11 +68,11 @@ class GZDoomRunError(Exception):
 
 
 
-def find_wad(wad_name: str) -> str:
+def find_file(mod_name: str) -> str:
     for file_name in os.listdir(WAD_DIRECTORY):
-        if file_name.startswith(wad_name):
+        if file_name.startswith(mod_name):
             print(file_name)
-            return f"{WAD_DIRECTORY}{file_name}"
+            return file_name
 
     return "nil"
 
@@ -110,8 +110,7 @@ class CommandOptions:
     
     def __init__(self, custom_options: dict):
         self.command_options : dict = {
-            "help"   : self.print_help,
-            "with"   : self.process_arguments
+            "help"   : self.print_help
         }
 
         try:
@@ -128,13 +127,24 @@ class CommandOptions:
     def process_arguments(self, argc: int, argv: list):
         if argc > 0:
             if argc <= 2:
+                file_paths : list = []
+                
+                if argv[0] == "iwad":
+                    file_paths.append("-iwad")
+                    file_paths.append(argv[1])
+                    argv.pop(0)
+                    argv.pop(0)
+                    
+                    if len(argv) == 0:
+                        return launch_gzdoom_with(file_paths)
+
+
                 if argv[0] == "with":
-                    print(argv[0])
+                    file_paths.append("-file")
                     file_names : list = argv[1].split("%")
-                    file_paths : list = []
 
                     for file_name in file_names:
-                        file_path : str = find_wad(file_name)
+                        file_path : str = find_file(file_name)
 
                         if file_path != "nil":
                             file_paths.append(file_path)
