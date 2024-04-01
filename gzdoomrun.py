@@ -208,7 +208,7 @@ class Application:
 
         self.window.close()
 
-        
+gui.Fr      
 
 def make_application(mod_list: list, iwad_list: list) -> Application:
     title      : str  = f"GZDoom Run v{gzdr.VERSION_MAJOR}.{gzdr.VERSION_MINOR}.{gzdr.VERSION_PATCH}"
@@ -216,7 +216,7 @@ def make_application(mod_list: list, iwad_list: list) -> Application:
 
     iwad_block : list = [
         [
-            gui.Text("Run IWAD"),
+            gui.Text("Run IWAD", size=(10, 1)),
             gui.In(size=(25, 1), enable_events=True, key=IWAD_NAME),
             gui.FolderBrowse()
         ]
@@ -224,7 +224,7 @@ def make_application(mod_list: list, iwad_list: list) -> Application:
 
     pwad_block : list = [
         [
-            gui.Text("Mod Folder"),
+            gui.Text("Mod Folder", size=(10, 1)),
             gui.In(DEFAULT_PATH, size=(25, 1), enable_events=True, key=DIRECTORY),
             gui.FolderBrowse()
         ],
@@ -232,14 +232,14 @@ def make_application(mod_list: list, iwad_list: list) -> Application:
     ]
 
     launch_pad : list = [
-        [
-            gui.Text("Launch With"),
-            gui.In(size=(25, 1), enable_events=True, key=RUN_ARGS)
-        ],
-        [
-            gui.Text("Warp Map   "),
-            gui.In(size=(25, 1), enable_events=True, key=WARP_MAP),
-        ],
+        [gui.Frame("Launch Options", layout=[[
+                gui.Text("With ", size=(5, 1)),
+                gui.In(size=(34, 1), enable_events=True, key=RUN_ARGS)
+            ],
+            [
+                gui.Text("Warp", size=(5, 1)),
+                gui.In(size=(34, 1), enable_events=True, key=WARP_MAP)
+        ]])],
         [
             gui.Button("Run", enable_events=True, key=EXECUTE),
             gui.Button("Clear", enable_events=True, key=CLEAR_ARGS),
