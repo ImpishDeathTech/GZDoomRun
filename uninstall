@@ -4,7 +4,7 @@ GZDOOMR_CONFIG="${HOME}/.config/gzdoom"
 GZDOOMR_BIN=/usr/bin/gzdoomrun
 GZDOOMR_GUI_1312_BIN=/usr/bin/gzdoomrun-1-3-12
 GZDOOMR_BIN=/usr/bin/gzdoomrun
-GZDOOMR_LIB=/usr/bin/gzdoomrunlib.py
+GZDOOMR_LIB=/usr/bin/gzdoomrunlib
 GZDOOMR_CUSTOM_DIR="${GZDOOMR_CONFIG}/custom"
 GZDOOMR_CUSTOM="${GZDOOMR_CUSTOM_DIR}.py"
 GZDOOMR_DESKTOP=/usr/share/applications/gzdoomrun.desktop
@@ -15,13 +15,12 @@ GZDOOMR_STEAM_ARTWORK="${GZDOOMR_CONFIG}/artwork.png"
 function uninstall-gzdoom () {
     printf "uninstalling GZDoom Run ... \n\n"
     
-    sudo rm $GZDOOMR_LIB
+    sudo rm -r $GZDOOMR_LIB
     sudo rm $GZDOOMR_BIN
     
     rm $GZDOOMR_STEAM_ARTWORK
     rm $GZDOOMR_STEAM_LOGO
     rm $GZDOOMR_STEAM_BANNER
-    rm $GZDOOMR_CUSTOM
     rm -r $GZDOOMR_CUSTOM_DIR
     
     sudo rm $GZDOOMR_DESKTOP

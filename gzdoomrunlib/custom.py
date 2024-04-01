@@ -1,15 +1,15 @@
-import os, sys, importlib.util, subprocess
+import os, sys, importlib.util, subprocess, json
 
 from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path 
 
-WAD_DIRECTORY  : str   = f"{Path.home()}/.config/gzdoom/"
-CUSTOM_DIR     : str   = f"{WAD_DIRECTORY}custom/"
-WAD_SUFFIXES   : tuple = (".wad", ".WAD", ".pk3", ".PK3")
+WAD_DIRECTORY  : str   = os.path.join(Path.home, ".config", "gzdoom")
+CUSTOM_DIR     : str   = os.path.join(WAD_DIRECTORY, "custom")
+MODCACHE       : str   = os.path.join(WAD_DIRECTORY, "modcache.json")
+WAD_SUFFIXES   : tuple = (".wad", ".pk3")
 GZDOOM_INSTALL : str   = "[GZDoom Run Install]: "
 GZDOOM_REMOVE  : str   = "[GZDoom Run Removal]: "
-
 
 def load_module(modname: str, modpath: str):
     spec   : ModuleSpec = importlib.util.spec_from_file_location(modname, modpath)
@@ -46,20 +46,7 @@ def list_wads(argc: int, argv: list):
     
     sys.exit(0)
 
-# gzdoom-run install [file names]
-def install_wads(argc: int, argv: list):
-    for file_name in argv:
-        if file_name.endswith(WAD_SUFFIXES):
-            print(GZDOOM_INSTALL + f"Installing {file_name} ...")
 
-            result : CompletedProcess = subprocess.run(["cp", file_name, WAD_DIRECTORY + file_name])
-
-            if result.returncode != 0:
-                raise GZDoomRunError(result.returncode, result.stderr)
-
-            print(GZDOOM_INSTALL + f"{file_name} installed to {WAD_DIRECTORY}{file_name} successfully")
-	
-    sys.exit(0)
 
 
 # gzdoom-run remove [keywords]
@@ -86,7 +73,6 @@ def remove_wads(argc: int, argv: list):
 
 OPTIONS : dict = {
     "list"   : list_wads,
-    "install": install_wads,
     "remove" : remove_wads,
 }
 

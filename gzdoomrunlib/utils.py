@@ -1,5 +1,6 @@
 import os, sys, subprocess, importlib.util
 
+import gzdoomrunlib.custom as custom
 from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path 
@@ -40,20 +41,6 @@ HELP_STRING       : str = F"""
 """
 
 
-def load_custom():
-    spec   : ModuleSpec = importlib.util.spec_from_file_location(CUSTOM_FILE["name"], CUSTOM_FILE["path"])
-    custom : ModuleType = importlib.util.module_from_spec(spec)
-    
-    sys.modules[CUSTOM_FILE["name"]] = custom
-    spec.loader.exec_module(custom)
-    
-    return custom
-
-
-custom : ModuleType = load_custom()
-
-
-
 class GZDoomRunError(Exception):
 
     def __init__(self, code: int, reason: str):
@@ -71,7 +58,6 @@ class GZDoomRunError(Exception):
 def find_file(mod_name: str) -> str:
     for file_name in os.listdir(WAD_DIRECTORY):
         if file_name.startswith(mod_name):
-            print(file_name)
             return file_name
 
     return "nil"
@@ -150,7 +136,7 @@ class CommandOptions:
                             file_paths.append(file_path)
 
                         else:
-                            raise GZDoomRunError(2, f"No '{file_path}' .WAD or .PK3 found in {WAD_DIRECTORY}")
+                            raise GZDoomRunError(2, f"No '{file_path}.wad' or '{file_path}.pk3' found in {WAD_DIRECTORY}")
                     
                     return launch_gzdoom_with(file_paths)
                 
