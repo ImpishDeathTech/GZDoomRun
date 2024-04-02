@@ -28,10 +28,10 @@ GZDOOM_DIRECTORY : str  = os.path.join(os.path.sep, "usr", "share", "gzdoom")
 del cache
 
 def load_module(modname: str, modpath: str):
-    spec   : ModuleSpec = importlib.util.spec_from_file_location(modname, modpath)
+    spec   : ModuleSpec = importlib.util.spec_from_file_location("custom." + modname, modpath)
     custom : ModuleType = importlib.util.module_from_spec(spec)
 
-    sys.modules[modname] = custom
+    sys.modules["custom." + modname] = custom
     spec.loader.exec_module(custom)
 
     return custom

@@ -5,51 +5,9 @@ from importlib.machinery import ModuleSpec
 from pathlib import Path 
 
 
-VERSION_MAJOR     : int  = 1
-VERSION_MINOR     : int  = 3
-VERSION_PATCH     : int  = 3
 
-HELP_STRING       : str = F"""
-    GZDoom Run v{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH} Help
-        
-        GZDoom Run is a small linux program for loading GZDoom mods
-        a little easier. This program is meant to be used with Steam 
-        but can be used in standalone, and has a few command line options:
-    
-        help             
-            Prints this help message.
-        
-        iwad [IWAD Name/Path]
-            If the (case sensitive) name provided exists as a known IWAD to GZDoom,
-            the engine will boot it with any subsequent arguments. Must come first in
-            a list of command line parameters.
-        
-        warp E[n]M[n] / MAP[n][n]
-            For Doom II, Final Doom, Hexen and Strife, starts the game on map m. 
-            For Chex Quest, Doom and Heretic, starts the game on episode e, map m. 
-            The +map command can also be used to perform this action, but it expects 
-            the actual name of the map (e.g. MAP01, E1M1). must come after 'iwad', 
-            and before 'skill' and 'with'.
-        
-        skill "Difficulty Name"
-            Sets the difficulty name for the warped-to map provided. (eg skill "Ultraviolence")
-            Must be provided afer 'iwad' and 'warp', and before 'with'
 
-        with [PWAD Names]   
-            Searches the mod directory for any WADs or PK3s resembling the
-            provided keyword. This search is case sensitive, and is the default operation
-            when no option keyword is provided. Otherwise, must come after 'iwad', 'warp' 
-            and 'skill' consecutively
-        
-        list
-            Lists all of the currently available keywords.
 
-        install [file names]
-            if they exist, installs the provided WAD, PKZ and PK3 files to GZdoom (testing)
-
-        remove [keywords]
-            if they exist, uninstalls the related WAD and PK3 files (testing)
-"""
 
 def load_custom() -> ModuleType:
     spec   : ModuleSpec = importlib.util.spec_from_file_location("custom", os.path.join(Path.home(), ".config", "gzdoom", "gzdoomrunlib", "custom.py"))
@@ -61,6 +19,14 @@ def load_custom() -> ModuleType:
     return custom
 
 custom : ModuleType = load_custom()
+
+modcache : dict = custom.load_modcache()
+
+VERSION_MAJOR     : int  = modcache["version"][0]
+VERSION_MINOR     : int  = modcache["version"][1]
+VERSION_PATCH     : int  = modcache["version"][2]
+
+del modcache
 
 WAD_DIRECTORY : str = custom.WAD_DIRECTORY
 
@@ -139,9 +105,7 @@ def load_filepaths(iwad_path: list, file_names: list) -> list:
 class CommandOptions:  
     
     def __init__(self, custom_options: dict):
-        self.command_options : dict = {
-            "help"   : self.print_help
-        }
+        self.command_options : dict = {}
 
         try:
             for key in custom_options.keys():
@@ -149,13 +113,17 @@ class CommandOptions:
         except:
             return
 
-    def print_help(self, argc: int, argv: list):
-        print(HELP_STRING)
-        sys.exit(0)
-
 
     def process_arguments(self, argc: int, argv: list):
-        if argc >= 2:
+        if argc == 1:
+            for option in self.command_options.keys():
+                if argv[0] == option:
+                    key : str = argv[0]
+                    argv.pop(0)
+                    self.command_options[key](argc - 1, argv)
+        
+        elif argc >= 2:
+                        
             iwad_path  : list = []
             pos        : int  = 0
             
@@ -221,7 +189,11 @@ class CommandOptions:
                 print(err)
 
         else:
-            return launch_gzdoom_with(["-iwad", argv[0]])
+            for option in self.command_options.keys():
+                if argv[0] == option:
+                    key : str = argv[0]
+                    argv.pop(0)
+                    self.command_options[key](argc - 1, argv)
 
 
 

@@ -23,6 +23,8 @@ IMAGE_NAMES: tuple = (
     "artwork.jpg"
 )
 
+
+
 def main(argc: int, argv: list):
     for path_name in argv:
         if os.path.isdir(path_name):

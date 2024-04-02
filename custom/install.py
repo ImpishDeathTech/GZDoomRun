@@ -7,10 +7,11 @@
 # https://github.com/ImpishDeathTech/GZDoomRun/blob/master/LICENSE
 # '''
 
-import os, json, sys, shutil, subprocess
+import os, json, sys, subprocess, shutil
 
 from pathlib import Path
 from zipfile import ZipFile
+from subprocess import CompletedProcess
 
 
 MODCACHE_PATH    : str   = os.path.join(Path.home(), ".config", "gzdoom", "modcache.json")
@@ -69,7 +70,6 @@ def install_packet_archive(file_name: str):
     print(GZDOOM_INSTALL + f" {file_name} to {outpath} ...")
 
     if not os.path.isdir(outpath):
-        manifest.append(outpath)
         os.makedirs(outpath)
     
     with ZipFile(file_name, mode='r', allowZip64=True) as zip_file:
@@ -103,7 +103,11 @@ def install_packet_archive(file_name: str):
 
 def install_file(path: str, name: str, outpath: str):
     if name.endswith(".desktop"):
-        subprocess.run(["sudo", "cp", os.path.join(path, name), os.path.join(outpath, name)])
+        completed : CompletedProcess = subprocess.run(["sudo", "cp", os.path.join(path, name), os.path.join(outpath, name)])
+        
+        if completed.returncode != 0:
+            print(f"[GZDoom Run Error]{completed.returncode}: {completed.stderr}")
+            sys.exit(completed.returncode)
     else:
         shutil.copy(os.path.join(path, name), os.path.join(outpath, name))
 
