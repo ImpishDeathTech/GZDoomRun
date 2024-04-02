@@ -1,19 +1,19 @@
 .vscode
-brutal/bd21-changelog.txt
-brutal/BRUTAL DOOM MANUAL.rtf
-brutal/icon.png
-brutal/brutalv21.pk3
-brutal/banner.jpg 
-brutal/logo.png
-brutal/artwork.jpg
-sigil/banner.jpg
-sigil/logo.jpg
-sigil/icon.png
-sigil/artwork.jpg
-sigil/SIGIL_v1_21.wad
-sigil/SIGIL_COMPAT_v1_21.wad
-sigil/SIGIL_instructions.txt 
-sigil/SIGIL_v1_21.txt
+brutalv21/bd21-changelog.txt
+brutalv21/BRUTAL DOOM MANUAL.rtf
+brutalv21/icon.png
+brutalv21/brutalv21.pk3
+brutalv21/banner.jpg 
+brutalv21/logo.png
+brutalv21/artwork.jpg
+SIGIL_v1_21/banner.jpg
+SIGIL_v1_21/logo.jpg
+SIGIL_v1_21/icon.png
+SIGIL_v1_21/artwork.jpg
+SIGIL_v1_21/SIGIL_v1_21.wad
+SIGIL_v1_21/SIGIL_COMPAT_v1_21.wad
+SIGIL_v1_21/SIGIL_instructions.txt 
+SIGIL_v1_21/SIGIL_v1_21.txt
 artwork.png
 banner.jpg 
 logo.png

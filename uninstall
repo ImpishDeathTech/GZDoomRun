@@ -11,6 +11,7 @@ GZDOOMR_DESKTOP=/usr/share/applications/gzdoomrun.desktop
 GZDOOMR_STEAM_BANNER="${GZDOOMR_CONFIG}/banner.jpg"
 GZDOOMR_STEAM_LOGO="${GZDOOMR_CONFIG}/logo.png"
 GZDOOMR_STEAM_ARTWORK="${GZDOOMR_CONFIG}/artwork.png"
+GZDOOMR_MODCACHE="${GZDOOMR_CONFIG}/modcache.json"
 
 function uninstall-gzdoom () {
     printf "uninstalling GZDoom Run ... \n\n"

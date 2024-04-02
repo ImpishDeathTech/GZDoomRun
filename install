@@ -10,7 +10,7 @@ GZDOOMR_DESKTOP=/usr/share/applications/gzdoomrun.desktop
 GZDOOMR_STEAM_BANNER="${GZDOOMR_CONFIG}/banner.jpg"
 GZDOOMR_STEAM_LOGO="${GZDOOMR_CONFIG}/logo.png"
 GZDOOMR_STEAM_ARTWORK="${GZDOOMR_CONFIG}/artwork.png"
-GZDOOMR_MODCACHE="${GSDOOMR_CONFIG}/modcache.json"
+GZDOOMR_MODCACHE="${HOME}/.config/gzdoom/modcache.json"
 
 function install-gzdoom () {
     printf "Installing GZDoom Run ... \n\n"
@@ -18,7 +18,7 @@ function install-gzdoom () {
     sudo cp -r ./gzdoomrunlib $GZDOOMR_CONFIG
     sudo cp ./gzdoomrun.py $GZDOOMR_BIN
     sudo chmod +x $GZDOOMR_BIN
-    sudo cp ./modcache.json $GZDOOMR_MODCACHE
+    cp ./modcache.json $GZDOOMR_MODCACHE
     cp ./artwork.png $GZDOOMR_STEAM_ARTWORK
     cp ./logo.png $GZDOOMR_STEAM_LOGO
     cp ./banner.jpg $GZDOOMR_STEAM_BANNER

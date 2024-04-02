@@ -175,6 +175,10 @@ class Application:
         
 
     def clear_arguments(self, event: any, values: any):
+        self.run_args   = ""
+        self.warp_map   = ""
+        self.difficulty = ""
+        self.iwad       = ""
         self.window[RUN_ARGS].update("")
         self.window[WARP_MAP].update("")
         self.window[DIFFICULTY].update("")
