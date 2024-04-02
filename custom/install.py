@@ -3,21 +3,8 @@ import os, json, sys, shutil, subprocess
 from pathlib import Path
 from zipfile import ZipFile
 
-WAD_DIRECTORY   : str   = os.path.join(Path.home(), ".config", "gzdoom")
-APPS_DIRECTORY  : str   = os.path.join(os.path.sep, "usr", "share", "applications")
-ARCHIVE_SUFFIXES: str   = (".pkz", ".zip") 
-WAD_SUFFIXES    : tuple = (".wad", "pk3")
-TEXT_SUFFIXES   : tuple = (".txt", ".otf", ".rtf")
-GZDOOM_INSTALL  : str   = "[GZDoom Run Install]: "
-MODCACHE_PATH   : str   = os.path.join(WAD_DIRECTORY, "modcache.json")
-IMAGE_NAMES     : tuple = (
-    "artwork.png",
-    "artwork.jpg",
-    "banner.png",
-    "banner.jpg",
-    "logo.png",
-    "icon.png"
-)
+
+MODCACHE_PATH    : str   = os.path.join(Path.home(), ".config", "gzdoom", "modcache.json")
 
 def load_modcache() -> dict:
     with open(MODCACHE_PATH, "r") as f:
@@ -30,11 +17,33 @@ def save_modcache(data: dict):
         f.truncate()
         json.dump(data, f)
 
-
 def save_manifest(name: str, manifest: list):
-    cache : dict = load_modcache()
-    cache["manifest"][name] = manifest
-    save_modcache(cache)
+    modcache : dict = load_modcache()
+    modcache["manifest"][name] = manifest
+    save_modcache(modcache)
+
+modcache : dict = load_modcache()
+
+WAD_DIRECTORY    : str   = os.path.join(Path.home(), os.path.sep.join(modcache["path"]["config"]))
+STEAM_DIRECTORY  : str   = os.path.join(Path.home(), os.path.sep.join(modcache["path"]["steam"]))
+CUSTOM_DIRECTORY : str   = os.path.join(WAD_DIRECTORY, "custom")
+APPS_DIRECTORY   : str   = os.path.join(os.path.sep, "usr", "share", "applications")
+GZDOOM_DIRECTORY : str   = os.path.join(os.path.sep, "usr", "share", "gzdoom")
+ARCHIVE_SUFFIXES : str   = (".pkz", ".zip") 
+WAD_SUFFIXES     : tuple = (".wad", "pk3")
+TEXT_SUFFIXES    : tuple = (".txt", ".otf", ".rtf")
+GZDOOM_INSTALL   : str   = "[GZDoom Run Install]: "
+
+del modcache
+
+IMAGE_NAMES      : tuple = (
+    "artwork.png",
+    "artwork.jpg",
+    "banner.png",
+    "banner.jpg",
+    "logo.png",
+    "icon.png"
+) 
 
 def install_desktop_file(zip_file: ZipFile, file_name: str):
     input_file = zip_file.open(file_name, "r")

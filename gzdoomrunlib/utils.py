@@ -4,7 +4,6 @@ from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path 
 
-WAD_DIRECTORY     : str  = f"{Path.home()}/.config/gzdoom/"
 
 VERSION_MAJOR     : int  = 1
 VERSION_MINOR     : int  = 3
@@ -53,7 +52,7 @@ HELP_STRING       : str = F"""
 """
 
 def load_custom() -> ModuleType:
-    spec   : ModuleSpec = importlib.util.spec_from_file_location("custom", os.path.join(WAD_DIRECTORY, "gzdoomrunlib", "custom.py"))
+    spec   : ModuleSpec = importlib.util.spec_from_file_location("custom", os.path.join(Path.home(), ".config", "gzdoom", "gzdoomrunlib", "custom.py"))
     custom : ModuleType = importlib.util.module_from_spec(spec)
 
     sys.modules["custom"] = custom
@@ -63,6 +62,7 @@ def load_custom() -> ModuleType:
 
 custom : ModuleType = load_custom()
 
+WAD_DIRECTORY : str = custom.WAD_DIRECTORY
 
 class GZDoomRunError(Exception):
 
@@ -80,7 +80,7 @@ class GZDoomRunError(Exception):
 
 def find_file(mod_name: str) -> str:
     for file_name in os.listdir(WAD_DIRECTORY):
-        if file_name.startswith(mod_name):
+        if file_name.startswith(mod_name) and file_name.endswith(custom.WAD_SUFFIXES):
             return file_name
 
     return "nil"

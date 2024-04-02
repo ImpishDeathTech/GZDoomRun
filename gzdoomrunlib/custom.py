@@ -3,13 +3,29 @@ import os, sys, importlib.util, subprocess, json
 from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path 
+MODCACHE       : str   = os.path.join(Path.home(), ".config", "gzdoom", "modcache.json")
 
-WAD_DIRECTORY  : str   = os.path.join(Path.home(), ".config", "gzdoom")
-CUSTOM_DIR     : str   = os.path.join(WAD_DIRECTORY, "custom")
-MODCACHE       : str   = os.path.join(WAD_DIRECTORY, "modcache.json")
-WAD_SUFFIXES   : tuple = (".wad", ".pk3")
-GZDOOM_INSTALL : str   = "[GZDoom Run Install]: "
-GZDOOM_REMOVE  : str   = "[GZDoom Run Removal]: "
+def load_modcache() -> dict:
+    with open(MODCACHE, "r") as modcache: 
+        data : dict = json.load(modcache)
+        return data
+
+def save_modcache(data: dict):
+    with open(MODCACHE, "w") as modcache: 
+        modcache.truncate()
+        json.dump(data, modcache)
+
+cache : dict = load_modcache()
+
+WAD_DIRECTORY    : str   = os.path.join(Path.home(), os.sep.join(cache["path"]["config"]))
+STEAM_DIRECTORY  : str   = os.path.join(Path.home(), os.sep.join(cache["path"]["steam"]))
+CUSTOM_DIR       : str   = os.path.join(WAD_DIRECTORY, "custom")
+WAD_SUFFIXES     : tuple = (".wad", ".pk3")
+GZDOOM_INSTALL   : str   = "[GZDoom Run Install]: "
+GZDOOM_REMOVE    : str   = "[GZDoom Run Removal]: "
+GZDOOM_DIRECTORY : str  = os.path.join(os.path.sep, "usr", "share", "gzdoom")
+
+del cache
 
 def load_module(modname: str, modpath: str):
     spec   : ModuleSpec = importlib.util.spec_from_file_location(modname, modpath)

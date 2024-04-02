@@ -38,11 +38,9 @@ INPUT_BACKGROUND : str = "#4B4B4B"
 TEXT_COLOR       : str = "#DFDFDF"
 CLICK_BACKGROUND : str = "#3A3A3A"
 
-
-
 # Path Strings
-DEFAULT_PATH: str = os.path.join(Path.home(), ".config", "gzdoom")
-STEAM_PATH  : str = os.path.join(Path.home(), ".local", "share", "Steam", "steamapps", "common")
+DEFAULT_PATH: str = gzdr.WAD_DIRECTORY
+STEAM_PATH  : str = gzdr.custom.STEAM_DIRECTORY
 ICON_PATH   : str = os.path.join(os.path.sep, "usr", "share", "icons", "gzdoom.png")
 
 STEAM_NAMES : dict = {
