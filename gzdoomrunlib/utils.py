@@ -136,38 +136,70 @@ class CommandOptions:
 
 
     def process_arguments(self, argc: int, argv: list):
-        if argc > 0:
-            if argc > 1:
-                iwad_path  : list = []
-                pos        : int  = 0
-                
+        if argc >= 2:
+            iwad_path  : list = []
+            pos        : int  = 0
+            
+            try:
                 if argv[0] == "iwad":
                     iwad_path += ["-iwad", argv[1]]
                     pos += 2
-                    
+                
                     if argc == 2:
                         return launch_gzdoom_with(iwad_path)
-                
+            
                 if argv[pos] == "warp":
-                    iwad_path += ["-warp", argv[pos + 1]]
-                    pos += 2
+                    warpmap : dict =  {
+                        "E": None,
+                        "M": None
+                    }
+                    pos += 1
+                
+                    for i in range(len(argv[pos])):
+                        if argv[pos][i] == 'E':
+                            warpmap["E"] = argv[pos][i + 1]
 
+                        elif argv[pos][i] == 'M':
+                            if argv[pos].startswith("MAP"):
+                                warpmap["M"] = argv[pos][3:]
+                                break
+
+                            else:
+                                warpmap["M"] = argv[pos][i + 1]
+                        else:
+                            continue
+
+                    if warpmap["E"]:
+                        iwad_path += ["-warp", warpmap["E"], warpmap["M"]]
+                
+                    else:
+                        iwad_path += ["-warp", warpmap["M"]]
+
+                    pos += 1
+            
                 if argv[pos] == "skill":
-                    iwad_path ++ ["-skill", argv[pos + 1]]
+                    iwad_path += ["-skill", argv[pos + 1]]
                     pos += 2
+                
+                    try:
+                        a = argv[pos]
+                        
+                    except IndexError:
+                        args = load_filepaths(iwad_path, [])
+                        return launch_gzdoom_with(args)
 
                 if argv[pos] == "with":
-                    args = argv[pos + 1].split("%")
-                    args = load_filepaths(iwad_path, args)
+                    args = load_filepaths(iwad_path, argv[pos + 1].split("%"))
                     return launch_gzdoom_with(args)
-
-                    
+                
                 else:
                     for option in self.command_options.keys():
                         if argv[0] == option:
                             key : str = argv[0]
                             argv.pop(0)
                             self.command_options[key](argc - 1, argv)
+            except IndexError as err:
+                print(err)
 
         else:
             return launch_gzdoom_with(["-iwad", argv[0]])

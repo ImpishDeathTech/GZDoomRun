@@ -150,14 +150,21 @@ class Application:
             
             elif (self.iwad != "doom1") and self.run_args:
                 if self.warp_map:
-                    self.options.process_arguments(6, ["iwad", self.iwad, "warp", self.warp_map, "skill", self.difficulty, "with", self.run_args])
-                
+                    if self.difficulty:
+                        self.options.process_arguments(6, ["iwad", self.iwad, "warp", self.warp_map, "skill", self.difficulty, "with", self.run_args])
+
+                    else:
+                        self.options.process_arguments(6, ["iwad", self.iwad, "warp", self.warp_map, "with", self.run_args])
                 else:
                     self.options.process_arguments(4, ["iwad", self.iwad, "with", self.run_args])
                 
             else:
                 if self.warp_map:
-                    self.options.rocess_arguments(4, ["iwad", self.iwad, "warp", self.warp_map, "skill", self.difficulty])
+                    if self.difficulty:
+                        self.options.process_arguments(4, ["iwad", self.iwad, "warp", self.warp_map, "skill", self.difficulty])
+                    
+                    else:
+                        self.options.process_arguments(4, ["iwad", self.iwad, "warp", self.warp_map])
                 
                 else:
                     self.options.process_arguments(2, ["iwad", self.iwad])
