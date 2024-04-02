@@ -1,6 +1,5 @@
 ## To Do List for v1.3.3:
-- Test updated install command
-- Update uninstall command
+- Implement uninstall command
 - Add 'update-modcache' command
 - Update README.md
 
