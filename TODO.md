@@ -1,5 +1,4 @@
 ## To Do List for v1.3.3:
-- Update filepaths correctly
 - Test updated install command
 - Update uninstall command
 - Add 'update-modcache' command
