@@ -5,9 +5,11 @@ from importlib.machinery import ModuleSpec
 from pathlib import Path 
 
 WAD_DIRECTORY     : str  = f"{Path.home()}/.config/gzdoom/"
+
 VERSION_MAJOR     : int  = 1
 VERSION_MINOR     : int  = 3
 VERSION_PATCH     : int  = 3
+
 HELP_STRING       : str = F"""
     GZDoom Run v{VERSION_MAJOR}.{VERSION_MINOR}.{VERSION_PATCH} Help
         
@@ -16,21 +18,38 @@ HELP_STRING       : str = F"""
         but can be used in standalone, and has a few command line options:
     
         help             
-            prints this message
+            Prints this help message.
+        
+        iwad [IWAD Name/Path]
+            If the (case sensitive) name provided exists as a known IWAD to GZDoom,
+            the engine will boot it with any subsequent arguments. Must come first in
+            a list of command line parameters.
+        
+        warp E[n]M[n] / MAP[n][n]
+            For Doom II, Final Doom, Hexen and Strife, starts the game on map m. 
+            For Chex Quest, Doom and Heretic, starts the game on episode e, map m. 
+            The +map command can also be used to perform this action, but it expects 
+            the actual name of the map (e.g. MAP01, E1M1). must come after 'iwad', 
+            and before 'skill' and 'with'.
+        
+        skill "Difficulty Name"
+            Sets the difficulty name for the warped-to map provided. (eg skill "Ultraviolence")
+            Must be provided afer 'iwad' and 'warp', and before 'with'
 
-        with [keywords]   
-            searches the mod directory for any WADs or PK3s resembling the
+        with [PWAD Names]   
+            Searches the mod directory for any WADs or PK3s resembling the
             provided keyword. This search is case sensitive, and is the default operation
-            when no option keyword is provided.
+            when no option keyword is provided. Otherwise, must come after 'iwad', 'warp' 
+            and 'skill' consecutively
         
         list
             Lists all of the currently available keywords.
 
         install [file names]
-            if they exist, installs the provided WAD and PK3 files to GZdoom
+            if they exist, installs the provided WAD, PKZ and PK3 files to GZdoom (testing)
 
         remove [keywords]
-            if they exist, uninstalls the related WAD and PK3 files
+            if they exist, uninstalls the related WAD and PK3 files (testing)
 """
 
 def load_custom() -> ModuleType:
