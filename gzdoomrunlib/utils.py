@@ -143,7 +143,6 @@ class CommandOptions:
                 
                 if argv[0] == "iwad":
                     iwad_path += ["-iwad", argv[1]]
-                    print(iwad_path)
                     pos += 2
                     
                     if argc == 2:
@@ -151,14 +150,15 @@ class CommandOptions:
                 
                 if argv[pos] == "warp":
                     iwad_path += ["-warp", argv[pos + 1]]
-                    print(iwad_path)
+                    pos += 2
+
+                if argv[pos] == "skill":
+                    iwad_path ++ ["-skill", argv[pos + 1]]
                     pos += 2
 
                 if argv[pos] == "with":
                     args = argv[pos + 1].split("%")
-                    print(args)
                     args = load_filepaths(iwad_path, args)
-                    print(args)
                     return launch_gzdoom_with(args)
 
                     

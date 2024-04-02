@@ -18,7 +18,7 @@ def load_gzdr() -> ModuleType:
 
 gzdr : ModuleType = load_gzdr()
 
-
+# Event Names
 DIRECTORY        : str = "@ Directory Path"
 MOD_LIST         : str = "@ WAD/PK3 List"
 IWAD_NAME        : str = "@ IWAD Name"
@@ -30,16 +30,20 @@ CLEAR_ARGS       : str = "@ Clear Arguments"
 EXIT_APP         : str = "@ Exit Application"
 WARP_MAP         : str = "@ Warp to Map"
 DIFFICULTY       : str = "@ Set Difficulty"
+
+# Colour Strings
 BACKGROUND       : str = "#202020"
 BUTTON_COLOR     : str = "#2B2B2B"
 INPUT_BACKGROUND : str = "#4B4B4B"
 TEXT_COLOR       : str = "#DFDFDF"
+CLICK_BACKGROUND : str = "#3A3A3A"
 
 
 
-# Paths
+# Path Strings
 DEFAULT_PATH: str = os.path.join(Path.home(), ".config", "gzdoom")
 STEAM_PATH  : str = os.path.join(Path.home(), ".local", "share", "Steam", "steamapps", "common")
+ICON_PATH   : str = os.path.join(os.path.sep, "usr", "share", "icons", "gzdoom.png")
 
 STEAM_NAMES : dict = {
     "Doom": "doom1",
@@ -52,8 +56,11 @@ STEAM_NAMES : dict = {
     "Hexen: Beyond Heretic": "HEXEN.WAD"
 }
 
-
-
+# '''
+# Application Object
+# 
+# Used to manage the state of the gui application
+# '''
 class Application:
 
     def __init__(self, title: str, iwad_table: list, pwad_table: list, launch_pad: list):
@@ -81,10 +88,10 @@ class Application:
         self.layout : list = [
             [gui.Column([[gui.Frame("IWAD", background_color=BACKGROUND, layout=iwad_table)]], background_color=BACKGROUND)],
             [gui.Column([[gui.Frame("PWAD", background_color=BACKGROUND, layout=pwad_table)]], background_color=BACKGROUND)],
-            [gui.Column([[gui.Frame("Launch Pad", background_color=BACKGROUND, layout=launch_pad)]], background_color=BACKGROUND)]
+            [gui.Column([[gui.Frame("Launch", background_color=BACKGROUND, layout=launch_pad)]], background_color=BACKGROUND)]
         ]
 
-        self.window       : gui.Window = gui.Window(title=self.title, layout=self.layout, background_color=BACKGROUND)
+        self.window       : gui.Window = gui.Window(title=self.title, icon=ICON_PATH, layout=self.layout, background_color=BACKGROUND)
         self.is_first_run : bool       = True
     
     def find(self, event: any) -> bool:
@@ -143,14 +150,14 @@ class Application:
             
             elif (self.iwad != "doom1") and self.run_args:
                 if self.warp_map:
-                    self.options.process_arguments(6, ["iwad", self.iwad, "warp", self.warp_map, "with", self.run_args])
+                    self.options.process_arguments(6, ["iwad", self.iwad, "warp", self.warp_map, "skill", self.difficulty, "with", self.run_args])
                 
                 else:
                     self.options.process_arguments(4, ["iwad", self.iwad, "with", self.run_args])
                 
             else:
                 if self.warp_map:
-                    self.options.rocess_arguments(4, ["iwad", self.iwad, "warp", self.warp_map])
+                    self.options.rocess_arguments(4, ["iwad", self.iwad, "warp", self.warp_map, "skill", self.difficulty])
                 
                 else:
                     self.options.process_arguments(2, ["iwad", self.iwad])
@@ -220,51 +227,51 @@ class Application:
 
         self.window.close()
 
+# '''
+# Builds and returns the application based on the found iwads and pwads
+# '''
 def make_application(mod_list: list, iwad_list: list) -> Application:
     title      : str  = f"GZDoom Run v{gzdr.VERSION_MAJOR}.{gzdr.VERSION_MINOR}.{gzdr.VERSION_PATCH}"
     iwad_listln: int  = len(iwad_list)
-
     iwad_block : list = [
         [
-            gui.Text("Launch", size=(6, 1), background_color=BACKGROUND),
-            gui.In(size=(22, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=IWAD_NAME),
+            gui.Text("Path", size=(5, 1), background_color=BACKGROUND),
+            gui.In(size=(23, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=IWAD_NAME),
             gui.FolderBrowse(button_color=BUTTON_COLOR)
         ]
     ]
-
     pwad_block : list = [
         [
-            gui.Text("Path", size=(4, 1), background_color=BACKGROUND),
-            gui.In(DEFAULT_PATH, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, size=(24, 1), enable_events=True, key=DIRECTORY),
+            gui.Text("Path", size=(5, 1), background_color=BACKGROUND),
+            gui.In(DEFAULT_PATH, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, size=(23, 1), enable_events=True, key=DIRECTORY),
             gui.FolderBrowse(button_color=BUTTON_COLOR)
         ],
-        [gui.Listbox(mod_list, enable_events=True, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_background_color=BACKGROUND, size=(38, 8), key=MOD_LIST)]
+        [gui.Listbox(mod_list, enable_events=True, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_trough_color=CLICK_BACKGROUND, sbar_arrow_color=CLICK_BACKGROUND, sbar_background_color=BACKGROUND, size=(38, 8), key=MOD_LIST)]
     ]
-
     launch_pad : list = [
         [
-            gui.Text("Run With", size=(9, 1), background_color=BACKGROUND),
-            gui.In(size=(19, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=RUN_ARGS),
+            gui.Text("With", size=(5, 1), background_color=BACKGROUND),
+            gui.In(size=(23, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=RUN_ARGS),
             gui.Button("Run", size=(6, 1), button_color=BUTTON_COLOR, enable_events=True, key=EXECUTE)
         ],
         [
-            gui.Text("Warp Map", size=(9, 1), background_color=BACKGROUND),
-            gui.In(size=(19, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=WARP_MAP),
+            gui.Text("Warp", size=(5, 1), background_color=BACKGROUND),
+            gui.In(size=(23, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=WARP_MAP),
             gui.Button("Clear", size=(6, 1), button_color=BUTTON_COLOR, enable_events=True, key=CLEAR_ARGS)
         ],
         [
-            gui.Text("Difficulty", size=(9, 1), background_color=BACKGROUND),
-            gui.In(size=(19, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=DIFFICULTY),
+            gui.Text("Skill", size=(5, 1), background_color=BACKGROUND),
+            gui.In(size=(23, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=DIFFICULTY),
             gui.Button("Exit", size=(6, 1), button_color=BUTTON_COLOR, enable_events=True, key=EXIT_APP)
         ]
     ]
 
     if iwad_listln > 0:
         if iwad_listln <= 8:
-            iwad_block.append([gui.Listbox(iwad_list, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_background_color=BACKGROUND, enable_events=True, size=(38, iwad_listln), key=IWAD_LIST)])
+            iwad_block.append([gui.Listbox(iwad_list, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_trough_color=CLICK_BACKGROUND, sbar_arrow_color=CLICK_BACKGROUND, sbar_background_color=BACKGROUND, enable_events=True, size=(38, iwad_listln), key=IWAD_LIST)])
 
         else:
-            iwad_block.append([gui.Listbox(iwad_list, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_background_color=BACKGROUND, enable_events=True, size=(38, 8), key=IWAD_LIST)])
+            iwad_block.append([gui.Listbox(iwad_list, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_trough_color=CLICK_BACKGROUND, sbar_arrow_color=CLICK_BACKGROUND, sbar_background_color=BACKGROUND, enable_events=True, size=(38, 8), key=IWAD_LIST)])
 
     return Application(title, iwad_block, pwad_block, launch_pad)
 
@@ -276,16 +283,18 @@ def make_application(mod_list: list, iwad_list: list) -> Application:
 # through steam
 # '''
 def find_doom1() -> bool:
-    if os.path.isdir(os.path.join("/usr", "share", "doom")):
-        return os.path.isfile(os.path.join("/usr", "share", "doom", "doom1.wad"))
+    if os.path.isdir(os.path.join(os.path.sep, "usr", "share", "doom")):
+        return os.path.isfile(os.path.join(os.path.sep, "usr", "share", "doom", "doom1.wad"))
     
     return False
 
 def find_doom2() -> bool:
     return os.path.isfile(os.path.join(STEAM_PATH, "Doom 2", "base", "DOOM2.WAD"))
 
+
 def find_ultimate_doom() -> bool:
     return os.path.isfile(os.path.join(STEAM_PATH, "Ultimate Doom", "base", "DOOM.WAD"))
+
 
 def find_hexen() -> bool:
     return os.path.isfile(os.path.join(STEAM_PATH, "Hexen", "base", "HEXEN.WAD"))
