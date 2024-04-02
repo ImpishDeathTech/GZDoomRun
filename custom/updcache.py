@@ -1,5 +1,5 @@
 # '''
-# gzdoom.custom.uninstall.py
+# gzdoom.custom.updcache.py
 #
 # BSD 2-Clause License  
 # Copyright (c) 2024, Sanguine Noctis

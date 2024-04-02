@@ -1,3 +1,12 @@
+# '''
+# gzdoom.custom.install.py
+#
+# BSD 2-Clause License  
+# Copyright (c) 2024, Sanguine Noctis
+#
+# https://github.com/ImpishDeathTech/GZDoomRun/blob/master/LICENSE
+# '''
+
 import os, json, sys, shutil, subprocess
 
 from pathlib import Path
