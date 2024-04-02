@@ -115,15 +115,7 @@ class CommandOptions:
 
 
     def process_arguments(self, argc: int, argv: list):
-        if argc == 1:
-            for option in self.command_options.keys():
-                if argv[0] == option:
-                    key : str = argv[0]
-                    argv.pop(0)
-                    self.command_options[key](argc - 1, argv)
-        
-        elif argc >= 2:
-                        
+        if argc >= 2:
             iwad_path  : list = []
             pos        : int  = 0
             
@@ -189,11 +181,7 @@ class CommandOptions:
                 print(err)
 
         else:
-            for option in self.command_options.keys():
-                if argv[0] == option:
-                    key : str = argv[0]
-                    argv.pop(0)
-                    self.command_options[key](argc - 1, argv)
+            launch_gzdoom()
 
 
 
