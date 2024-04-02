@@ -13,7 +13,7 @@
 
 ### Installation 
 > First, make sure you have GZDoom installed natively, no snap or flatpak crap.
- > Then, download most recent the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-3-0/GZDoomRun_v1.3.3-0.zip) or [Tarball](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-3-0/GZDoomRun_v1.3.3-0.tar.gz) version and unload it:
+ > Then, download most recent the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-3-0/GZDoomRun_v1.3.3-0.zip) version and unload it:
 ```sh
 unzip GZDoomRunL_vX.X.X-X.zip
 ```
