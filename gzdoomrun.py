@@ -19,16 +19,22 @@ def load_gzdr() -> ModuleType:
 gzdr : ModuleType = load_gzdr()
 
 
-DIRECTORY   : str = "@ directory path"
-MOD_LIST    : str = "@ WAD/PK3 list"
-IWAD_NAME   : str = "@ IWAD name"
-IWAD_LIST   : str = "@ IWAD list"
-RUN_ARGS    : str = "@ run arguments"
-ARTWORK     : str = "@ game artwork"
-EXECUTE     : str = "@ run gzdoom"
-CLEAR_ARGS  : str = "@ clear arguments"
-EXIT_APP    : str = "@ exit application"
-WARP_MAP    : str = "@ warp to map"
+DIRECTORY        : str = "@ Directory Path"
+MOD_LIST         : str = "@ WAD/PK3 List"
+IWAD_NAME        : str = "@ IWAD Name"
+IWAD_LIST        : str = "@ IWAD List"
+RUN_ARGS         : str = "@ Run Arguments"
+ARTWORK          : str = "@ Game Artwork"
+EXECUTE          : str = "@ Run GZDoom"
+CLEAR_ARGS       : str = "@ Clear Arguments"
+EXIT_APP         : str = "@ Exit Application"
+WARP_MAP         : str = "@ Warp to Map"
+DIFFICULTY       : str = "@ Set Difficulty"
+BACKGROUND       : str = "#202020"
+BUTTON_COLOR     : str = "#2B2B2B"
+INPUT_BACKGROUND : str = "#4B4B4B"
+TEXT_COLOR       : str = "#DFDFDF"
+
 
 
 # Paths
@@ -36,13 +42,13 @@ DEFAULT_PATH: str = os.path.join(Path.home(), ".config", "gzdoom")
 STEAM_PATH  : str = os.path.join(Path.home(), ".local", "share", "Steam", "steamapps", "common")
 
 STEAM_NAMES : dict = {
-    "The Ultimate Doom": "DOOM.WAD",
+    "Doom": "doom1",
+    "Doom (Unity)": "doom",
     "Doom 2": "DOOM2.WAD",
+    "Doom 2 (Unity)": "doom2",
     "Final Doom: The Plutonia Experiment": "PLUTONIA.WAD",
     "Final Doom: TNT Evilution": "TNT.WAD",
-    "Doom (Shareware)": "doom1",
-    "Doom (Unity)": "doom",
-    "Doom 2 (Unity)": "doom2",
+    "The Ultimate Doom": "DOOM.WAD",
     "Hexen: Beyond Heretic": "HEXEN.WAD"
 }
 
@@ -57,6 +63,7 @@ class Application:
         self.run_args   : str                 = ""
         self.iwad       : str                 = ""
         self.warp_map   : str                 = ""
+        self.difficulty : str                 = ""
 
         self.events : dict = {
             DIRECTORY : self.list_directory,
@@ -66,18 +73,18 @@ class Application:
             RUN_ARGS  : self.update_arglist,
             EXECUTE   : self.run_gzdoom,
             WARP_MAP  : self.set_warp_map,
+            DIFFICULTY: self.set_difficulty,
             CLEAR_ARGS: self.clear_arguments,
             EXIT_APP  : self.exit_application
-           
         }
 
         self.layout : list = [
-            [gui.Column(iwad_table)],
-            [gui.Column(pwad_table)],
-            [gui.Column(launch_pad)]
+            [gui.Column([[gui.Frame("IWAD", background_color=BACKGROUND, layout=iwad_table)]], background_color=BACKGROUND)],
+            [gui.Column([[gui.Frame("PWAD", background_color=BACKGROUND, layout=pwad_table)]], background_color=BACKGROUND)],
+            [gui.Column([[gui.Frame("Launch Pad", background_color=BACKGROUND, layout=launch_pad)]], background_color=BACKGROUND)]
         ]
 
-        self.window       : gui.Window = gui.Window(title=self.title, layout=self.layout)
+        self.window       : gui.Window = gui.Window(title=self.title, layout=self.layout, background_color=BACKGROUND)
         self.is_first_run : bool       = True
     
     def find(self, event: any) -> bool:
@@ -111,7 +118,6 @@ class Application:
             run_args = values[RUN_ARGS].split(" ")
             run_args.append(values[MOD_LIST][0])
             self.run_args = "%".join(run_args)
-            print(self.run_args)
             self.window[RUN_ARGS].update(" ".join(run_args))
 
         except:
@@ -157,6 +163,8 @@ class Application:
     def clear_arguments(self, event: any, values: any):
         self.window[RUN_ARGS].update("")
         self.window[WARP_MAP].update("")
+        self.window[DIFFICULTY].update("")
+        self.window[IWAD_NAME].update("")
         self.run_args = ""
 
 
@@ -195,6 +203,10 @@ class Application:
         self.warp_map = values[WARP_MAP].upper()
         self.window[WARP_MAP].update(self.warp_map)
     
+    def set_difficulty(self, event: any, values: any):
+        self.difficulty = values[DIFFICULTY]
+        self.window[DIFFICULTY].update(self.difficulty)
+    
 
     def run(self):
         while self.is_running:
@@ -208,84 +220,123 @@ class Application:
 
         self.window.close()
 
-gui.Fr      
-
 def make_application(mod_list: list, iwad_list: list) -> Application:
     title      : str  = f"GZDoom Run v{gzdr.VERSION_MAJOR}.{gzdr.VERSION_MINOR}.{gzdr.VERSION_PATCH}"
     iwad_listln: int  = len(iwad_list)
 
     iwad_block : list = [
         [
-            gui.Text("Run IWAD", size=(10, 1)),
-            gui.In(size=(25, 1), enable_events=True, key=IWAD_NAME),
-            gui.FolderBrowse()
+            gui.Text("Launch", size=(6, 1), background_color=BACKGROUND),
+            gui.In(size=(22, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=IWAD_NAME),
+            gui.FolderBrowse(button_color=BUTTON_COLOR)
         ]
     ]
 
     pwad_block : list = [
         [
-            gui.Text("Mod Folder", size=(10, 1)),
-            gui.In(DEFAULT_PATH, size=(25, 1), enable_events=True, key=DIRECTORY),
-            gui.FolderBrowse()
+            gui.Text("Path", size=(4, 1), background_color=BACKGROUND),
+            gui.In(DEFAULT_PATH, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, size=(24, 1), enable_events=True, key=DIRECTORY),
+            gui.FolderBrowse(button_color=BUTTON_COLOR)
         ],
-        [gui.Listbox(mod_list, enable_events=True, size=(45, 8), key=MOD_LIST)]
+        [gui.Listbox(mod_list, enable_events=True, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_background_color=BACKGROUND, size=(38, 8), key=MOD_LIST)]
     ]
 
     launch_pad : list = [
-        [gui.Frame("Launch Options", layout=[[
-                gui.Text("With ", size=(5, 1)),
-                gui.In(size=(34, 1), enable_events=True, key=RUN_ARGS)
-            ],
-            [
-                gui.Text("Warp", size=(5, 1)),
-                gui.In(size=(34, 1), enable_events=True, key=WARP_MAP)
-        ]])],
         [
-            gui.Button("Run", enable_events=True, key=EXECUTE),
-            gui.Button("Clear", enable_events=True, key=CLEAR_ARGS),
-            gui.Button("Exit", enable_events=True, key=EXIT_APP)
+            gui.Text("Run With", size=(9, 1), background_color=BACKGROUND),
+            gui.In(size=(19, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=RUN_ARGS),
+            gui.Button("Run", size=(6, 1), button_color=BUTTON_COLOR, enable_events=True, key=EXECUTE)
+        ],
+        [
+            gui.Text("Warp Map", size=(9, 1), background_color=BACKGROUND),
+            gui.In(size=(19, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=WARP_MAP),
+            gui.Button("Clear", size=(6, 1), button_color=BUTTON_COLOR, enable_events=True, key=CLEAR_ARGS)
+        ],
+        [
+            gui.Text("Difficulty", size=(9, 1), background_color=BACKGROUND),
+            gui.In(size=(19, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=DIFFICULTY),
+            gui.Button("Exit", size=(6, 1), button_color=BUTTON_COLOR, enable_events=True, key=EXIT_APP)
         ]
     ]
 
     if iwad_listln > 0:
         if iwad_listln <= 8:
-            iwad_block.append([gui.Listbox(iwad_list, enable_events=True, size=(45, iwad_listln), key=IWAD_LIST)])
+            iwad_block.append([gui.Listbox(iwad_list, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_background_color=BACKGROUND, enable_events=True, size=(38, iwad_listln), key=IWAD_LIST)])
 
         else:
-            iwad_block.append([gui.Listbox(iwad_list, enable_events=True, size=(45, 8), key=IWAD_LIST)])
-    
+            iwad_block.append([gui.Listbox(iwad_list, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_background_color=BACKGROUND, enable_events=True, size=(38, 8), key=IWAD_LIST)])
+
     return Application(title, iwad_block, pwad_block, launch_pad)
 
+# '''
+# IWAD Finders
+# 
+# The following functions directly search for the 
+# associated IWADs to ensure they have been installed
+# through steam
+# '''
+def find_doom1() -> bool:
+    if os.path.isdir(os.path.join("/usr", "share", "doom")):
+        return os.path.isfile(os.path.join("/usr", "share", "doom", "doom1.wad"))
+    
+    return False
 
-# This will list IWADS from Steam based on those I personally own
+def find_doom2() -> bool:
+    return os.path.isfile(os.path.join(STEAM_PATH, "Doom 2", "base", "DOOM2.WAD"))
+
+def find_ultimate_doom() -> bool:
+    return os.path.isfile(os.path.join(STEAM_PATH, "Ultimate Doom", "base", "DOOM.WAD"))
+
+def find_hexen() -> bool:
+    return os.path.isfile(os.path.join(STEAM_PATH, "Hexen", "base", "HEXEN.WAD"))
+
+def finaldoom_find(iwad_name: str) -> bool:
+    finaldoom_path : str = os.path.join(STEAM_PATH, "Doom 2", "finaldoombase")
+    plutonia_path  : str = os.path.join(finaldoom_path, f"{iwad_name}.WAD")
+    if os.path.isdir(finaldoom_path):
+        return os.path.isfile(plutonia_path)
+
+def find_tnt() -> bool:
+    finaldoom_path : str = os.path.join(STEAM_PATH, "Doom 2", "finaldoombase")
+    tnt_path  : str = os.path.join(finaldoom_path, "TNT.WAD")
+    if os.path.isdir(finaldoom_path):
+        return os.path.isfile(tnt_path)
+
+# '''
+# This function will list IWADS based on what is installed
+# to your .local/shared/Steam 
+# '''
 def load_iwads(folder_list: list) -> list:
     iwad_names : list = []
     keys       = list(STEAM_NAMES.keys())
 
+    if find_doom1():
+        iwad_names.append(keys[0])
+
     for folder in folder_list:
-        if folder == "Ultimate Doom":
-            iwad_names.append(keys[0])
+        if folder == "Ultimate Doom" and find_ultimate_doom():
+            iwad_names += [keys[1], keys[6]]
         
-        elif folder == "Doom 2":
-            iwad_names += [keys[1], keys[2], keys[3]]
-        
-        elif folder == "Hexen":
+        elif folder == "Doom 2" and find_doom2():
+            iwad_names += [keys[2], keys[3]]
+            
+            if finaldoom_find("PLUTONIA"):
+                iwad_names.append(keys[4])
+
+            if finaldoom_find("TNT"):
+                iwad_names.append(keys[5])
+
+        elif folder == "Hexen" and find_hexen():
             iwad_names.append(keys[7])
-    
-    if (keys[0]) in iwad_names:
-        iwad_names += [keys[4], keys[5]]
-    
-    if (keys[1]) in iwad_names:
-        iwad_names.append(keys[6])
 
     return iwad_names
 
 
-'''
+# '''
 # This function will list PWADS and PK3s in the directory DEFAULT_PATH.
 # This path can be changed dynamically by simply typing into
 # the 'Mod Folder' input
-'''
+# '''
 def load_pwads(file_list: list) -> list:
     file_names : list = []
 
@@ -296,8 +347,10 @@ def load_pwads(file_list: list) -> list:
     
     return file_names
 
-
-# this will run the application from command line
+# '''
+# This function will run the appliction without GUI
+# and parse command line arguments
+# '''
 def run_from_cli(argc: int, argv: list) -> int:
     options : gzdr.CommandOptions = gzdr.CommandOptions(gzdr.custom.load_directory())
     
@@ -311,7 +364,9 @@ def run_from_cli(argc: int, argv: list) -> int:
     
     return 0
 
-
+# '''
+# This function will launch the GUI application
+# '''
 def run_with_gui():
     try:
         file_list : list = os.listdir(DEFAULT_PATH)
