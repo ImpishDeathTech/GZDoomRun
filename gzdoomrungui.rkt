@@ -1,4 +1,6 @@
 #lang racket
+; Included for old references
+
 (require racket/draw
          racket/gui/easy
          racket/gui/easy/operator)
