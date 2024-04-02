@@ -1,5 +1,14 @@
 #! /usr/bin/python3
 
+# '''
+# gzdoomrun.py
+#
+# BSD 2-Clause License  
+# Copyright (c) 2024, Sanguine Noctis
+#
+# https://github.com/ImpishDeathTech/GZDoomRun/blob/master/LICENSE
+# '''
+
 import importlib.util, sys, os
 import PySimpleGUI as gui 
 
@@ -7,6 +16,10 @@ from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path
 
+# '''
+# Loads the library dinamically because I wrote this weird. 
+# It was never supposed to be this complex. ^,..,^"
+# ''' 
 def load_gzdr() -> ModuleType:
     spec : ModuleSpec = importlib.util.spec_from_file_location("utils", os.path.join(Path.home(), ".config", "gzdoom", "gzdoomrunlib", "utils.py"))
     gzdr : ModuleType = importlib.util.module_from_spec(spec)
@@ -43,6 +56,10 @@ DEFAULT_PATH: str = gzdr.WAD_DIRECTORY
 STEAM_PATH  : str = gzdr.custom.STEAM_DIRECTORY
 ICON_PATH   : str = os.path.join(os.path.sep, "usr", "share", "icons", "gzdoom.png")
 
+# ''' 
+# Names that will appear if the application 
+# finds their associated files in the steam directory
+# '''
 STEAM_NAMES : dict = {
     "Doom": "doom1",
     "Doom (Unity)": "doom",
@@ -407,8 +424,9 @@ def run_with_gui():
     app : Application = make_application(pwad_names, iwad_names)
     app.run()
 
-
-
+# '''
+# Main Block
+# '''
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
         sys.exit(run_from_cli(len(sys.argv), sys.argv))
