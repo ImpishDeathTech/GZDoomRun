@@ -8,7 +8,9 @@
 
 ## GZDoom Run GUI
 > The gui is currently written in racket, may be rewritten in C with SDL2, or C++ with SFML, more likely the latter
-![Alt text]( "")
+
+![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/application-screenshot.jpg "Application Screenshot")
+
 ## Tutorial
 
 ### Installation 
