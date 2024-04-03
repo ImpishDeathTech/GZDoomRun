@@ -7,7 +7,7 @@
 > Requires python3 and PySimpleGUI to be installed on your sistem, racket for v1.3.1
 
 ## GZDoom Run GUI
-> The gui is currently written in racket, may be rewritten in C with SDL2, or C++ with SFML, more likely the latter
+> The gui is currently written in python with PySimpleGUI
 
 ![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/application-screenshot.jpg "Application Screenshot")
 
