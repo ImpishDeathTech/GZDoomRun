@@ -7,7 +7,8 @@
 > Requires python3 and PySimpleGUI to be installed on your sistem, racket for v1.3.1
 
 ## GZDoom Run GUI
-> The gui is currently written in python with PySimpleGUI
+> The gui is currently written in python with PySimpleGUI. The application automatically searches the steam directory, if present, for any
+> IWADs, and the .config/gzdoom directory for any PWADs or PK3s
 
 ![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/application-screenshot.jpg "Application Screenshot")
 
