@@ -3,12 +3,13 @@
 
 > This program was originally meant to used with Steam to help me load doom mods easier, 
 > but has a few command line options that make it a fine standalone program.
-> Type `gzdoomrun help` once installed to see these options.
-> Requires python3 and PySimpleGUI to be installed on your sistem, racket for v1.3.1
+> Type `gzdoomrun help all` once installed to see these options.
+> Requires python3 and PySimpleGUI to be installed on your sistem. 
 
 ## GZDoom Run GUI
-> The gui is currently written in python with PySimpleGUI. The application automatically searches the steam directory, if present, for any
-> IWADs, and the .config/gzdoom directory for any PWADs or PK3s
+> The gui is currently written in python with PySimpleGUI, which has recently "GoNe PrO" (They went proprietary). Head [here](https://pysimplegui.com/pricing) and grab a.
+> free license so you can get a key to run the application and fiddle with the code (I'm not paying 99$ for an open source, customizable doomloader and mod manager).
+> The application automatically searches the steam directory, if present, for any IWADs, and the .config/gzdoom directory for any PWADs or PK3s.
 
 ![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/application-screenshot.jpg "Application Screenshot")
 
