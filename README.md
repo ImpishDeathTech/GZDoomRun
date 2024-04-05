@@ -8,7 +8,10 @@
 
 ## GZDoom Run GUI
 > The gui is currently written in python with PySimpleGUI, which has recently "GoNe PrO" (They went proprietary). Head [here](https://pysimplegui.com/pricing) and grab a.
-> free license so you can get a key to run the application and fiddle with the code (I'm not paying 99$ for an open source, customizable doomloader and mod manager).
+> free license so you can get a key to run the application and fiddle with the code (I'm not paying 99$ for an open source, customizable doomloader and mod manager so you can get
+> a shiny distribution key, this is linux, be resourceful >,..,o). This application, under all intensive purposes, is for fun, and born of tinkering and made to be continued to
+> be tinkered with. Thus, I encourage you to do so.
+> 
 > The application automatically searches the steam directory, if present, for any IWADs, and the .config/gzdoom directory for any PWADs or PK3s.
 
 ![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/application-screenshot.jpg "Application Screenshot")
