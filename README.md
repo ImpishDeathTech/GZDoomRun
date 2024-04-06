@@ -39,7 +39,9 @@ gzdoomrun iwad DOOM2.WAD with brutalv21
 # Loading multiple wads is done by seperating each wad name by a '%'
 gzdoomrun iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
 ```
-gzdoomrun will launch as a gui application if no arguments are provided. 
+gzdoomrun will launch as a gui application if no arguments are provided. When you select an IWAD from the list, it's key will appear in the "Path" input, which represents it's file stem. This input accepts these known file stems, as well as full paths, in case your IWAD is not a IWAD that I personally use or own.
+
+For the PWADs, either select the key or type it in. The list will automatically update based on what is contained within the input box. "Browse" buttons are provided alongside both of these inputs, so that you may browse your drive for either path.
 
 ## DMFlags
 The DMFlags section accepts the following constants and their related values:
@@ -79,6 +81,8 @@ The DMFlags section accepts the following constants and their related values:
 
 The input accepts multiple parameters, and the program automatically caps-locks this input section, and converts - to _ so you have to press shift less. 
 The same goes for the map choice input, which accepts the "E1M1" or "MAP01" formats.
+
+All GZDR settings are saved to the modcache, locaded in .config/gzdoom.
 
 And that's it! Now, Setting it up with steam is pretty easy.
 Go to your Library, and click Add Game at the bottom. A list of your applications should pop up and we can add GZDoom from there.
