@@ -28,7 +28,7 @@ unzip GZDoomRunL_vX.X.X-X.zip
 > Next, cd into the project directory and execute the install.sh script.
 ```sh
 cd GZDoomRun
-./install
+make install
 ```
 
 ### Running
@@ -39,7 +39,71 @@ gzdoomrun iwad DOOM2.WAD with brutalv21
 # Loading multiple wads is done by seperating each wad name by a '%'
 gzdoomrun iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
 ```
-gzdoomrun will launch as a gui application if no arguments are provided
+gzdoomrun will launch as a gui application if no arguments are provided. The DMFlags section accepts the following constants and their related values:
+## DMFlags
+| Constant                        | Value     |
+|---------------------------------|-----------|
+| ALLOW_HEALTH                    | $1        |
+| ALLOW_POWERUPS                  | $2        |
+| WEAPONS_STAY                    | $4        |
+| FALL_DMG                        | $8        |
+| FALL_DMG_HEXEN                  | $10       |
+| FALL_DMG_STRIFE                 | $18       |
+| SAME_MAP                        | $40       |
+| SPAWN_FARTHEST                  | $80       |
+| FORCE_RESPAWN                   | $100      |
+| ALLOW_ARMOR                     | $200      |
+| ALLOW_EXIT                      | $400      |
+| INFINITE_AMMO                   | $800      |
+| NO_MONSTERS                     | $1000     |
+| MONSTERS_RESPAWN                | $2000     |
+| ITEMS_RESPAWN                   | $4000     |
+| FAST_MONSTERS                   | $8000     |
+| ALLOW_JUMP                      | $10000    |
+| ALLOW_FREELOOK_OFF              | $40000    |
+| ALLOW_FREELOOK                  | $80000    |
+| ALLOW_FOV                       | $100000   |
+| SPAWN_MULTI_WEAPONS             | $200000   |
+| ALLOW_CROUCH                    | $400000   |
+| LOOSE_INVENTORY                 | $1000000  |
+| KEEP_KEYS                       | $2000000  |
+| KEEP_WEAPONS                    | $4000000  |
+| KEEP_ARMOR                      | $8000000  |
+| KEEP_POWERUPS                   | $10000000 |
+| KEEP_AMMO                       | $20000000 |
+| LOSE_HALF_AMMO                  | $40000000 |
+| DMFLAGS_DEFAULT                 | $3E750603 |
+
+## DMFlags 2
+| Constant                        | Value     |
+|---------------------------------|-----------|
+| DROP_WEAPON                     | $2        |
+| NO_TEAM_CHANGING                | $10       |
+| DOUBLE_AMMO                     | $40       |
+| DEGENERATION_ON                 | $80       |
+| ALLOW_BFG_AIMING                | $100      |
+| BARRELS_RESPAWN                 | $200      |
+| RESPAWN_PROTECTION              | $400      |
+| SPAWN_WHERE_DIED                | $1000     |
+| KEEP_FRAGS_GAINED               | $2000     |
+| NO_RESPAWN                      | $4000     |
+| LOSE_FRAG_ON_DEATH              | $8000     |
+| INFINITE_INVENTORY              | $10000    |
+| NO_MONSTERS_TO_EXIT             | $20000    |
+| ALLOW_AUTOMAP                   | $40000    |
+| AUTOMAP_ALLIES                  | $80000    |
+| ALLOW_SPYING                    | $100000   |
+| CHASECAM_CHEAT                  | $200000   |
+| DISALLOW_SUICIDE                | $400000   |
+| ALLOW_AUTOAIM                   | $800000   |
+| CHECK_AMMO_FOR_WEAPON_SWITCH    | $1000000  |
+| ICON_OF_SINS_DEATH_KILLS_SPAWNS | $2000000  |
+| END_SECTOR_COUNTS_FOR_KILLS     | $4000000  |
+| BIG_POWERUPS_RESPAWN            | $8000000  |
+| ALLOW_VERTICAL_BULLET_SPREAD    | $40000000 |
+| DMFLAGS2_DEFAULT                | $79C0100  |
+
+The program automatically caps-locks this input section, and converts - to _ so you have to press shift less. The same goes for the map choice input, which accepts the "E1M1" or "MAP01" formats.
 
 And that's it! Now, Setting it up with steam is pretty easy.
 Go to your Library, and click Add Game at the bottom. A list of your applications should pop up and we can add GZDoom from there.
@@ -50,4 +114,4 @@ I'll make a video soon
 
 
 ### Uninstall
-simply run the uninstall script as you did the install, and you should be golden.
+simply run `make uninstall` 
