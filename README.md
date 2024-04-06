@@ -4,7 +4,9 @@
 > This program was originally meant to used with Steam to help me load doom mods easier, 
 > but has a few command line options that make it a fine standalone program.
 > Type `gzdoomrun help all` once installed to see these options.
-> Requires python3 and PySimpleGUI to be installed on your sistem. 
+> Requires python3 and PySimpleGUI to be installed on your sistem.
+> This program is really for my own usage, this help is just here as a reference for myself,
+> and to aid anyone wanting to mess with programming and ye olde Doom modding.
 
 ## GZDoom Run GUI
 > The gui is currently written in python with PySimpleGUI, which has recently gone proprietary. This program is for personal use only (mostly my own), so you'll have to head [here](https://pysimplegui.com/pricing) and
