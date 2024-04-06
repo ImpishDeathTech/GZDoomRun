@@ -132,8 +132,8 @@ class Application:
 
 
     def update_run_args(self, event: str, values: list):
-        self.run_args = "%".join(self.run_args, values[event][0])
-        print(run_args)
+        self.run_args = "%".join([self.run_args, values[event][0]])
+        
         if self.run_args[0] == '%':
             self.run_args = self.run_args[1:]
 
@@ -141,7 +141,7 @@ class Application:
 
     
     def update_arglist(self, event: str, values: list):
-        self.run_args += values[event][len(self.run_args):]
+        self.run_args = values[event]
         self.window[event].update(self.run_args.replace(' ', '%'))
 
 
