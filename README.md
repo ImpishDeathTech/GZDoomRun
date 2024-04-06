@@ -32,10 +32,10 @@ make install
 ### Running
 > Now, we'll test it by extracting the provided tarball and installing Brutal Doom! The following options will only be usable if you have SIGIL and Brutal Doom installed to your .config/gzdoom directory.
 ```sh
-gzdoomrun iwad DOOM2.WAD with brutalv21
+gzdr iwad DOOM2.WAD warp E1M1 skill 4 with brutalv21
 
 # Loading multiple wads is done by seperating each wad name by a '%'
-gzdoomrun iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
+gzdr iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
 ```
 gzdoomrun will launch as a gui application if no arguments are provided. When you select an IWAD from the list, it's key will appear in the "Path" input, which represents it's file stem. This input accepts these known file stems, as well as full paths, in case your IWAD is not a IWAD that I personally use or own.
 
