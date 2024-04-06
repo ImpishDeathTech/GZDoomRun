@@ -15,8 +15,6 @@
 > 
 > The application automatically searches the steam directory, if present, for any IWADs, and the .config/gzdoom directory for any PWADs or PK3s.
 
-![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/application-screenshot.jpg "Application Screenshot")
-
 ## Tutorial
 
 ### Installation 
