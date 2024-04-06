@@ -17,6 +17,7 @@ install:
 uninstall:
 	python3 -m pip uninstall gzdoomrun 
 	sudo rm -r /usr/share/gzdoomrun
+	sudo rm /usr/bin/gzdr
 	sudo rm -r $(HOME)/.config/gzdoom/custom 
 	sudo rm /usr/share/applications/gzdoomrun.desktop
 	
