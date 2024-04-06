@@ -23,7 +23,7 @@ CUSTOM_DIR       : str   = os.path.join(WAD_DIRECTORY, "custom")
 WAD_SUFFIXES     : tuple = (".wad", ".pk3")
 GZDOOM_INSTALL   : str   = "[GZDoom Run Install]: "
 GZDOOM_REMOVE    : str   = "[GZDoom Run Removal]: "
-GZDOOM_DIRECTORY : str  = os.path.join(os.path.sep, "usr", "share", "gzdoom")
+GZDOOM_DIRECTORY : str   = os.path.join(os.path.sep, "usr", "share", "gzdoom")
 
 del cache
 

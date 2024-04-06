@@ -1,24 +1,11 @@
 import os, sys, subprocess, importlib.util, json
+import custom
 
 from types import ModuleType
 from importlib.machinery import ModuleSpec
-from pathlib import Path 
-
-
-
-
-
-
-def load_custom() -> ModuleType:
-    spec   : ModuleSpec = importlib.util.spec_from_file_location("custom", os.path.join(Path.home(), ".config", "gzdoom", "gzdoomrunlib", "custom.py"))
-    custom : ModuleType = importlib.util.module_from_spec(spec)
-
-    sys.modules["custom"] = custom
-    spec.loader.exec_module(custom)
-
-    return custom
-
-custom : ModuleType = load_custom()
+from pathlib import Path
+from custom import load_modcache 
+from custom import save_modcache
 
 modcache : dict = custom.load_modcache()
 
@@ -104,15 +91,12 @@ def load_filepaths(iwad_path: list, file_names: list) -> list:
 
 class CommandOptions:  
     
-    def __init__(self, custom_options: dict):
-        self.command_options : dict = {}
+    def __init__(self, custom_options: dict = {}):
+        modcache : dict = load_modcache()
 
-        try:
-            for key in custom_options.keys():
-                self.command_options[key] = custom_options[key]
-        except:
-            return
-
+        self.dmflags         : int  = modcache["exec"]["dmflags"]
+        self.dmflags2        : int  = modcache["exec"]["dmflags2"]
+        self.command_options : dict = custom_options
 
     def process_arguments(self, argc: int, argv: list):
         if argc >= 2:
@@ -125,7 +109,7 @@ class CommandOptions:
                     pos += 2
                 
                     if argc == 2:
-                        return launch_gzdoom_with(iwad_path)
+                        return launch_gzdoom_with(["+dmflags", str(self.dmflags), "+dmflags2", str(self.dmflags2)] + iwad_path)
             
                 if argv[pos] == "warp":
                     warpmap : dict =  {
@@ -164,11 +148,11 @@ class CommandOptions:
                         a = argv[pos]
                         
                     except IndexError:
-                        args = load_filepaths(iwad_path, [])
+                        args = load_filepaths(iwad_path, []) + ["+dmflags", str(self.dmflags), "+dmflags2", str(self.dmflags2)]
                         return launch_gzdoom_with(args)
 
                 if argv[pos] == "with":
-                    args = load_filepaths(iwad_path, argv[pos + 1].split("%"))
+                    args = load_filepaths(iwad_path, argv[pos + 1].split("%")) + ["+dmflags", str(self.dmflags), "+dmflags2", str(self.dmflags2)]
                     return launch_gzdoom_with(args)
                 
                 else:
@@ -177,6 +161,7 @@ class CommandOptions:
                             key : str = argv[0]
                             argv.pop(0)
                             self.command_options[key](argc - 1, argv)
+                            
             except IndexError as err:
                 print(err)
 
