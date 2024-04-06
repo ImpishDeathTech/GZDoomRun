@@ -28,5 +28,6 @@ makepkz
 gzdoom-run-gui.rkt~
 __pycache__
 GZDoomRun.egg-info/*
+gzdoomrun/GZDoomRun.egg-info/*
 build/*
 gzdoomrungui.rkt

@@ -15,8 +15,8 @@ import PySimpleGUI as gui
 from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path
-import utils as gzdr
-from utils import CommandOptions
+import gzdoomrun.utils as gzdr
+from gzdoomrun.utils import CommandOptions
 
 # '''
 # Loads the library dinamically because I wrote this weird. 
@@ -119,7 +119,8 @@ DMFLAGS_DEFAULT : int = (
     ALLOW_POWERUPS | 
     ALLOW_ARMOR | 
     ALLOW_EXIT | 
-    ALLOW_JUMP | 
+    ALLOW_JUMP |
+    ALLOW_FREELOOK_OFF |
     ALLOW_FOV | 
     SPAWN_MULTI_WEAPONS | 
     ALLOW_CROUCH | 

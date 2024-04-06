@@ -1,11 +1,11 @@
 import os, sys, subprocess, importlib.util, json
-import custom
+import gzdoomrun.custom as custom
 
 from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path
-from custom import load_modcache 
-from custom import save_modcache
+from gzdoomrun.custom import load_modcache 
+from gzdoomrun.custom import save_modcache
 
 modcache : dict = custom.load_modcache()
 
