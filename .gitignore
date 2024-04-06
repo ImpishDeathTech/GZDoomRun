@@ -29,3 +29,4 @@ gzdoom-run-gui.rkt~
 __pycache__
 GZDoomRun.egg-info/*
 build/*
+gzdoomrungui.rkt
