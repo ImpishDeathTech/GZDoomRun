@@ -1,4 +1,5 @@
 # GZDoom Run
+## Version 1.4
 ### A small tool for loading GZDoom mods on Linux a little easier. 
 
 > This program was originally meant to used with Steam to help me load doom mods easier, 
@@ -21,7 +22,7 @@
 
 ### Installation 
 > First, make sure you have GZDoom installed natively, no snap or flatpak crap.
- > Then, download most recent the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-3-0/GZDoomRun_v1.3.3-0.zip) version and unload it:
+ > Then, download most recent the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-4-0-0/GZDoomRun_v1.4.0-0.zip) version and unload it:
 ```sh
 unzip GZDoomRunL_vX.X.X-X.zip
 ```
