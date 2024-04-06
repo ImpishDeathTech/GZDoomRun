@@ -1,15 +1,18 @@
 # GZDoom Run
+## Version 1.4
 ### A small tool for loading GZDoom mods on Linux a little easier. 
 
 > This program was originally meant to used with Steam to help me load doom mods easier, 
 > but has a few command line options that make it a fine standalone program.
 > Type `gzdoomrun help all` once installed to see these options.
-> Requires python3 and PySimpleGUI to be installed on your sistem. 
+> Requires python3 and PySimpleGUI to be installed on your sistem.
+> This program is really for my own usage, this help is just here as a reference for myself,
+> and to aid anyone wanting to mess with programming and ye olde Doom modding.
 
 ## GZDoom Run GUI
-> The gui is currently written in python with PySimpleGUI, which has recently gone proprietary. Head [here](https://pysimplegui.com/pricing) and grab a.
-> free license so you can get a key so you can run the Doom Loader and fiddle with it's code. This application, under all intensive purposes, is for fun, It's a Doom Loader. It was born of tinkering and made to be
-> tinkered with. Thus, I encourage you to do so. If you're an aspiring or experienced python programmer using Windows, figure out how to get it working, I don't know that directory structure! 
+> The gui is currently written in python with PySimpleGUI, which has recently gone proprietary. This program is for personal use only (mostly my own), so you'll have to head [here](https://pysimplegui.com/pricing) and
+> grab a free license so you can get a key so you can run the Doom Loader and fiddle with it's code. This application, under all intensive purposes, is for fun, It's a Doom Loader. It was born of tinkering and made to
+> be tinkered with. Thus, I encourage you to do so. If you're an aspiring or experienced python programmer using Windows, figure out how to get it working, I don't know that directory structure! 
 > 
 > The application automatically searches the steam directory, if present, for any IWADs, and the .config/gzdoom directory for any PWADs or PK3s.
 
@@ -19,23 +22,26 @@
 
 ### Installation 
 > First, make sure you have GZDoom installed natively, no snap or flatpak crap.
- > Then, download most recent the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-3-3-0/GZDoomRun_v1.3.3-0.zip) version and unload it:
+ > Then, download most recent the Release [Zip](https://github.com/ImpishDeathTech/GZDoomRun/releases/download/gzdoom-v1-4-0-0/GZDoomRun_v1.4.0-0.zip) version and unload it:
 ```sh
 unzip GZDoomRunL_vX.X.X-X.zip
 ```
 > Next, cd into the project directory and execute the install.sh script.
 ```sh
 cd GZDoomRun
+# you might want to make a venv like so
+python3 -m venv ${HOME}/.venv
+source ${HOME}/.venv/bin/activate
 make install
 ```
 
 ### Running
 > Now, we'll test it by extracting the provided tarball and installing Brutal Doom! The following options will only be usable if you have SIGIL and Brutal Doom installed to your .config/gzdoom directory.
 ```sh
-gzdoomrun iwad DOOM2.WAD with brutalv21
+gzdr iwad DOOM.WAD warp E1M1 skill 4 with brutalv21
 
 # Loading multiple wads is done by seperating each wad name by a '%'
-gzdoomrun iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
+gzdr iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
 ```
 gzdoomrun will launch as a gui application if no arguments are provided. When you select an IWAD from the list, it's key will appear in the "Path" input, which represents it's file stem. This input accepts these known file stems, as well as full paths, in case your IWAD is not a IWAD that I personally use or own.
 
