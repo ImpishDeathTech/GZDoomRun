@@ -1,0 +1,84 @@
+# DMFlags
+ALLOW_HEALTH        : int = 0x00000001
+ALLOW_POWERUPS      : int = 0x00000002
+WEAPONS_STAY        : int = 0x00000004
+FALL_DMG            : int = 0x00000008
+FALL_DMG_HEXEN      : int = 0x00000010
+FALL_DMG_STRIFE     : int = 0x00000018
+SAME_MAP            : int = 0x00000040
+SPAWN_FARTHEST      : int = 0x00000080
+FORCE_RESPAWN       : int = 0x00000100
+ALLOW_ARMOR         : int = 0x00000200
+ALLOW_EXIT          : int = 0x00000400
+INFINITE_AMMO       : int = 0x00000800
+NO_MONSTERS         : int = 0x00001000
+MONSTERS_RESPAWN    : int = 0x00002000
+ITEMS_RESPAWN       : int = 0x00004000
+FAST_MONSTERS       : int = 0x00008000
+ALLOW_JUMP          : int = 0x00010000
+ALLOW_FREELOOK_OFF  : int = 0x00040000
+ALLOW_FREELOOK      : int = 0x00080000
+ALLOW_FOV           : int = 0x00100000
+SPAWN_MULTI_WEAPONS : int = 0x00200000
+ALLOW_CROUCH        : int = 0x00400000
+LOOSE_INVENTORY     : int = 0x01000000
+KEEP_KEYS           : int = 0x02000000
+KEEP_WEAPONS        : int = 0x04000000
+KEEP_ARMOR          : int = 0x08000000
+KEEP_POWERUPS       : int = 0x10000000
+KEEP_AMMO           : int = 0x20000000
+LOSE_HALF_AMMO      : int = 0x40000000
+
+DMFLAGS_DEFAULT : int = (
+    ALLOW_HEALTH | 
+    ALLOW_POWERUPS | 
+    ALLOW_ARMOR | 
+    ALLOW_EXIT | 
+    ALLOW_JUMP |
+    ALLOW_FREELOOK_OFF |
+    ALLOW_FOV | 
+    SPAWN_MULTI_WEAPONS | 
+    ALLOW_CROUCH | 
+    KEEP_KEYS | 
+    KEEP_WEAPONS | 
+    KEEP_ARMOR | 
+    KEEP_POWERUPS | 
+    KEEP_AMMO
+)
+
+# DMFlags 2
+DROP_WEAPON                     : int = 0x00000002
+NO_TEAM_CHANGING                : int = 0x00000010
+DOUBLE_AMMO                     : int = 0x00000040
+DEGENERATION_ON                 : int = 0x00000080
+ALLOW_BFG_AIMING                : int = 0x00000100
+BARRELS_RESPAWN                 : int = 0x00000200
+RESPAWN_PROTECTION              : int = 0x00000400
+SPAWN_WHERE_DIED                : int = 0x00001000
+KEEP_FRAGS_GAINED               : int = 0x00002000
+NO_RESPAWN                      : int = 0x00004000
+LOSE_FRAG_ON_DEATH              : int = 0x00008000
+INFINITE_INVENTORY              : int = 0x00010000
+NO_MONSTERS_TO_EXIT             : int = 0x00020000
+ALLOW_AUTOMAP                   : int = 0x00040000
+AUTOMAP_ALLIES                  : int = 0x00080000
+ALLOW_SPYING                    : int = 0x00100000
+CHASECAM_CHEAT                  : int = 0x00200000
+DISALLOW_SUICIDE                : int = 0x00400000
+ALLOW_AUTOAIM                   : int = 0x00800000
+CHECK_AMMO_FOR_WEAPON_SWITCH    : int = 0x01000000
+ICON_OF_SINS_DEATH_KILLS_SPAWNS : int = 0x02000000
+END_SECTOR_COUNTS_FOR_KILLS     : int = 0x04000000
+BIG_POWERUPS_RESPAWN            : int = 0x08000000
+ALLOW_VERTICAL_BULLET_SPREAD    : int = 0x40000000
+
+DMFLAGS2_DEFAULT                : int = (
+    ALLOW_BFG_AIMING | 
+    ALLOW_AUTOMAP | 
+    AUTOMAP_ALLIES | 
+    ALLOW_SPYING |
+    ALLOW_AUTOAIM |
+    CHECK_AMMO_FOR_WEAPON_SWITCH | 
+    ICON_OF_SINS_DEATH_KILLS_SPAWNS | 
+    END_SECTOR_COUNTS_FOR_KILLS
+)

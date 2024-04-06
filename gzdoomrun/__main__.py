@@ -11,32 +11,14 @@
 
 import importlib.util, sys, os, string
 import PySimpleGUI as gui 
+import gzdoomrun.utils as utils
 
+from gzdoomrun.dmflags import *
 from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path
-import gzdoomrun.utils as gzdr
+
 from gzdoomrun.utils import CommandOptions
-
-# '''
-# Loads the library dinamically because I wrote this weird. 
-# It was never supposed to be this complex. ^,..,^"
-# ''' 
-'''
-def load_gzdr() -> ModuleType:
-    spec : ModuleSpec = importlib.util.spec_from_file_location("utils", os.path.join(Path.home(), ".config", "gzdoom", "gzdoomrunlib", "utils.py"))
-    gzdr : ModuleType = importlib.util.module_from_spec(spec)
-
-    sys.modules["utils"] = gzdr
-    spec.loader.exec_module(gzdr)
-
-    return gzdr
-
-gzdr : ModuleType = load_gzdr()
-
-CommandOptions = gzdr.CommandOptions
-'''
-
 
 # Event Names
 DIRECTORY        : str = "@ Directory Path"
@@ -64,108 +46,13 @@ TEXT_COLOR       : str = "#DFDFDF"
 CLICK_BACKGROUND : str = "#3A3A3A"
 
 # Path Strings
-DEFAULT_PATH: str = gzdr.WAD_DIRECTORY
-STEAM_PATH  : str = gzdr.custom.STEAM_DIRECTORY
+DEFAULT_PATH: str = utils.WAD_DIRECTORY
+STEAM_PATH  : str = utils.STEAM_DIRECTORY
 ICON_PATH   : str = os.path.join(os.path.sep, "usr", "share", "icons", "gzdoom.png")
+STEAM_NAMES : list = utils.STEAM_NAMES
 
-# ''' 
-# Names that will appear if the application 
-# finds their associated files in the steam directory
-# '''
-STEAM_NAMES : dict = {
-    "Doom": "doom1",
-    "Doom (Unity)": "doom",
-    "Doom 2": "DOOM2.WAD",
-    "Doom 2 (Unity)": "doom2",
-    "Final Doom: The Plutonia Experiment": "PLUTONIA.WAD",
-    "Final Doom: TNT Evilution": "TNT.WAD",
-    "The Ultimate Doom": "DOOM.WAD",
-    "Hexen: Beyond Heretic": "HEXEN.WAD"
-}
-
-# DMFlags
-ALLOW_HEALTH        : int = 0x00000001
-ALLOW_POWERUPS      : int = 0x00000002
-WEAPONS_STAY        : int = 0x00000004
-FALL_DMG            : int = 0x00000008
-FALL_DMG_HEXEN      : int = 0x00000010
-FALL_DMG_STRIFE     : int = 0x00000018
-SAME_MAP            : int = 0x00000040
-SPAWN_FARTHEST      : int = 0x00000080
-FORCE_RESPAWN       : int = 0x00000100
-ALLOW_ARMOR         : int = 0x00000200
-ALLOW_EXIT          : int = 0x00000400
-INFINITE_AMMO       : int = 0x00000800
-NO_MONSTERS         : int = 0x00001000
-MONSTERS_RESPAWN    : int = 0x00002000
-ITEMS_RESPAWN       : int = 0x00004000
-FAST_MONSTERS       : int = 0x00008000
-ALLOW_JUMP          : int = 0x00010000
-ALLOW_FREELOOK_OFF  : int = 0x00040000
-ALLOW_FREELOOK      : int = 0x00080000
-ALLOW_FOV           : int = 0x00100000
-SPAWN_MULTI_WEAPONS : int = 0x00200000
-ALLOW_CROUCH        : int = 0x00400000
-LOOSE_INVENTORY     : int = 0x01000000
-KEEP_KEYS           : int = 0x02000000
-KEEP_WEAPONS        : int = 0x04000000
-KEEP_ARMOR          : int = 0x08000000
-KEEP_POWERUPS       : int = 0x10000000
-KEEP_AMMO           : int = 0x20000000
-LOSE_HALF_AMMO      : int = 0x40000000
-
-DMFLAGS_DEFAULT : int = (
-    ALLOW_HEALTH | 
-    ALLOW_POWERUPS | 
-    ALLOW_ARMOR | 
-    ALLOW_EXIT | 
-    ALLOW_JUMP |
-    ALLOW_FREELOOK_OFF |
-    ALLOW_FOV | 
-    SPAWN_MULTI_WEAPONS | 
-    ALLOW_CROUCH | 
-    KEEP_KEYS | 
-    KEEP_WEAPONS | 
-    KEEP_ARMOR | 
-    KEEP_POWERUPS | 
-    KEEP_AMMO
-)
-
-# DMFlags 2
-DROP_WEAPON                     : int = 0x00000002
-NO_TEAM_CHANGING                : int = 0x00000010
-DOUBLE_AMMO                     : int = 0x00000040
-DEGENERATION_ON                 : int = 0x00000080
-ALLOW_BFG_AIMING                : int = 0x00000100
-BARRELS_RESPAWN                 : int = 0x00000200
-RESPAWN_PROTECTION              : int = 0x00000400
-SPAWN_WHERE_DIED                : int = 0x00001000
-KEEP_FRAGS_GAINED               : int = 0x00002000
-NO_RESPAWN                      : int = 0x00004000
-LOSE_FRAG_ON_DEATH              : int = 0x00008000
-INFINITE_INVENTORY              : int = 0x00010000
-NO_MONSTERS_TO_EXIT             : int = 0x00020000
-ALLOW_AUTOMAP                   : int = 0x00040000
-AUTOMAP_ALLIES                  : int = 0x00080000
-ALLOW_SPYING                    : int = 0x00100000
-CHASECAM_CHEAT                  : int = 0x00200000
-DISALLOW_SUICIDE                : int = 0x00400000
-ALLOW_AUTOAIM                   : int = 0x00800000
-CHECK_AMMO_FOR_WEAPON_SWITCH    : int = 0x01000000
-ICON_OF_SINS_DEATH_KILLS_SPAWNS : int = 0x02000000
-END_SECTOR_COUNTS_FOR_KILLS     : int = 0x04000000
-BIG_POWERUPS_RESPAWN            : int = 0x08000000
-ALLOW_VERTICAL_BULLET_SPREAD    : int = 0x40000000
-
-DMFLAGS2_DEFAULT                : int = (
-    ALLOW_BFG_AIMING | 
-    ALLOW_AUTOMAP | 
-    AUTOMAP_ALLIES | 
-    ALLOW_SPYING |
-    CHECK_AMMO_FOR_WEAPON_SWITCH | 
-    ICON_OF_SINS_DEATH_KILLS_SPAWNS | 
-    END_SECTOR_COUNTS_FOR_KILLS
-)
+def evaluate(s: str):
+    return eval(s)
 
 # '''
 # Application Object
@@ -208,7 +95,7 @@ class Application:
         self.window       : gui.Window = gui.Window(title=self.title, icon=ICON_PATH, layout=self.layout, background_color=BACKGROUND)
         self.is_first_run : bool       = True
     
-    def find(self, event: any) -> bool:
+    def find(self, event: str) -> bool:
         for key in self.events.keys():
             if key == str(event):
                 return True
@@ -216,21 +103,21 @@ class Application:
         return False
     
     
-    def execute(self, event: any, values: any):
+    def execute(self, event: str, values: list):
         self.events[str(event)](event, values)
 
 
-    def set_dmflags(self, event: any, values: any):
-        self.dmflags = values[SET_DMFLAGS].upper().replace("-", "_")
-        self.window[SET_DMFLAGS].update(self.dmflags)
+    def set_dmflags(self, event: str, values: list):
+        self.dmflags = values[event].upper().replace("-", "_")
+        self.window[event].update(self.dmflags)
              
 
-    def set_dmflags2(self, event: any, values: any):
-        self.dmflags2 = values[SET_DMFLAGS2].upper().replace("-", "_")
-        self.window[SET_DMFLAGS2].update(self.dmflags2)
+    def set_dmflags2(self, event: str, values: list):
+        self.dmflags2 = values[event].upper().replace("-", "_")
+        self.window[event].update(self.dmflags2)
 
-    def list_directory(self, event: any, values: any):
-        folder = values[DIRECTORY]
+    def list_directory(self, event: str, values: list):
+        folder = values[event]
         file_names: list = []
         try:
             file_list = os.listdir(folder)
@@ -238,33 +125,28 @@ class Application:
             file_list = []
         finally:
             for file_name in file_list:
-                if os.path.isfile(os.path.join(folder, file_name)) and file_name.lower().endswith(gzdr.custom.WAD_SUFFIXES):
+                if os.path.isfile(os.path.join(folder, file_name)) and file_name.lower().endswith(utils.WAD_SUFFIXES):
                     file_names.append(file_name[:-4])
+                
+            self.window[event].update(file_list)
 
 
-    def update_run_args(self, event: any, values: any):
-        try:
-            file_name = os.path.join(values[DIRECTORY], values[MOD_LIST][0])
-            run_args = values[RUN_ARGS].split(" ")
-            run_args.append(values[MOD_LIST][0])
-            self.run_args = "%".join(run_args)
-            self.window[RUN_ARGS].update(" ".join(run_args))
+    def update_run_args(self, event: str, values: list):
+        self.run_args = "%".join(self.run_args, values[event][0])
+        print(run_args)
+        if self.run_args[0] == '%':
+            self.run_args = self.run_args[1:]
 
-        except:
-            pass
+        self.window[RUN_ARGS].update(self.run_args)
 
     
-    def update_arglist(self, event: any, values: any):
-        if self.run_args:
-            self.run_args += "%"
-            self.run_args += "%".join(values[RUN_ARGS].split(" "))
-        
-        else:
-            self.run_args += "%".join(values[RUN_ARGS].split(" "))
+    def update_arglist(self, event: str, values: list):
+        self.run_args += values[event][len(self.run_args):]
+        self.window[event].update(self.run_args.replace(' ', '%'))
 
 
-    def run_gzdoom(self, event: any, values: any):
-        modcache : dict = gzdr.load_modcache()
+    def run_gzdoom(self, event: str, values: list):
+        modcache : dict = utils.load_modcache()
 
         if self.dmflags.__contains__(" "):
             self.options.dmflags = eval(self.dmflags.replace(" ", " | "))
@@ -278,10 +160,10 @@ class Application:
         else:
             self.options.dmflags2 = eval(self.dmflags2)
         
-        modcache["exec"]["dmflags"] = self.options.dmflags
+        modcache["exec"]["dmflags"]  = self.options.dmflags
         modcache["exec"]["dmflags2"] = self.options.dmflags2
         
-        gzdr.save_modcache(modcache)
+        utils.save_modcache(modcache)
 
         try:
             if not self.iwad:
@@ -312,35 +194,41 @@ class Application:
                     self.options.process_arguments(2, ["iwad", self.iwad])
                 
         
-        except gzdr.GZDoomRunError as e:
-            print(e.what(False))
+        except utils.GZDoomRunError as exn:
+            print(exn.what(False))
         
 
-    def clear_arguments(self, event: any, values: any):
-        modcache : dict = gzdr.load_modcache()
+    def clear_arguments(self, event: str, values: list):
+        modcache : dict = utils.load_modcache()
         
-        modcache["exec"]["iwad"]  = ""
-        modcache["exec"]["warp"]  = ""
-        modcache["exec"]["skill"] = ""
-        modcache["exec"]["with"]  = ""
+        modcache["exec"]["iwad"]     = ""
+        modcache["exec"]["warp"]     = ""
+        modcache["exec"]["skill"]    = ""
+        modcache["exec"]["with"]     = ""
+        modcache["exec"]["dmflags"]  = 0
+        modcache["exec"]["dmflags2"] = 0
         
-        gzdr.custom.save_modcache(modcache)
+        utils.save_modcache(modcache)
 
-        self.run_args   = ""
-        self.warp_map   = ""
-        self.difficulty = ""
-        self.iwad       = ""
+        self.run_args         = ""
+        self.warp_map         = ""
+        self.difficulty       = ""
+        self.iwad             = ""
+        self.dmflags          = "0"
+        self.dmflags2         = "0"
+        self.options.dmflags  = 0
+        self.options.dmflags2 = 0
 
         self.window[RUN_ARGS].update("")
         self.window[WARP_MAP].update("")
         self.window[DIFFICULTY].update("")
         self.window[IWAD_NAME].update("")
+        self.window[SET_DMFLAGS].update("0")
+        self.window[SET_DMFLAGS2].update("0")
 
 
-
-
-    def exit_application(self, event: any, values: any):
-        modcache : dict = gzdr.load_modcache()
+    def exit_application(self, event: str, values: list):
+        modcache : dict = utils.load_modcache()
 
         if self.dmflags.__contains__(" "):
             self.options.dmflags = eval(self.dmflags.replace(" ", " | ").replace("$", "0x").replace("#", ""))
@@ -357,15 +245,15 @@ class Application:
         modcache["exec"]["dmflags"]  = self.options.dmflags
         modcache["exec"]["dmflags2"] = self.options.dmflags2
         
-        gzdr.save_modcache(modcache)
+        utils.save_modcache(modcache)
         self.is_running = False
 
     
-    def set_iwad(self, event: any, values: any):
+    def set_iwad(self, event: str, values: list):
         bignames : list = ["DOOM", "DOOM2", "HEXEN", "PLUTONIA", "TNT"]
-        modcache : dict = gzdr.load_modcache()
+        modcache : dict = utils.load_modcache()
         
-        self.iwad = values[IWAD_NAME]
+        self.iwad = values[event]
 
         if self.iwad in bignames:
             self.iwad += ".WAD"
@@ -374,14 +262,14 @@ class Application:
             self.iwad = STEAM_NAMES[self.iwad]
 
         modcache["exec"]["iwad"] = self.iwad
-        gzdr.custom.save_modcache(modcache)
+        utils.save_modcache(modcache)
 
     
-    def update_iwad(self, event: any, values: any):
+    def update_iwad(self, event: str, values: list):
         bignames : list = ["DOOM", "DOOM2", "HEXEN", "PLUTONIA", "TNT"]
-        modcache : dict = gzdr.load_modcache()
+        modcache : dict = utils.load_modcache()
 
-        self.iwad = values[IWAD_LIST][0]
+        self.iwad = values[event][0]
         
         if self.iwad in bignames:
             self.iwad += ".WAD"
@@ -396,21 +284,27 @@ class Application:
             self.window[IWAD_NAME].update(self.iwad)
 
         modcache["exec"]["iwad"] = self.iwad
-        gzdr.custom.save_modcache(modcache)
+        utils.save_modcache(modcache)
     
-    def set_warp_map(self, event: any, values: any):
-        modcache : dict = gzdr.load_modcache()
-        self.warp_map = values[WARP_MAP].upper()
-        self.window[WARP_MAP].update(self.warp_map)
-        modcache["exec"]["warp"] = self.iwad
-        gzdr.custom.save_modcache(modcache)
     
-    def set_difficulty(self, event: any, values: any):
-        modcache : dict = gzdr.load_modcache()
-        self.difficulty = values[DIFFICULTY]
-        self.window[DIFFICULTY].update(self.difficulty)
-        modcache["exec"]["skill"] = self.iwad
-        gzdr.custom.save_modcache(modcache)
+    def set_warp_map(self, event: str, values: list):
+        modcache : dict = utils.load_modcache()
+        
+        self.warp_map = values[event].upper()
+        self.window[event].update(self.warp_map)
+
+        modcache["exec"]["warp"] = self.warp_map
+        utils.save_modcache(modcache)
+    
+
+    def set_difficulty(self, event: str, values: list):
+        modcache : dict = utils.load_modcache()
+        print(f"[GZDoom Run]: Setting Difficulty to {values[event]}")
+        self.difficulty = values[event]
+        self.window[event].update(self.difficulty)
+        
+        modcache["exec"]["skill"] = self.difficulty
+        utils.save_modcache(modcache)
     
 
     def run(self):
@@ -420,8 +314,8 @@ class Application:
             if e == gui.WIN_CLOSED:
                 break
 
-            elif self.find(e):
-                self.execute(e, v)
+            elif self.find(str(e)):
+                self.execute(str(e), v)
 
         self.window.close()
 
@@ -429,14 +323,10 @@ class Application:
 # Builds and returns the application based on the found iwads and pwads
 # '''
 def make_application(mod_list: list, iwad_list: list) -> Application:
-    modcache   : dict = gzdr.load_modcache()
-    title      : str  = f"GZDoom Run v{gzdr.VERSION_MAJOR}.{gzdr.VERSION_MINOR}.{gzdr.VERSION_PATCH}"
+    modcache   : dict = utils.load_modcache()
+    title      : str  = f"GZDoom Run v{utils.VERSION_MAJOR}.{utils.VERSION_MINOR}.{utils.VERSION_PATCH}"
     iwad_listln: int  = len(iwad_list)
     iwad_name  : str  = modcache["exec"]["iwad"]
-
-    if modcache["first?"]:
-        modcache["first?"] = False 
-        modcache["path"]["iwad"] = DEFAULT_PATH
         
     if iwad_name.endswith(".WAD"):
         iwad_name = iwad_name[:-4]
@@ -451,10 +341,11 @@ def make_application(mod_list: list, iwad_list: list) -> Application:
     pwad_block : list = [
         [
             gui.Text("Path", size=(5, 1), background_color=BACKGROUND),
-            gui.In(modcache["path"]["iwad"], text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, size=(23, 1), enable_events=True, key=DIRECTORY),
+            gui.In(utils.WAD_DIRECTORY, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, size=(23, 1), enable_events=True, key=DIRECTORY),
             gui.FolderBrowse(button_color=BUTTON_COLOR)
         ],
-        [gui.Listbox(mod_list, enable_events=True, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_trough_color=CLICK_BACKGROUND, sbar_arrow_color=CLICK_BACKGROUND, sbar_background_color=BACKGROUND, size=(38, 8), key=MOD_LIST)]
+        [gui.Listbox(mod_list, enable_events=True, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, 
+            sbar_trough_color=CLICK_BACKGROUND, sbar_arrow_color=CLICK_BACKGROUND, sbar_background_color=BACKGROUND, size=(38, 8), key=MOD_LIST)]
     ]
     launch_pad : list = [
         [
@@ -475,118 +366,39 @@ def make_application(mod_list: list, iwad_list: list) -> Application:
     ]
 
     dmflags_layout : list = [
-            [gui.Frame("dmflags", background_color=BACKGROUND, p=3, layout=[[gui.In(str(modcache["exec"]["dmflags"]), size=(39, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=SET_DMFLAGS)]])],
-            [gui.Frame("dmflags2", background_color=BACKGROUND, p=3, layout=[[gui.In(str(modcache["exec"]["dmflags2"]), size=(39, 1), text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=SET_DMFLAGS2)]])]
+            [gui.Frame("dmflags", background_color=BACKGROUND, p=3, layout=[[gui.In(str(modcache["exec"]["dmflags"]), size=(39, 1), 
+                text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=SET_DMFLAGS)]])],
+            [gui.Frame("dmflags2", background_color=BACKGROUND, p=3, layout=[[gui.In(str(modcache["exec"]["dmflags2"]), size=(39, 1), 
+                text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, enable_events=True, key=SET_DMFLAGS2)]])]
     ]
 
     if iwad_listln > 0:
         if iwad_listln <= 8:
-            iwad_block.append([gui.Listbox(iwad_list, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_trough_color=CLICK_BACKGROUND, sbar_arrow_color=CLICK_BACKGROUND, sbar_background_color=BACKGROUND, enable_events=True, size=(38, iwad_listln), key=IWAD_LIST)])
+            iwad_block.append([gui.Listbox(iwad_list, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, 
+                sbar_trough_color=CLICK_BACKGROUND, sbar_arrow_color=CLICK_BACKGROUND, sbar_background_color=BACKGROUND, 
+                enable_events=True, size=(38, iwad_listln), key=IWAD_LIST)])
 
         else:
-            iwad_block.append([gui.Listbox(iwad_list, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, sbar_trough_color=CLICK_BACKGROUND, sbar_arrow_color=CLICK_BACKGROUND, sbar_background_color=BACKGROUND, enable_events=True, size=(38, 8), key=IWAD_LIST)])
+            iwad_block.append([gui.Listbox(iwad_list, text_color=TEXT_COLOR, background_color=INPUT_BACKGROUND, 
+                sbar_trough_color=CLICK_BACKGROUND, sbar_arrow_color=CLICK_BACKGROUND, sbar_background_color=BACKGROUND, 
+                enable_events=True, size=(38, 8), key=IWAD_LIST)])
 
     return Application(title, iwad_block, pwad_block, launch_pad, dmflags_layout, modcache)
 
-# '''
-# IWAD Finders
-# 
-# The following functions directly search for the 
-# associated IWADs to ensure they have been installed
-# through steam
-# '''
-def find_doom1() -> bool:
-    doom_dir   : str = os.path.join(os.path.sep, "usr", "share", "doom")
-    gzdoom_dir : str = os.path.join(os.path.sep, "usr", "share", "gzdoom")
 
-    if os.path.isdir(doom_dir):
-        return os.path.isfile(os.path.join(doom_dir, "doom1.wad"))
-    
-    elif os.path.isfile(os.path.join(gzdoom_dir, "doom1.wad")):
-        return os.path.join(gzdoom_dir, "doom1.wad")
-    
-    return False
-
-def find_doom2() -> bool:
-    return os.path.isfile(os.path.join(STEAM_PATH, "Doom 2", "base", "DOOM2.WAD"))
-
-
-def find_ultimate_doom() -> bool:
-    return os.path.isfile(os.path.join(STEAM_PATH, "Ultimate Doom", "base", "DOOM.WAD"))
-
-
-def find_hexen() -> bool:
-    return os.path.isfile(os.path.join(STEAM_PATH, "Hexen", "base", "HEXEN.WAD"))
-
-def finaldoom_find(iwad_name: str) -> bool:
-    finaldoom_path : str = os.path.join(STEAM_PATH, "Doom 2", "finaldoombase")
-    plutonia_path  : str = os.path.join(finaldoom_path, f"{iwad_name}.WAD")
-    if os.path.isdir(finaldoom_path):
-        return os.path.isfile(plutonia_path)
-
-def find_tnt() -> bool:
-    finaldoom_path : str = os.path.join(STEAM_PATH, "Doom 2", "finaldoombase")
-    tnt_path  : str = os.path.join(finaldoom_path, "TNT.WAD")
-    if os.path.isdir(finaldoom_path):
-        return os.path.isfile(tnt_path)
-
-# '''
-# This function will list IWADS based on what is installed
-# to your .local/shared/Steam 
-# '''
-def load_iwads(folder_list: list) -> list:
-    iwad_names : list = []
-    keys       = list(STEAM_NAMES.keys())
-
-    if find_doom1():
-        iwad_names.append(keys[0])
-
-    for folder in folder_list:
-        if folder == "Ultimate Doom" and find_ultimate_doom():
-            iwad_names += [keys[1], keys[6]]
-        
-        elif folder == "Doom 2" and find_doom2():
-            iwad_names += [keys[2], keys[3]]
-            
-            if finaldoom_find("PLUTONIA"):
-                iwad_names.append(keys[4])
-
-            if finaldoom_find("TNT"):
-                iwad_names.append(keys[5])
-
-        elif folder == "Hexen" and find_hexen():
-            iwad_names.append(keys[7])
-
-    return iwad_names
-
-
-# '''
-# This function will list PWADS and PK3s in the directory DEFAULT_PATH.
-# This path can be changed dynamically by simply typing into
-# the 'Mod Folder' input
-# '''
-def load_pwads(file_list: list) -> list:
-    file_names : list = []
-
-    for file_name in file_list:
-        if os.path.isfile(os.path.join(DEFAULT_PATH, file_name)) and file_name.lower().endswith(gzdr.custom.WAD_SUFFIXES):
-            file_names.sort(key=str.lower)
-            file_names.append(file_name[:-4])
-    
-    return file_names
 
 # '''
 # This function will run the appliction without GUI
 # and parse command line arguments
 # '''
 def run_from_cli(argc: int, argv: list) -> int:
-    options : CommandOptions = CommandOptions(gzdr.custom.load_directory())
+    options : CommandOptions = CommandOptions(utils.custom.load_directory())
     
     try:
         argv.pop(0)
         options.process_arguments(argc - 1, argv)
     
-    except gzdr.GZDoomRunError as e:
+    except utils.GZDoomRunError as e:
         e.what()
         return 1
     
@@ -603,7 +415,7 @@ def run_with_gui():
         file_list : list = []
     
     finally:
-        pwad_names = load_pwads(file_list)
+        pwad_names = utils.load_pwads(file_list)
     
     try: 
         folder_list : list = os.listdir(STEAM_PATH)
@@ -612,7 +424,7 @@ def run_with_gui():
         folder_list : list = []
     
     finally:
-        iwad_names = load_iwads(folder_list)
+        iwad_names = utils.load_iwads(folder_list)
 
     app : Application = make_application(pwad_names, iwad_names)
     app.run()

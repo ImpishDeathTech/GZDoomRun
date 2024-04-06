@@ -1,39 +1,144 @@
 import os, sys, subprocess, importlib.util, json
-import gzdoomrun.custom as custom
 
 from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path
-from gzdoomrun.custom import load_modcache 
-from gzdoomrun.custom import save_modcache
+from gzdoomrun.error import GZDoomRunError
+from gzdoomrun.dmflags import *
 
-modcache : dict = custom.load_modcache()
+MODCACHE       : str   = os.path.join(Path.home(), ".config", "gzdoom", "modcache.json")
 
+def load_modcache() -> dict:
+    with open(MODCACHE, "r") as modcache: 
+        data : dict = json.load(modcache)
+        return data
+
+def save_modcache(data: dict):
+    with open(MODCACHE, "w") as modcache: 
+        modcache.truncate()
+        json.dump(data, modcache)
+
+modcache : dict = load_modcache()
+
+WAD_DIRECTORY     : str   = os.path.join(Path.home(), os.sep.join(modcache["path"]["config"]))
+STEAM_DIRECTORY   : str   = os.path.join(Path.home(), os.sep.join(modcache["path"]["steam"]))
+CUSTOM_DIRECTORY  : str   = os.path.join(WAD_DIRECTORY, "custom")
+WAD_SUFFIXES      : tuple = (".wad", ".pk3")
+GZDOOM_DIRECTORY  : str   = os.path.join(os.path.sep, "usr", "share", "gzdoom")
 VERSION_MAJOR     : int  = modcache["version"][0]
 VERSION_MINOR     : int  = modcache["version"][1]
 VERSION_PATCH     : int  = modcache["version"][2]
 
+# ''' 
+# Names that will appear if the application 
+# finds their associated files in the steam directory
+# '''
+STEAM_NAMES : dict = {
+    "Doom": "doom1",
+    "Doom (Unity)": "doom",
+    "Doom 2": "DOOM2.WAD",
+    "Doom 2 (Unity)": "doom2",
+    "Final Doom: The Plutonia Experiment": "PLUTONIA.WAD",
+    "Final Doom: TNT Evilution": "TNT.WAD",
+    "The Ultimate Doom": "DOOM.WAD",
+    "Hexen: Beyond Heretic": "HEXEN.WAD"
+}
+
 del modcache
 
-WAD_DIRECTORY : str = custom.WAD_DIRECTORY
+# '''
+# IWAD Finders
+# 
+# The following functions directly search for the 
+# associated IWADs to ensure they have been installed
+# through steam
+# '''
+def find_doom1() -> bool:
+    doom_dir   : str = os.path.join(os.path.sep, "usr", "share", "doom")
+    gzdoom_dir : str = os.path.join(os.path.sep, "usr", "share", "gzdoom")
 
-class GZDoomRunError(Exception):
-
-    def __init__(self, code: int, reason: str):
-        self.__what__ : str = f"[GZDoom Run Error] ({code}): {reason}"
-        self.__code__ : int = code
+    if os.path.isdir(doom_dir):
+        return os.path.isfile(os.path.join(doom_dir, "doom1.wad"))
     
-    def what(self, exit_app: bool=True):
-        print(self.__what__)
-        
-        if exit_app:
-            sys.exit(self.__code__)
+    elif os.path.isfile(os.path.join(gzdoom_dir, "doom1.wad")):
+        return os.path.join(gzdoom_dir, "doom1.wad")
+    
+    return False
 
+def find_doom2() -> bool:
+    return os.path.isfile(os.path.join(STEAM_DIRECTORY, "Doom 2", "base", "DOOM2.WAD"))
+
+
+def find_ultimate_doom() -> bool:
+    return os.path.isfile(os.path.join(STEAM_DIRECTORY, "Ultimate Doom", "base", "DOOM.WAD"))
+
+
+def find_hexen() -> bool:
+    return os.path.isfile(os.path.join(STEAM_DIRECTORY, "Hexen", "base", "HEXEN.WAD"))
+
+def finaldoom_find(iwad_name: str) -> bool:
+    finaldoom_path : str = os.path.join(STEAM_DIRECTORY, "Doom 2", "finaldoombase")
+    path           : str = os.path.join(finaldoom_path, f"{iwad_name}.WAD")
+    
+    if os.path.isdir(finaldoom_path):
+        return os.path.isfile(path)
+
+
+# '''
+# This function will list IWADS based on what is installed
+# to your .local/shared/Steam 
+# '''
+def load_iwads(folder_list: list) -> list:
+    iwad_names : list = []
+    
+    keys = list(STEAM_NAMES.keys())
+
+    if find_doom1():
+        iwad_names.append(keys[0])
+
+    for folder in folder_list:
+        if folder == "Ultimate Doom" and find_ultimate_doom():
+            iwad_names += [keys[1], keys[6]]
+        
+        elif folder == "Doom 2" and find_doom2():
+            iwad_names += [keys[2], keys[3]]
+            
+            if finaldoom_find("PLUTONIA"):
+                iwad_names.append(keys[4])
+
+            if finaldoom_find("TNT"):
+                iwad_names.append(keys[5])
+
+        elif folder == "Hexen" and find_hexen():
+            iwad_names.append(keys[7])
+
+    return iwad_names
+
+
+def load_pwads(file_list: list) -> list:
+    file_names : list = []
+
+    for file_name in file_list:
+        if os.path.isfile(os.path.join(WAD_DIRECTORY, file_name)) and file_name.lower().endswith(WAD_SUFFIXES):
+            file_names.sort(key=str.lower)
+            file_names.append(file_name[:-4])
+    
+    return file_names
+
+
+def load_module(modname: str, modpath: str):
+    spec   : ModuleSpec = importlib.util.spec_from_file_location(f"gzdoomrun.{modname}", modpath)
+    custom : ModuleType = importlib.util.module_from_spec(spec)
+
+    sys.modules[f"gzdoomrun.{modname}"] = custom
+    spec.loader.exec_module(custom)
+
+    return custom
 
 
 def find_file(mod_name: str) -> str:
     for file_name in os.listdir(WAD_DIRECTORY):
-        if file_name.startswith(mod_name) and file_name.endswith(custom.WAD_SUFFIXES):
+        if file_name.startswith(mod_name) and file_name.endswith(WAD_SUFFIXES):
             return file_name
 
     return "nil"

@@ -1,23 +1,39 @@
+PY3      = python3 -m 
+INSTALL  = pip install
+GZDR_DIR = /usr/share/gzdoomrun 
+APPS     = /usr/share/applications
+BIN      = /usr/bin/gzdrun
+
+venv:
+	$(PY3) venv $(HOME)/.venv
+	chmod +x activate.sh
+	./activate.sh 
+
+remove-venv:
+	sudo rm /usr/bin/activate
+
 install:
+	sudo mkdir $(GZDR_DIR)
+	sudo cp LICENSE $(GZDR_DIR)
+	sudo cp VERSION $(GZDR_DIR)
+	sudo cp -r build $(GZDR_DIR)
+	sudo cp *.png $(GZDR_DIR) 
+	sudo cp *.jpg $(GZDR_DIR) 
+	sudo cp gzdoomrun.desktop $(APPS)
 	
-	sudo mkdir /usr/share/gzdoomrun
-	sudo cp LICENSE /usr/share/gzdoomrun
-	sudo cp VERSION /usr/share/gzdoomrun
-	sudo cp -r build /usr/share/gzdoomrun
-	sudo cp *.png /usr/share/gzdoomrun 
-	sudo cp *.jpg /usr/share/gzdoomrun 
-	sudo cp gzdoomrun.desktop /usr/share/applications
-	chmod +x ./gzdr.sh
-	sudo cp ./gzdr.sh /usr/bin/gzdr
+	chmod +x gzdrun.sh 
+	sudo cp gzdrun.sh /usr/bin/gzdrun
+	sudo cp activate.sh /usr/bin/activate
 	cp modcache.json $(HOME)/.config/gzdoom 
 	cp -r custom $(HOME)/.config/gzdoom
-	python3 -m pip install pysimplegui
-	python3 -m pip install ./
+
+	$(PY3) $(INSTALL) pysimplegui
+	$(PY3) $(INSTALL) ./
 
 uninstall:
 	python3 -m pip uninstall gzdoomrun 
-	sudo rm -r /usr/share/gzdoomrun
-	sudo rm /usr/bin/gzdr
+	sudo rm -r $(GZDR_DIR)
+	sudo rm $(BIN)
 	sudo rm -r $(HOME)/.config/gzdoom/custom 
 	sudo rm /usr/share/applications/gzdoomrun.desktop
 	
