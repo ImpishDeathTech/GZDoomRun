@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=gzdoomrun iwad DOOM.WAD with SIGIL_v1_21
+Exec=gzdrun iwad DOOM.WAD with SIGIL_v1_21
 Icon=sigil
 Name=SIGIL
 Categories=Game;ActionGame;
