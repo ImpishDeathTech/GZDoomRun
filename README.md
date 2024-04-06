@@ -8,7 +8,8 @@
 
 ## GZDoom Run GUI
 > The gui is currently written in python with PySimpleGUI, which has recently gone proprietary. This program, is for personal use only (mostly my own), so you'll have to head [here](https://pysimplegui.com/pricing) and
-> grab a free license so you can get a key so you can run the Doom Loader and fiddle with it's code. This application, under all intensive purposes, is for fun, It's a Doom Loader. It was born of tinkering and made to > be tinkered with. Thus, I encourage you to do so. If you're an aspiring or experienced python programmer using Windows, figure out how to get it working, I don't know that directory structure! 
+> grab a free license so you can get a key so you can run the Doom Loader and fiddle with it's code. This application, under all intensive purposes, is for fun, It's a Doom Loader. It was born of tinkering and made to
+> be tinkered with. Thus, I encourage you to do so. If you're an aspiring or experienced python programmer using Windows, figure out how to get it working, I don't know that directory structure! 
 > 
 > The application automatically searches the steam directory, if present, for any IWADs, and the .config/gzdoom directory for any PWADs or PK3s.
 
