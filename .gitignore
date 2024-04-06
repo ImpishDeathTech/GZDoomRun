@@ -27,3 +27,5 @@ print-version
 makepkz
 gzdoom-run-gui.rkt~
 __pycache__
+GZDoomRun.egg-info/*
+build/*

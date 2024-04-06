@@ -116,21 +116,30 @@ class CommandOptions:
                         "E": None,
                         "M": None
                     }
+                    E : bool = False 
+                    M : bool = False
+                    
                     pos += 1
-                
-                    for i in range(len(argv[pos])):
-                        if argv[pos][i] == 'E':
-                            warpmap["E"] = argv[pos][i + 1]
+                    s : str = argv[pos]
 
-                        elif argv[pos][i] == 'M':
-                            if argv[pos].startswith("MAP"):
-                                warpmap["M"] = argv[pos][3:]
-                                break
+                    for c in s:
+                        if M and c:
+                            M = False
+                            print(c)
+                            warpmap["M"] = c
+                            
+                        elif warpmap["E"] and c:
+                            E = False
+                            print(c)
+                            warpmap["E"] = c
+                        
+                        elif c.upper() == 'E':
+                            print(c)
+                            M = True
 
-                            else:
-                                warpmap["M"] = argv[pos][i + 1]
-                        else:
-                            continue
+                        elif c.upper() == 'M':
+                            print(c)
+                            M = True
 
                     if warpmap["E"]:
                         iwad_path += ["-warp", warpmap["E"], warpmap["M"]]
@@ -139,6 +148,10 @@ class CommandOptions:
                         iwad_path += ["-warp", warpmap["M"]]
 
                     pos += 1
+
+                    if pos == argc:
+                        print(iwad_path + ["+dmflags", str(self.dmflags), "+dmflags2", str(self.dmflags2)])
+                        return launch_gzdoom_with(iwad_path + ["+dmflags", str(self.dmflags), "+dmflags2", str(self.dmflags2)])
             
                 if argv[pos] == "skill":
                     iwad_path += ["-skill", argv[pos + 1]]

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=gzdoomrun
+Exec=python3 -m gzdoomrun
 Icon=gzdoom
 Name=GZDoom Run
 Categories=Game;ActionGame;

@@ -1,103 +1,15 @@
-#! /usr/bin/bash
+sudo mkdir /usr/share/gzdoomrun	
+sudo cp LICENSE /usr/share/gzdoomrun
+sudo cp VERSION /usr/share/gzdoomrun
+sudo cp -r build /usr/share/gzdoomrun
+chmod +x ./uninstall
+sudo cp ./uninstall /usr/share/gzdoomrun
+sudo cp *.png /usr/share/gzdoomrun 
+sudo cp *.jpg /usr/share/gzdoomrun 
+sudo cp gzdoomrun.desktop /usr/share/applications
 
-GZDOOMR_CONFIG="${HOME}/.config/gzdoom"
-GZDOOMR_BIN=/usr/bin/gzdoomrun
-GZDOOMR_GUI_1312_BIN=/usr/bin/gzdoomrun-1-3-12
-GZDOOMR_BIN=/usr/bin/gzdoomrun
-GZDOOMR_CUSTOM_DIR="${GZDOOMR_CONFIG}/custom"
-GZDOOMR_CUSTOM="${GZDOOMR_CUSTOM_DIR}.py"
-GZDOOMR_DESKTOP=/usr/share/applications/gzdoomrun.desktop
-GZDOOMR_STEAM_BANNER="${GZDOOMR_CONFIG}/banner.jpg"
-GZDOOMR_STEAM_LOGO="${GZDOOMR_CONFIG}/logo.png"
-GZDOOMR_STEAM_ARTWORK="${GZDOOMR_CONFIG}/artwork.png"
-GZDOOMR_MODCACHE="${HOME}/.config/gzdoom/modcache.json"
+chmod +x ./gzdr.sh
+sudo cp ./gzdr.sh /usr/bin
 
-function install-gzdoom () {
-    printf "Installing GZDoom Run ... \n\n"
-    
-    sudo cp -r ./gzdoomrunlib $GZDOOMR_CONFIG
-    sudo cp ./gzdoomrun.py $GZDOOMR_BIN
-    sudo chmod +x $GZDOOMR_BIN
-    cp ./modcache.json $GZDOOMR_MODCACHE
-    cp ./artwork.png $GZDOOMR_STEAM_ARTWORK
-    cp ./logo.png $GZDOOMR_STEAM_LOGO
-    cp ./banner.jpg $GZDOOMR_STEAM_BANNER
-    cp -r ./custom $GZDOOMR_CUSTOM_DIR
-    
-    sudo cp ./gzdoomrun.desktop $GZDOOMR_DESKTOP
-
-    RET=$?
-    printf "\nDone.\n"
-    return $RET
-}
-
-function check-done () {
-    if [ $1 -eq 0 ]
-    then
-        printf "\nDone.\n"
-    else
-        printf "\nCould not install %s!\n" $2
-        exit 1
-    fi
-}
-
-function install-module () {
-    PKG_NAME=$1
-    cd $PKG_NAME
-    
-    if [ $? -eq 1 ]
-    then 
-        unzip "./${PKG_NAME}.pkz"
-        check-done $? $PKG_NAME
-        cd $PKG_NAME
-        check-done $? $PKG_NAME
-    fi
-    
-    ./install
-    RET=$?
-    cd ..
-
-    return $RET
-}
-
-function install-brutal () { 
-    install-module brutal
-    return $?
-}
-
-function install-sigil () {  
-    install-module sigil 
-    return $?
-}
-
-if [ $# -eq 1 ]
-then
-    if [ $1 = gzdoom ]
-    then
-        install-gzdoom
-    elif [ $1 = brutal ]
-    then
-        install-brutal
-    elif [ $1 = sigil ]
-    then 
-        install-sigil
-    elif [ $1 = all ]
-    then 
-        install-gzdoom
-        install-brutal
-        install-sigil
-    else
-        install-module $1
-
-        if [ $? -eq 1 ]
-        then
-            printf "\nInvalid argument '%s'\n" $ARG 
-            exit 1
-        fi
-    fi
-else 
-    install-gzdoom
-fi
-
-exit $?
-
+cp modcache.json $HOME/.config/gzdoom 
+cp -r custom $HOME/.config/gzdoom
