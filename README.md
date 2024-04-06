@@ -41,6 +41,7 @@ gzdoomrun iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
 ```
 gzdoomrun will launch as a gui application if no arguments are provided. The DMFlags section accepts the following constants and their related values:
 | DMFlags                                     | DMFlags 2                                   |
+|---------------------------------------------|---------------------------------------------|
 | Constant                        | Value     | Constant                        | Value     |
 |---------------------------------|-----------|---------------------------------|-----------|
 | ALLOW_HEALTH                    | $1        | DROP_WEAPON                     | $2        |
