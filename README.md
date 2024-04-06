@@ -39,10 +39,12 @@ gzdoomrun iwad DOOM2.WAD with brutalv21
 # Loading multiple wads is done by seperating each wad name by a '%'
 gzdoomrun iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
 ```
-gzdoomrun will launch as a gui application if no arguments are provided. The DMFlags section accepts the following constants and their related values:
-| DMFlags                                     | DMFlags 2                                   |
-|---------------------------------------------|---------------------------------------------|
-| Constant                        | Value     | Constant                        | Value     |
+gzdoomrun will launch as a gui application if no arguments are provided. 
+
+## DMFlags
+The DMFlags section accepts the following constants and their related values:
+
+| DMFlag                          | Value     | DMFlag 2                        | Value     |
 |---------------------------------|-----------|---------------------------------|-----------|
 | ALLOW_HEALTH                    | $1        | DROP_WEAPON                     | $2        |
 | ALLOW_POWERUPS                  | $2        | NO_TEAM_CHANGING                | $10       |
@@ -75,8 +77,8 @@ gzdoomrun will launch as a gui application if no arguments are provided. The DMF
 | LOSE_HALF_AMMO                  | $40000000 |
 | DMFLAGS_DEFAULT                 | $3E750603 |
 
-
-The program automatically caps-locks this input section, and converts - to _ so you have to press shift less. The same goes for the map choice input, which accepts the "E1M1" or "MAP01" formats.
+The input accepts multiple parameters, and the program automatically caps-locks this input section, and converts - to _ so you have to press shift less. 
+The same goes for the map choice input, which accepts the "E1M1" or "MAP01" formats.
 
 And that's it! Now, Setting it up with steam is pretty easy.
 Go to your Library, and click Add Game at the bottom. A list of your applications should pop up and we can add GZDoom from there.
