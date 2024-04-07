@@ -1,6 +1,6 @@
 import os
 
-from gzdoomrun.utils import load_module
+from gzdoomrun.utils import load_module, CUSTOM_DIRECTORY
 from types import ModuleType
 
 ####################################################################
@@ -15,11 +15,11 @@ OPTIONS : dict = {}
 ####################################################################
 
 def load_directory() -> dict:
-    for file_name in os.listdir(utils.CUSTOM_DIRECTORY):
+    for file_name in os.listdir(CUSTOM_DIRECTORY):
         if file_name.endswith(".py"):
             modname : str        = file_name[:-3]
-            modpath : str        = os.path.join(utils.CUSTOM_DIRECTORY, file_name)
-            module  : ModuleType = utils.load_module(modname, modpath)
+            modpath : str        = os.path.join(CUSTOM_DIRECTORY, file_name)
+            module  : ModuleType = load_module(modname, modpath)
 
         OPTIONS[modname] : callable = module.main
     
