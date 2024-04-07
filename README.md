@@ -47,13 +47,17 @@ make install-system
 > But I'd advise otherwise. Best practice is to use a .venv
 
 ### Running
-> Now, we'll test it by extracting the provided tarball and installing Brutal Doom! The following options will only be usable if you have SIGIL and Brutal Doom installed to your .config/gzdoom directory.
+> Now, we'll test it by extracting the provided pkz and installing Brutal Doom! The following options will only be usable if you have SIGIL and Brutal Doom installed to your .config/gzdoom directory.
 > You'll always want to make sure you have your python virtual environment running. 
 ```sh
-gzdrun iwad DOOM.WAD warp E1M1 skill 4 with brutalv21
+gzdrun install SIGIL_v1_21.pkz
+gzdrun iwad DOOM.WAD warp E1M1 skill 4 with SIGIL_v1_21
 
 # Loading multiple wads is done by seperating each wad name by a '%'
 gzdrun iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
+
+# It is also possible to warp to a specific map, and choose a difficulty
+gzdrun iwad DOOM.WAD warp E1M1 skill 4 with SIGIL_v1_21
 ```
 gzdoomrun will launch as a gui application if no arguments are provided. When you select an IWAD from the list, it's key will appear in the "Path" input, which represents it's file stem. This input accepts these known file stems, as well as full paths, in case your IWAD is not a IWAD that I personally use or own.
 
