@@ -38,6 +38,8 @@ make .venv && make install
 python3 -m venv /path/to/venv && python3 -m venv /path/to/.venv/bin/activate
 make install
 ```
+> You will have to edit the `VENV` var in gzdrun.sh with /path/to/.venv
+
 > If you want to install it to the native environment (Not Reccomended!!!), of course, you could always type the following:
 ```sh
 make install-system
