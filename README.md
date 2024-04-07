@@ -10,6 +10,7 @@
 > and to aid anyone wanting to mess with programming and ye olde Doom modding.
 
 ## GZDoom Run GUI
+![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/Screenshot.jpg)
 > The gui is currently written in python with PySimpleGUI, which has recently gone proprietary. This program is for personal use only (mostly my own), so you'll have to head [here](https://pysimplegui.com/pricing) and
 > grab a free license so you can get a key so you can run the Doom Loader and fiddle with it's code until I can release a python package, which will remain free software. This application, under all intensive purposes,
 > is for fun, It's a Doom Loader. It was born of tinkering and made to be tinkered with. Thus, I encourage you to do so. If you're an aspiring or experienced python programmer using Windows, figure out how to get it working,
@@ -17,7 +18,7 @@
 > 
 > The application automatically searches the steam directory, if present, for any IWADs, and the .config/gzdoom directory for any PWADs or PK3s.
 
-![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/Screenshot.jpg "Application Screenshot")
+
 
 ## Tutorial
 
@@ -47,13 +48,17 @@ make install-system
 > But I'd advise otherwise. Best practice is to use a .venv
 
 ### Running
-> Now, we'll test it by extracting the provided tarball and installing Brutal Doom! The following options will only be usable if you have SIGIL and Brutal Doom installed to your .config/gzdoom directory.
+> Now, we'll test it by extracting the provided pkz and installing Brutal Doom! The following options will only be usable if you have SIGIL and Brutal Doom installed to your .config/gzdoom directory.
 > You'll always want to make sure you have your python virtual environment running. 
 ```sh
-gzdrun iwad DOOM.WAD warp E1M1 skill 4 with brutalv21
+gzdrun install SIGIL_v1_21.pkz
+gzdrun iwad DOOM.WAD warp E1M1 skill 4 with SIGIL_v1_21
 
 # Loading multiple wads is done by seperating each wad name by a '%'
 gzdrun iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
+
+# It is also possible to warp to a specific map, and choose a difficulty
+gzdrun iwad DOOM.WAD warp E1M1 skill 4 with SIGIL_v1_21
 ```
 gzdoomrun will launch as a gui application if no arguments are provided. When you select an IWAD from the list, it's key will appear in the "Path" input, which represents it's file stem. This input accepts these known file stems, as well as full paths, in case your IWAD is not a IWAD that I personally use or own.
 
