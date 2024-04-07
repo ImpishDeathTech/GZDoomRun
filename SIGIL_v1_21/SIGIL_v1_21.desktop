@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Exec=gzdrun iwad DOOM.WAD with SIGIL_v1_21
-Icon=sigil
+Icon=SIGIL_v1_21
 Name=SIGIL
 Categories=Game;ActionGame;
 Comment=The Unofficial 5th episode of DOOM by Romero Games. 
