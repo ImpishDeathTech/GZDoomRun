@@ -12,7 +12,7 @@ import os, json, sys, subprocess, shutil
 from pathlib import Path
 from zipfile import ZipFile
 from subprocess import CompletedProcess
-from gzdoomrun.utils import load_modcache, save_modcache, save_manifest, WAD_DIRECTORY, STEAM_DIRECTORY, CUSTOM_DIRECTORY, WAD_SUFFIXES
+from gzdoomrun.utils import load_modcache, save_modcache, WAD_DIRECTORY, STEAM_DIRECTORY, CUSTOM_DIRECTORY, WAD_SUFFIXES
 
 APPS_DIRECTORY   : str   = os.path.join(os.path.sep, "usr", "share", "applications")
 GZDOOM_DIRECTORY : str   = os.path.join(os.path.sep, "usr", "share", "gzdoom")
@@ -37,14 +37,14 @@ def install_desktop_file(zip_file: ZipFile, file_name: str):
     input_file.close()
     output_file.close()
 
-def install_icon(temp_dir: str, file_name:str, icon_path: str, zip_file: ZipFile = None):
-    print(f"[GZDoom Run Install]: installing {name} to {icon_path}")
-    manifest.append(icon_path)
-    
+def install_icon(temp_dir: str, file_name:str, icon_path: str, zip_file: ZipFile = None) -> dict:
+    print(f"[GZDoom Run Install]: installing {file_name} to {icon_path}")
+
+    name = file_name
     if zip_file:
-        zip_file.extract(name)
+        zip_file.extract(os.path.join(file_name))
     
-    completed : CompletedProcess = subprocess.run(["sudo", "cp", temp_dir + file_name, icon_path])
+    completed : CompletedProcess = subprocess.run(["sudo", "cp", os.path.join(temp_dir, file_name), icon_path])
                     
     if completed.returncode != 0:
         print(f"[GZDoom Run Error]({completed.returncode}): {completed.stdout}")
@@ -54,7 +54,6 @@ def install_packet_archive(file_name: str):
     manifest : list = []
     outpath  : str  = os.path.join(WAD_DIRECTORY, file_name[:-4])
     icon_path: str  = os.path.join(os.path.sep, "usr", "share", "icons", file_name[:-4] + ".png")
-    temp_dir : str  = os.path.abspath(file_name[:-4])
 
     print(GZDOOM_INSTALL + f" {file_name} to {outpath} ...")
 
@@ -65,15 +64,15 @@ def install_packet_archive(file_name: str):
         for name in zip_file.namelist():
             if name.endswith(WAD_SUFFIXES):
                 print(f"[GZDoom Run Install]: insalling {name} to {os.path.join(WAD_DIRECTORY, name.split(os.path.sep)[1])} ...")
-                manifest.append(os.path.join(WAD_DIRECTORY, name))
+                manifest.append(os.path.join(WAD_DIRECTORY, name.split(os.path.sep)[1]))
                 zip_file.extract(name)
-                install_file(temp_dir, name.split(os.path.sep)[1], WAD_DIRECTORY)
+                install_file(name.split(os.path.sep)[0], name.split(os.path.sep)[1], WAD_DIRECTORY)
             
             elif name.endswith(".desktop"):
                 print(f"[GZDoom Run Install]: Installing {name} to {os.path.join(WAD_DIRECTORY, name)} ...")
-                manifest.append(os.path.join(APPS_DIRECTORY, name))
+                manifest.append(os.path.join(APPS_DIRECTORY, name.split(os.path.sep)[1]))
                 zip_file.extract(name)
-                install_file(temp_dir, name.split(os.path.sep)[1], APPS_DIRECTORY)
+                install_file(name.split(os.path.sep)[0], name.split(os.path.sep)[1], APPS_DIRECTORY)
             
             elif name.endswith(TEXT_SUFFIXES):
                 print(f"[GZDoom Run Install]: Installing {name} to {os.path.join(WAD_DIRECTORY, name)} ...")
@@ -81,8 +80,9 @@ def install_packet_archive(file_name: str):
                 zip_file.extract(name, path=WAD_DIRECTORY) 
             
             elif name.endswith(IMAGE_NAMES):
-                if name == os.path.join(file_name[:-4], "icon.png"):
-                    install_icon(temp_dir, name.split(os.path.sep, name)[1], icon_path, zip_file)
+                if name.endswith("icon.png"):
+                    manifest.append(icon_path)
+                    install_icon('./', name, icon_path, zip_file)
 
                 else:
                     print(f"[GZDoom Run Install]: Installing {name} to {os.path.join(WAD_DIRECTORY, name)} ...")
@@ -90,7 +90,9 @@ def install_packet_archive(file_name: str):
                     zip_file.extract(name, path=WAD_DIRECTORY)
     
     shutil.rmtree(file_name[:-4])
-    save_manifest(file_name[:-4], manifest)
+    modcache : dict = load_modcache()
+    modcache["manifest"][file_name] = manifest 
+    save_modcache(modcache)
 
     print(GZDOOM_INSTALL + f"{file_name} installed to {outpath} successfully")
 
