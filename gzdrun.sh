@@ -1,7 +1,9 @@
 #! /usr/bin/bash
 VENV="${HOME}"/.venv
 
-if [ $(python3 -m gzdoomrun is-venv) = false ]
+python3 -m gzdoomrun is-venv
+
+if [ $? -eq 1 ]
 then
     source "${VENV}/bin/activate"
 fi

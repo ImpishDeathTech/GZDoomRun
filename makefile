@@ -20,7 +20,7 @@ install:
 	
 	chmod +x gzdrun.sh 
 	sudo cp gzdrun.sh /usr/bin/gzdrun
-	sudo cp activate.sh /usr/bin/activate
+
 	cp modcache.json $(HOME)/.config/gzdoom 
 	cp -r custom $(HOME)/.config/gzdoom
 

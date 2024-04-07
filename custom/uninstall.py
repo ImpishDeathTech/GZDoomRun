@@ -13,11 +13,9 @@ from pathlib import Path
 from subprocess import CompletedProcess
 from gzdoomrun.utils import load_modcache, save_modcache, WAD_DIRECTORY
 
-WAD_DIRECTORY    : str   = os.path.join(Path.home(), os.path.sep.join(modcache["path"]["config"]))
-
 def main(argc: int, argv: list):
     modcache : dict = load_modcache()
-    
+
     for key in modcache["manifest"].keys():
         if key == argv[0]:
             print(f"[GZDoom Run Uninstall]: Uninstalling {key} ...")
