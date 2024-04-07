@@ -429,6 +429,12 @@ def run_with_gui():
     app : Application = make_application(pwad_names, iwad_names)
     app.run()
 
+import sys
+
+
+def is_venv():
+    return (hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
+
 # '''
 # Main Block
 # '''
@@ -436,5 +442,13 @@ if __name__ == "__main__":
     if len(sys.argv) >= 3:
         sys.exit(run_from_cli(len(sys.argv), sys.argv))
         
+    elif len(sys.argv) == 2:
+        if sys.argv[1] == "venv?":
+            if is_venv():
+                sys.exit(0)
+            else:
+                sys.exit(1)
+        else:
+            sys.exit(run_from_cli(len(sys.argv), sys.argv))
     else:
         run_with_gui()

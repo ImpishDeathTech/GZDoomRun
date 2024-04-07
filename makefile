@@ -1,5 +1,6 @@
 PY3      = python3 -m 
 INSTALL  = pip install
+UNINSTALL= pip uninstall
 GZDR_DIR = /usr/share/gzdoomrun 
 APPS     = /usr/share/applications
 BIN      = /usr/bin/gzdrun
@@ -27,7 +28,7 @@ install:
 	$(PY3) $(INSTALL) ./
 
 uninstall:
-	python3 -m pip uninstall gzdoomrun 
+	$(PY3) $(UNINSTALL) GZDoomRun
 	sudo rm -r $(GZDR_DIR)
 	sudo rm $(BIN)
 	sudo rm -r $(HOME)/.config/gzdoom/custom 
