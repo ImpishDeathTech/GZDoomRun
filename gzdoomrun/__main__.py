@@ -19,6 +19,7 @@ from importlib.machinery import ModuleSpec
 from pathlib import Path
 
 from gzdoomrun.utils import CommandOptions
+from gzdoomrun.custom import load_directory as load_custom_dir
 
 # Event Names
 DIRECTORY        : str = "@ Directory Path"
@@ -64,7 +65,7 @@ class Application:
     def __init__(self, title: str, iwad_table: list, pwad_table: list, launch_pad: list, dmflags: list, modcache: dict):
         self.title      : str            = title
         self.is_running : bool           = True
-        self.options    : CommandOptions = CommandOptions()
+        self.options    : CommandOptions = CommandOptions(load_custom_dir())
         self.run_args   : str            = modcache["exec"]["with"]
         self.iwad       : str            = modcache["exec"]["iwad"]
         self.warp_map   : str            = modcache["exec"]["warp"]
@@ -392,7 +393,7 @@ def make_application(mod_list: list, iwad_list: list) -> Application:
 # and parse command line arguments
 # '''
 def run_from_cli(argc: int, argv: list) -> int:
-    options : CommandOptions = CommandOptions(utils.load_directory())
+    options : CommandOptions = CommandOptions(load_custom_dir())
     
     try:
         argv.pop(0)
