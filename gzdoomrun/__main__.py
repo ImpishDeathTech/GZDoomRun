@@ -120,6 +120,7 @@ class Application:
     def list_directory(self, event: str, values: list):
         folder = values[event]
         file_names: list = []
+        
         try:
             file_list = os.listdir(folder)
         except:
@@ -129,7 +130,8 @@ class Application:
                 if os.path.isfile(os.path.join(folder, file_name)) and file_name.lower().endswith(utils.WAD_SUFFIXES):
                     file_names.append(file_name[:-4])
                 
-            self.window[event].update(file_list)
+            self.window[MOD_LIST].update(file_names)
+            self.window[event].update(folder)
 
 
     def update_run_args(self, event: str, values: list):
