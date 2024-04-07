@@ -1,5 +1,6 @@
 ## To Do List for v1.4.0:
 - Test `uninstall` command
+- Implement `list` command
 - Implement `update-modcache` command
 - Update `install` to install icons to the correct directory
 
