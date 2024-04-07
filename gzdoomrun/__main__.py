@@ -104,20 +104,20 @@ class Application:
         return False
     
     
-    def execute(self, event: str, values: list):
+    def execute(self, event: str, values: dict):
         self.events[str(event)](event, values)
 
 
-    def set_dmflags(self, event: str, values: list):
+    def set_dmflags(self, event: str, values: dict):
         self.dmflags = values[event].upper().replace("-", "_")
         self.window[event].update(self.dmflags)
              
 
-    def set_dmflags2(self, event: str, values: list):
+    def set_dmflags2(self, event: str, values: dict):
         self.dmflags2 = values[event].upper().replace("-", "_")
         self.window[event].update(self.dmflags2)
 
-    def list_directory(self, event: str, values: list):
+    def list_directory(self, event: str, values: dict):
         folder = values[event]
         file_names: list = []
         
@@ -134,8 +134,10 @@ class Application:
             self.window[event].update(folder)
 
 
-    def update_run_args(self, event: str, values: list):
-        self.run_args = "%".join([self.run_args, values[event][0]])
+    def update_run_args(self, event: str, values: dict):
+        value : str = values[event][0]
+        print(value) 
+        self.run_args += f"%{value}"
         
         if self.run_args[0] == '%':
             self.run_args = self.run_args[1:]
@@ -143,12 +145,12 @@ class Application:
         self.window[RUN_ARGS].update(self.run_args)
 
     
-    def update_arglist(self, event: str, values: list):
+    def update_arglist(self, event: str, values: dict):
         self.run_args = values[event]
         self.window[event].update(self.run_args.replace(' ', '%'))
 
 
-    def run_gzdoom(self, event: str, values: list):
+    def run_gzdoom(self, event: str, values: dict):
         modcache : dict = utils.load_modcache()
 
         if self.dmflags.__contains__(" "):
@@ -201,7 +203,7 @@ class Application:
             print(exn.what(False))
         
 
-    def clear_arguments(self, event: str, values: list):
+    def clear_arguments(self, event: str, values: dict):
         modcache : dict = utils.load_modcache()
         
         modcache["exec"]["iwad"]     = ""
@@ -230,7 +232,7 @@ class Application:
         self.window[SET_DMFLAGS2].update("0")
 
 
-    def exit_application(self, event: str, values: list):
+    def exit_application(self, event: str, values: dict):
         modcache : dict = utils.load_modcache()
 
         if self.dmflags.__contains__(" "):
@@ -252,7 +254,7 @@ class Application:
         self.is_running = False
 
     
-    def set_iwad(self, event: str, values: list):
+    def set_iwad(self, event: str, values: dict):
         bignames : list = ["DOOM", "DOOM2", "HEXEN", "PLUTONIA", "TNT"]
         modcache : dict = utils.load_modcache()
         
@@ -268,7 +270,7 @@ class Application:
         utils.save_modcache(modcache)
 
     
-    def update_iwad(self, event: str, values: list):
+    def update_iwad(self, event: str, values: dict):
         bignames : list = ["DOOM", "DOOM2", "HEXEN", "PLUTONIA", "TNT"]
         modcache : dict = utils.load_modcache()
 
@@ -290,7 +292,7 @@ class Application:
         utils.save_modcache(modcache)
     
     
-    def set_warp_map(self, event: str, values: list):
+    def set_warp_map(self, event: str, values: dict):
         modcache : dict = utils.load_modcache()
         
         self.warp_map = values[event].upper()
@@ -300,7 +302,7 @@ class Application:
         utils.save_modcache(modcache)
     
 
-    def set_difficulty(self, event: str, values: list):
+    def set_difficulty(self, event: str, values: dict):
         modcache : dict = utils.load_modcache()
         print(f"[GZDoom Run]: Setting Difficulty to {values[event]}")
         self.difficulty = values[event]
