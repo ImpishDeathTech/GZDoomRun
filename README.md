@@ -102,8 +102,10 @@ in the future.
 
 All GZDR settings are saved to the modcache.json, under "exec", locaded in .config/gzdoom.
 
+More on custom soon
+
 And that's it! Now, Setting it up with steam is pretty easy.
-Go to your Library, and click Add Game at the bottom. A list of your applications should pop up and we can add GZDoom from there.
+Go to your Steam Library, and click Add Game at the bottom. A list of your applications should pop up and we can add GZDoom from there.
 Then, once added, we right click the "game" in our library, go to Properties in the menu, (the little gear button on it's library page), and under the Shortcut properties, we change the TARGET from "gzdoom" to "gzdoom-run"
 Then, in LAUNCH OPTIONS under the same tab, we can add our mod keywords easily.
 
