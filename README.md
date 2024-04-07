@@ -10,6 +10,7 @@
 > and to aid anyone wanting to mess with programming and ye olde Doom modding.
 
 ## GZDoom Run GUI
+![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/Screenshot.jpg "Application Screenshot")
 > The gui is currently written in python with PySimpleGUI, which has recently gone proprietary. This program is for personal use only (mostly my own), so you'll have to head [here](https://pysimplegui.com/pricing) and
 > grab a free license so you can get a key so you can run the Doom Loader and fiddle with it's code until I can release a python package, which will remain free software. This application, under all intensive purposes,
 > is for fun, It's a Doom Loader. It was born of tinkering and made to be tinkered with. Thus, I encourage you to do so. If you're an aspiring or experienced python programmer using Windows, figure out how to get it working,
@@ -17,7 +18,7 @@
 > 
 > The application automatically searches the steam directory, if present, for any IWADs, and the .config/gzdoom directory for any PWADs or PK3s.
 
-![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/Screenshot.jpg "Application Screenshot")
+
 
 ## Tutorial
 
