@@ -441,9 +441,9 @@ def is_venv():
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
         sys.exit(run_from_cli(len(sys.argv), sys.argv))
-        
+
     elif len(sys.argv) == 2:
-        if sys.argv[1] == "venv?":
+        if sys.argv[1] == "is-venv":
             if is_venv():
                 sys.exit(0)
             else:
