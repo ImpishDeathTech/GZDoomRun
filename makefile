@@ -4,13 +4,9 @@ GZDR_DIR = /usr/share/gzdoomrun
 APPS     = /usr/share/applications
 BIN      = /usr/bin/gzdrun
 
-venv:
+.venv:
 	$(PY3) venv $(HOME)/.venv
-	chmod +x activate.sh
-	./activate.sh 
-
-remove-venv:
-	sudo rm /usr/bin/activate
+	$(PY3) venv $(HOME)/.venv/bin/activate
 
 install:
 	sudo mkdir $(GZDR_DIR)
