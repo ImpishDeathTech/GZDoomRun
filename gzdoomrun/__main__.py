@@ -392,7 +392,7 @@ def make_application(mod_list: list, iwad_list: list) -> Application:
 # and parse command line arguments
 # '''
 def run_from_cli(argc: int, argv: list) -> int:
-    options : CommandOptions = CommandOptions(utils.custom.load_directory())
+    options : CommandOptions = CommandOptions(utils.load_directory())
     
     try:
         argv.pop(0)
