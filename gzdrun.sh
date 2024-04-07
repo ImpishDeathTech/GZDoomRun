@@ -2,6 +2,7 @@
 VENV="${HOME}"/.venv
 
 if [ $(python3 - gzdoomrun venv?) = false ]
+then
     source "${VENV}/bin/activate"
 fi
 
