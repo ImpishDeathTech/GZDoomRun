@@ -10,7 +10,7 @@
         "dmflags2": 0
     },
     "path":{
-        "iwad":[],
+        "pwads":[],
         "config":[".config", "gzdoom"],
         "steam":[".local","share","Steam","steamapps","common"]
     },
