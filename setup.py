@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='GZDoomRun',
-      version='1.4.00',
+      version='1.4.0-1',
       description='A small linux program for loading GZDoom mods a little easier. ',
       author='Sanguine Noctis',
       author_email='shotgunshellproducktions@gmail.com',
