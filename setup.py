@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='GZDoomRun',
-      version='1.4.0-2',
+      version='1.4.0-1',
       description='A small linux program for loading GZDoom mods a little easier. ',
       long_description="""
 This a persosnal program that was originally just a simple python sciript meant to used with Steam to help me load doom mods easier, but has evolved into a full blown Doom Loader that has a few command line options that make it a fine personal program. 

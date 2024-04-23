@@ -6,8 +6,8 @@
 > Type `gzdrun help all` once installed to see these options.
 > Requires python3 and PySimpleGUI to be installed on your sistem.
 > This program is really for my own usage, this help is just here as a reference for myself,
-> you can use it yourself, but the python application will see no further development due to the recent decisions of the PySimpleGUI API.
-> This was supposed to be a **__free__** application. 
+> you can use it yourself, but the application's development is currently paused due to the recent decisions of the PySimpleGUI API to require proprietary licensing.
+> This was supposed to be a **__free__** application, and may stay that way, so I may or may not pay for this license, but I may just rewrite the entire app all together. 
 > The application automatically searches the steam directory, if present, for any IWADs, and the .config/gzdoom directory for any PWADs or PK3s.
 
 ## GZDoom Run Python GUI - Seems we've gotta redo EVERYTHING! You can still play with it though! ^,..,^
