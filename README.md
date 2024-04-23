@@ -1,23 +1,23 @@
 # GZDoom Run
 ## Version 1.4
 ### A small tool for loading GZDoom mods on Linux a little easier. 
-
 > This a persosnal program that was originally just a simple python sciript meant to used with Steam to help me load doom mods easier, 
-> but has evolved into a full blown Doom Loader, and has a few command line options that make it a fine personal program.
-> Type `gzdoomrun help all` once installed to see these options.
+> but has evolved into a full blown Doom Loader that has a few command line options that make it a fine personal program.
+> Type `gzdr help all` once installed to see these options.
 > Requires python3 and PySimpleGUI to be installed on your sistem.
 > This program is really for my own usage, this help is just here as a reference for myself,
-> and to aid anyone wanting to mess with programming and ye olde Doom modding.
-
-## GZDoom Run GUI
-![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/Screenshot.jpg)
-> The gui is currently written in python with PySimpleGUI, which has recently gone proprietary. This program is for personal use only (mostly my own), so you'll have to head [here](https://pysimplegui.com/pricing) and
-> grab a free license so you can get a key so you can run the Doom Loader and fiddle with it's code until I can release a python package, which will remain free software. This application, under all intensive purposes,
-> is for fun, It's a Doom Loader. It was born of tinkering and made to be tinkered with. Thus, I encourage you to do so. If you're an aspiring or experienced python programmer using Windows, figure out how to get it working,
-> I don't know that directory structure! 
-> 
+> you can use it yourself, but the python application will see no further development due to the recent decisions of the PySimpleGUI API.
+> This was supposed to be a **__free__** application. 
 > The application automatically searches the steam directory, if present, for any IWADs, and the .config/gzdoom directory for any PWADs or PK3s.
 
+## GZDoom Run Python GUI - Seems we've gotta redo EVERYTHING! You can still play with it though! ^,..,^
+![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/Screenshot.jpg)
+> The gui is currently written in python with PySimpleGUI, which has recently gone proprietary, and implemented an all-consuming draconian license which stunts my ability to release this as a free software application
+> in it's current state. As of this moment, this program is for personal use only (mostly my own), so you'll have to head [here](https://pysimplegui.com/pricing) and grab a free developers license so you can get a developer
+> key if you want to run this Doom Loader and fiddle with it's code (I won't be developing the python side any further myself, if that changes for any reason whatsoever, you will see the changes here) until I can rebuild in C++
+> or a more solid, efficient language. The resulting application will remain free software.
+> This application, under all intensive purposes,is for fun, It's a Doom Loader. It was born of tinkering and made to be tinkered with. To build on, to grow. One of my goal with all of my applications is to make them extendable
+> and customizable in some way. I will leave the python branch as an educational and personal reference. 
 
 
 ## Tutorial
