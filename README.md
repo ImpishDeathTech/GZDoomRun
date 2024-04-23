@@ -12,7 +12,7 @@
 
 ## GZDoom Run Python GUI - Seems we've gotta redo EVERYTHING! You can still play with it though! ^,..,^
 ![Alt text](https://github.com/ImpishDeathTech/GZDoomRun/blob/master/Screenshot.jpg)
-> The gui is currently written in python with PySimpleGUI, which has recently gone proprietary, and implemented an all-consuming draconian license which stunts my ability to release this as a free software application
+> The gui is currently written in python with PySimpleGUI, which has recently gone proprietary, and implemented an all-consuming license which stunts my ability to release this as a free software application
 > in it's current state. As of this moment, this program is for personal use only (mostly my own), so you'll have to head [here](https://pysimplegui.com/pricing) and grab a free developers license so you can get a developer
 > key if you want to run this Doom Loader and fiddle with it's code (I won't be developing the python side any further myself, if that changes for any reason whatsoever, you will see the changes here) until I can rebuild in C++
 > or a more solid, efficient language. The resulting application will remain free software.
