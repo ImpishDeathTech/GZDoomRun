@@ -16,7 +16,7 @@
 > in it's current state. As of this moment, this program is for personal use only (mostly my own), so you'll have to head [here](https://pysimplegui.com/pricing) and grab a free developers license so you can get a developer
 > key if you want to run this Doom Loader and fiddle with it's code (I won't be developing the python side any further myself, if that changes for any reason whatsoever, you will see the changes here) until I can rebuild in C++
 > or a more solid, efficient language. The resulting application will remain free software.
-> This application, under all intensive purposes,is for fun, It's a Doom Loader. It was born of tinkering and made to be tinkered with. To build on, to grow. One of my goal with all of my applications is to make them extendable
+> This application, under all intensive purposes,is for fun, It's a Doom Loader. It was born of tinkering and made to be tinkered with. To build on, to grow. One of my goals with all of my applications is to make them extendable
 > and customizable in some way. I will leave the python branch as an educational and personal reference. 
 
 
