@@ -5,4 +5,4 @@
 - Update `install` to install icons to the correct directory
 
 ## Goals for v2.0
-- Maybe reimplement everything in C or C++
+- Rewrite everything in C or C++

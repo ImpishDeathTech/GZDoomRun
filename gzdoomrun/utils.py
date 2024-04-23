@@ -179,9 +179,29 @@ def load_filepaths(iwad_path: list, file_names: list) -> list:
             raise GZDoomRunError(2, f"No '{file_path}.wad' or '{file_path}.pk3' found in {WAD_DIRECTORY}")
     
     print(iwad_path + file_paths)
-    return iwad_path + file_paths              
-                
+    return iwad_path + file_paths
 
+
+def parse_doom1_type(warp_map: str) -> list:
+    o : list = warp_map.replace('E', ' ').replace('M', ' ').split(' ')
+    return ['-warp', o[1], o[2]]
+
+
+def parse_doom2_type(warp_map: str) -> list:
+    if warp_map[3] == '0':
+        return ['-warp', warp_map[4]]
+    
+    if ' ' in warp_map:
+        return ['-warp', warp_map.replace(' ', '')[3:]]
+    
+    return ['-warp', warp_map[3:]]
+
+
+def parse_warpmap(warp_map: str) -> list:
+    if warp_map.startswith("MAP"):
+        return parse_doom2_type(warp_map)
+
+    return parse_doom1_type(warp_map)
 
 #########################################
 #        OOOOO PPPPP TTTTTT SSSSS       #
@@ -217,46 +237,9 @@ class CommandOptions:
                         return launch_gzdoom_with(["+dmflags", str(self.dmflags), "+dmflags2", str(self.dmflags2)] + iwad_path)
             
                 if argv[pos] == "warp":
-                    warpmap : dict =  {
-                        "E": None,
-                        "M": None
-                    }
-                    E : bool = False 
-                    M : bool = False
-                    
                     pos += 1
-                    s : str = argv[pos]
-
-                    for c in s:
-                        if M and c:
-                            M = False
-                            print(c)
-                            warpmap["M"] = c
-                            
-                        elif warpmap["E"] and c:
-                            E = False
-                            print(c)
-                            warpmap["E"] = c
-                        
-                        elif c.upper() == 'E':
-                            print(c)
-                            M = True
-
-                        elif c.upper() == 'M':
-                            print(c)
-                            M = True
-
-                    if warpmap["E"]:
-                        iwad_path += ["-warp", warpmap["E"], warpmap["M"]]
-                
-                    else:
-                        iwad_path += ["-warp", warpmap["M"]]
-
+                    iwad_path += parse_warpmap(argv[pos])
                     pos += 1
-
-                    if pos == argc:
-                        print(iwad_path + ["+dmflags", str(self.dmflags), "+dmflags2", str(self.dmflags2)])
-                        return launch_gzdoom_with(iwad_path + ["+dmflags", str(self.dmflags), "+dmflags2", str(self.dmflags2)])
             
                 if argv[pos] == "skill":
                     iwad_path += ["-skill", argv[pos + 1]]
@@ -284,7 +267,5 @@ class CommandOptions:
                 print(err)
 
         else:
-            launch_gzdoom()
-
-
+            return launch_gzdoom()
 

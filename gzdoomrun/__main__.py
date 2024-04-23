@@ -14,6 +14,7 @@ import PySimpleGUI as gui
 import gzdoomrun.utils as utils
 
 from gzdoomrun.dmflags import *
+from gzdoomrun.difficulty import *
 from types import ModuleType
 from importlib.machinery import ModuleSpec
 from pathlib import Path
@@ -164,9 +165,13 @@ class Application:
         
         else:
             self.options.dmflags2 = eval(self.dmflags2)
+
+        if self.difficulty:
+            self.difficulty = str(eval(self.difficulty))
         
         modcache["exec"]["dmflags"]  = self.options.dmflags
         modcache["exec"]["dmflags2"] = self.options.dmflags2
+        modcache["exec"]["skill"]    = self.difficulty
         
         utils.save_modcache(modcache)
 
@@ -247,6 +252,12 @@ class Application:
         else:
             self.options.dmflags2 = eval(self.dmflags2)
         
+        if self.difficulty:
+            modcache["exec"]["difficulty"] = str(eval(self.difficulty))
+        
+        else:
+            modcache['exec']['difficulty']= self.difficulty
+        
         modcache["exec"]["dmflags"]  = self.options.dmflags
         modcache["exec"]["dmflags2"] = self.options.dmflags2
         
@@ -304,12 +315,9 @@ class Application:
 
     def set_difficulty(self, event: str, values: dict):
         modcache : dict = utils.load_modcache()
-        print(f"[GZDoom Run]: Setting Difficulty to {values[event]}")
-        self.difficulty = values[event]
+        self.difficulty = values[event].replace(' ', '_').replace('-', '_').upper()
+        print(f"[GZDoom Run]: Setting Difficulty to {self.difficulty}")
         self.window[event].update(self.difficulty)
-        
-        modcache["exec"]["skill"] = self.difficulty
-        utils.save_modcache(modcache)
     
 
     def run(self):
