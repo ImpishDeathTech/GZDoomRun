@@ -3,7 +3,7 @@
 ### A small tool for loading GZDoom mods on Linux a little easier. 
 > This a persosnal program that was originally just a simple python sciript meant to used with Steam to help me load doom mods easier, 
 > but has evolved into a full blown Doom Loader that has a few command line options that make it a fine personal program.
-> Type `gzdr help all` once installed to see these options.
+> Type `gzdrun help all` once installed to see these options.
 > Requires python3 and PySimpleGUI to be installed on your sistem.
 > This program is really for my own usage, this help is just here as a reference for myself,
 > you can use it yourself, but the python application will see no further development due to the recent decisions of the PySimpleGUI API.
@@ -51,14 +51,14 @@ make install-system
 > Now, we'll test it by extracting the provided pkz and installing Brutal Doom! The following options will only be usable if you have SIGIL and Brutal Doom installed to your .config/gzdoom directory.
 > You'll always want to make sure you have your python virtual environment running. 
 ```sh
-gzdr install SIGIL_v1_21.pkz
-gzdr iwad DOOM.WAD warp E1M1 skill 4 with SIGIL_v1_21
+gzdrun install SIGIL_v1_21.pkz
+gzdrun iwad DOOM.WAD warp E1M1 skill 4 with SIGIL_v1_21
 
 # Loading multiple wads is done by seperating each wad name by a '%'
-gzdr iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
+gzdrun iwad DOOM.WAD with SIGIL_v1_21%SIGIL_v1_21_COMPAT%brutalv21
 
 # It is also possible to warp to a specific map, and choose a difficulty
-gzdr iwad DOOM.WAD warp E1M1 skill 4 with SIGIL_v1_21
+gzdrun iwad DOOM.WAD warp E1M1 skill 4 with SIGIL_v1_21
 ```
 gzdoomrun will launch as a gui application if no arguments are provided. When you select an IWAD from the list, it's key will appear in the "Path" input, which represents it's file stem. This input accepts these known file stems, as well as full paths, in case your IWAD is not a IWAD that I personally use or own.
 
