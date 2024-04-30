@@ -106,7 +106,12 @@ def finaldoom_find(iwad_name: str) -> bool:
 # '''
 def load_iwads(folder_list: list) -> list:
     iwad_names : list = []
-    
+    found_heretic : bool = False 
+    found_hexen   : bool = False
+    found_hexdd   : bool = False 
+    found_strife1 : bool = False 
+    found_strife_veteran_edition : bool = False 
+
     keys = list(STEAM_NAMES.keys())
 
     if find_doom1():
@@ -125,22 +130,27 @@ def load_iwads(folder_list: list) -> list:
             if finaldoom_find("TNT"):
                 iwad_names.append(keys[5])
         
-        elif find_heretic():
+        elif (not found_heretic) and find_heretic():
+            found_heretic = True
             iwad_names.append(keys[7])
             
-        elif find_hexen():
+        elif (not found_hexen) and find_hexen():
+            found_hexen = True
             iwad_names.append(keys[8])
         
-        elif find_hexdd():
+        elif (not found_hexdd) and find_hexdd():
+            found_hexdd = True
             iwad_names.append(keys[9])
         
-        elif find_strife1():
+        elif (not found_strife1) and find_strife1():
+            found_strife1 = True
             iwad_names.append(keys[10])
         
-        elif find_strife_veteran_edition():
+        elif (not found_strife_veteran_edition) and find_strife_veteran_edition():
+            found_strife_veteran_edition = True
             iwad_names.append(keys[11])
 
-
+    iwad_names.sort(key=str.lower)
     return iwad_names
 
 
