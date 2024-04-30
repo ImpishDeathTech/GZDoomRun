@@ -41,7 +41,11 @@ STEAM_NAMES : dict = {
     "Final Doom: The Plutonia Experiment": "PLUTONIA.WAD",
     "Final Doom: TNT Evilution": "TNT.WAD",
     "The Ultimate Doom": "DOOM.WAD",
-    "Hexen: Beyond Heretic": "HEXEN.WAD"
+    "Heretic: Shadow of the Serpent Riders": "HERETIC.WAD",
+    "Hexen: Beyond Heretic": "HEXEN.WAD",
+    "Hexen: Deathkings of the Dark Citadel": "HEXDD.WAD",
+    "Strife: Quest for the Sigil": "strife1",
+    "Strife: Veteran Edition": "SVE.wad"
 }
 
 del modcache
@@ -72,9 +76,21 @@ def find_doom2() -> bool:
 def find_ultimate_doom() -> bool:
     return os.path.isfile(os.path.join(STEAM_DIRECTORY, "Ultimate Doom", "base", "DOOM.WAD"))
 
+def find_heretic() -> bool:
+    return os.path.isfile(os.path.join(STEAM_DIRECTORY, "Heretic Shadow of the Serpent Riders", "base", "HERETIC.WAD"))
 
 def find_hexen() -> bool:
     return os.path.isfile(os.path.join(STEAM_DIRECTORY, "Hexen", "base", "HEXEN.WAD"))
+
+def find_hexdd() -> bool:
+    return os.path.isfile(os.path.join(STEAM_DIRECTORY, "Hexen Deathkings of the SerpentRiders", "base", "HEXDD.WAD"))
+
+def find_strife1() -> bool:
+    return os.path.isfile(os.path.join(STEAM_DIRECTORY, "Strife", "strife1.wad"))
+
+def find_strife_veteran_edition() -> bool:
+    return os.path.isfile(os.path.join(STEAM_DIRECTORY, "Strife", "SVE.wad"))
+
 
 def finaldoom_find(iwad_name: str) -> bool:
     finaldoom_path : str = os.path.join(STEAM_DIRECTORY, "Doom 2", "finaldoombase")
@@ -108,9 +124,22 @@ def load_iwads(folder_list: list) -> list:
 
             if finaldoom_find("TNT"):
                 iwad_names.append(keys[5])
-
-        elif folder == "Hexen" and find_hexen():
+        
+        elif find_heretic():
             iwad_names.append(keys[7])
+            
+        elif find_hexen():
+            iwad_names.append(keys[8])
+        
+        elif find_hexdd():
+            iwad_names.append(keys[9])
+        
+        elif find_strife1():
+            iwad_names.append(keys[10])
+        
+        elif find_strife_veteran_edition():
+            iwad_names.append(keys[11])
+
 
     return iwad_names
 

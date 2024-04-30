@@ -266,7 +266,7 @@ class Application:
 
     
     def set_iwad(self, event: str, values: dict):
-        bignames : list = ["DOOM", "DOOM2", "HEXEN", "PLUTONIA", "TNT"]
+        bignames : list = ["DOOM", "DOOM2", "HERETIC", "HEXEN", "HEXDD", "PLUTONIA", "TNT"]
         modcache : dict = utils.load_modcache()
         
         self.iwad = values[event]
@@ -282,7 +282,7 @@ class Application:
 
     
     def update_iwad(self, event: str, values: dict):
-        bignames : list = ["DOOM", "DOOM2", "HEXEN", "PLUTONIA", "TNT"]
+        bignames : list = ["DOOM", "DOOM2", "HERETIC", "HEXEN", "HEXDD", "PLUTONIA", "TNT"]
         modcache : dict = utils.load_modcache()
 
         self.iwad = values[event][0]
